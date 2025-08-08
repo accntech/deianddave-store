@@ -4,6 +4,7 @@ export type InventoryItem = {
 	productId: string;
 	productName: string;
 	productDescription: string;
+	productImage: string;
 	productSets: Array<{
 		id: string;
 		name: string;
@@ -32,6 +33,7 @@ export type Product = {
 	productId: string;
 	productName: string;
 	productDescription: string;
+	productImage: string;
 	productSets: Array<{
 		id: string;
 		name: string;

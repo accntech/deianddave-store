@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Product } from '$lib/services/inventory.js';
+	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
+	import type { Product } from '$lib/services/inventory';
 
 	let { data } = $props();
 
@@ -88,7 +89,6 @@
 
 		if (!result?.data?.length) return [] as Product[];
 
-		// Group by productId + fabricId + genderGroupId + status and take the min price per group
 		const groups = new Map<string, { item: any; minPrice: number }>();
 
 		for (const item of result.data) {
@@ -113,14 +113,18 @@
 			id: x.id,
 			productId: x.productId,
 			productName: x.productName,
+			productDescription: x.productDescription,
+			productImage: x.productImage,
 			fabricId: x.fabricId,
 			fabricName: x.fabricName,
 			ageGroupId: x.ageGroupId,
 			ageGroupName: x.ageGroupName,
 			genderGroupId: x.genderGroupId,
 			genderGroupName: x.genderGroupName,
+			productSets: x.productSets,
 			status: x.status,
-			price: x.price
+			price: x.price,
+			image: x.image
 		})) as Product[];
 
 		if (unique.length <= 1) {
@@ -166,9 +170,36 @@
 		{#each Object.entries(Object.groupBy(products, (item) => item.genderGroupName || '')).sort( ([a], [b]) => a.localeCompare(b) ) as [gender, items]}
 			<div class="mb-2">
 				<div class="mb-1 text-lg font-bold">{gender}</div>
-				<ul class="ml-4 list-disc">
+				<ul class="ml-4 flex list-disc gap-4">
 					{#each items ?? [] as item}
-						<pre>{JSON.stringify(item, null, 2)}</pre>
+						<a
+							class="group max-w-[300px] overflow-clip rounded-2xl border"
+							href="/add-to-cart?productId={item.productId}&fabricId={item.fabricId}&ageGroupId={item.ageGroupId}&genderGroupId={item.genderGroupId}"
+						>
+							<div class="overflow-clip">
+								<img
+									class="transition-scale size-[300px] object-cover duration-300 group-hover:scale-110"
+									src={item.productImage === '' ? PUBLIC_DEFAULT_PRODUCT_IMAGE : item.productImage}
+									alt={item.productName}
+									loading="lazy"
+									decoding="async"
+								/>
+							</div>
+							<div class="p-4">
+								<span class="text-wrap">{item.productName}</span>
+								<span>{item.fabricName}</span>
+								{#each item.productSets as set}
+									<div>
+										<span>{set.quantity}</span>
+										<span>{set.name}</span>
+									</div>
+								{/each}
+								<div class="flex flex-col">
+									from
+									<span>{item.price}</span>
+								</div>
+							</div>
+						</a>
 					{/each}
 				</ul>
 			</div>
