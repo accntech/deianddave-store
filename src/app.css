@@ -1,6 +1,9 @@
 @import 'tailwindcss';
 
 @layer base {
+	* {
+		font-family: 'Geist Variable', sans-serif;
+	}
 	body {
 		@apply h-screen bg-gray-100 text-gray-900;
 	}
