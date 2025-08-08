@@ -3,11 +3,19 @@ import { generateJWT } from '$lib/utils/jwt-generator';
 import { INVENTORIES_URL } from '$env/static/private';
 import type { InventoryItem } from '$lib/services/inventory';
 import type { Result } from '$lib/services';
+import { CACHE_DURATION, memoryCache } from '$lib/services/cache';
 
 export const load: PageServerLoad = async () => {
-	const jwt = await generateJWT();
-
 	try {
+		const now = Date.now();
+
+		const cache = memoryCache.find((item: { key: string }) => item.key === 'products');
+
+		if (cache && now < cache.expiry) {
+			return { result: cache.data };
+		}
+
+		const jwt = await generateJWT();
 		const url = new URL(INVENTORIES_URL);
 		url.searchParams.append('type', 'beddings');
 
@@ -25,7 +33,25 @@ export const load: PageServerLoad = async () => {
 
 		const result: Result<InventoryItem[]> = await response.json();
 
-		return { result };
+		const index = memoryCache.findIndex((item) => item.key === 'products');
+		if (index !== -1) {
+			memoryCache.splice(index, 1);
+		}
+
+		memoryCache.push({
+			key: 'products',
+			data: result,
+			expiry: Date.now() + CACHE_DURATION
+		});
+
+		const beddings = result.data.filter((item: InventoryItem) => item.type === 'beddings');
+		return {
+			result: {
+				status: result.status,
+				data: beddings,
+				errors: result.errors
+			} as Result<InventoryItem[]>
+		};
 	} catch (error) {
 		console.error('Error fetching items:', error);
 		return {
