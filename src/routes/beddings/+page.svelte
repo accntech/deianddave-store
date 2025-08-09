@@ -14,12 +14,13 @@
 		const unique = [];
 
 		for (const item of result.data) {
-			const fabricId = item.fabricId;
+			const fabricId = item.fabric.id;
 			if (!seen.has(fabricId)) {
 				seen.add(fabricId);
 				unique.push({
 					id: fabricId,
-					name: item.fabricName
+					index: item.fabric.index,
+					name: item.fabric.name
 				});
 			}
 		}
@@ -32,7 +33,12 @@
 			return unique;
 		}
 
-		unique.sort((a, b) => a.name.localeCompare(b.name));
+		unique.sort((a, b) => {
+			if (a.index !== b.index) {
+				return a.index - b.index;
+			}
+			return a.name.localeCompare(b.name);
+		});
 		return unique;
 	});
 
@@ -47,16 +53,18 @@
 
 		let hasGenericAgeGroup = false;
 		for (const item of result.data) {
-			if (selectedFabric && item.fabricId !== selectedFabric) continue;
+			if (!item.ageGroup) continue;
+			if (selectedFabric && item.fabric.id !== selectedFabric) continue;
 
-			const ageGroupId = item.ageGroupId;
+			const ageGroupId = item.ageGroup?.id;
 			if (!seen.has(ageGroupId)) {
 				seen.add(ageGroupId);
 
 				if (ageGroupId) {
 					unique.push({
 						id: ageGroupId,
-						name: item.ageGroupName
+						index: item.ageGroup.index,
+						name: item.ageGroup?.name
 					});
 				}
 				if (ageGroupId === '') {
@@ -69,7 +77,12 @@
 			return [];
 		}
 
-		unique.sort((a, b) => a.name.localeCompare(b.name));
+		unique.sort((a, b) => {
+			if (a.index !== b.index) {
+				return a.index - b.index;
+			}
+			return a.name.localeCompare(b.name);
+		});
 
 		if (hasGenericAgeGroup) return [{ id: '', name: 'Generic' }, ...unique];
 		return unique;
@@ -92,10 +105,10 @@
 		const groups = new Map<string, { item: any; minPrice: number }>();
 
 		for (const item of result.data) {
-			if (selectedFabric && item.fabricId !== selectedFabric) continue;
-			if (selectedAgeGroup && item.ageGroupId !== selectedAgeGroup) continue;
+			if (selectedFabric && item.fabric.id !== selectedFabric) continue;
+			if (selectedAgeGroup && item.ageGroup?.id !== selectedAgeGroup) continue;
 
-			const key = `${item.productId}|${item.fabricId}|${item.genderGroupId}|${item.status}`;
+			const key = `${item.product.id}|${item.fabric.id}|${item.genderGroup ? item.genderGroup.id : ''}|${item.status}`;
 			const existing = groups.get(key);
 			if (!existing) {
 				groups.set(key, { item, minPrice: item.price });
@@ -111,17 +124,10 @@
 
 		const products = unique.map((x) => ({
 			id: x.id,
-			productId: x.productId,
-			productName: x.productName,
-			productDescription: x.productDescription,
-			productImage: x.productImage,
-			fabricId: x.fabricId,
-			fabricName: x.fabricName,
-			ageGroupId: x.ageGroupId,
-			ageGroupName: x.ageGroupName,
-			genderGroupId: x.genderGroupId,
-			genderGroupName: x.genderGroupName,
-			productSets: x.productSets,
+			product: x.product,
+			fabric: x.fabric,
+			ageGroup: x.ageGroup,
+			genderGroup: x.genderGroup,
 			status: x.status,
 			price: x.price,
 			image: x.image
@@ -131,9 +137,42 @@
 			return products;
 		}
 
-		products.sort((a, b) => a.productName.localeCompare(b.productName));
+		products.sort((a, b) => {
+			if (a.product.index !== b.product.index) {
+				return a.product.index - b.product.index;
+			}
+
+			if (a.price !== b.price) {
+				return a.price - b.price;
+			}
+
+			return a.product.name.localeCompare(b.product.name);
+		});
 		return products;
 	});
+
+	const groupProducts = (products: Product[]) => {
+		const groups = Object.groupBy(products, (item) => item.genderGroup?.name || '');
+		const entries = Object.entries(groups);
+		entries.sort(([, a], [, b]) => {
+			const ai =
+				a?.reduce(
+					(min, i) => Math.min(min, i.genderGroup?.index ?? Number.MAX_SAFE_INTEGER),
+					Number.MAX_SAFE_INTEGER
+				) ?? Number.MAX_SAFE_INTEGER;
+			const bi =
+				b?.reduce(
+					(min, i) => Math.min(min, i.genderGroup?.index ?? Number.MAX_SAFE_INTEGER),
+					Number.MAX_SAFE_INTEGER
+				) ?? Number.MAX_SAFE_INTEGER;
+			if (ai !== bi) return ai - bi;
+
+			const an = a?.[0]?.genderGroup?.name ?? '';
+			const bn = b?.[0]?.genderGroup?.name ?? '';
+			return an.localeCompare(bn);
+		});
+		return entries as [string, Product[]][];
+	};
 </script>
 
 <div class="flex flex-col gap-4">
@@ -167,28 +206,31 @@
 	{/if}
 
 	{#if products.length > 0}
-		{#each Object.entries(Object.groupBy(products, (item) => item.genderGroupName || '')).sort( ([a], [b]) => a.localeCompare(b) ) as [gender, items]}
+		{#each groupProducts(products) as [gender, items]}
 			<div class="mb-2">
 				<div class="mb-1 text-lg font-bold">{gender}</div>
 				<ul class="ml-4 flex list-disc gap-4">
 					{#each items ?? [] as item}
 						<a
 							class="group max-w-[300px] overflow-clip rounded-2xl border"
-							href="/add-to-cart?productId={item.productId}&fabricId={item.fabricId}&ageGroupId={item.ageGroupId}&genderGroupId={item.genderGroupId}"
+							href="/add-to-cart?productId={item.product.id}&fabricId={item.fabric
+								.id}&ageGroupId={item.ageGroup?.id}&genderGroupId={item.genderGroup?.id}"
 						>
 							<div class="overflow-clip">
 								<img
 									class="transition-scale size-[300px] object-cover duration-300 group-hover:scale-110"
-									src={item.productImage === '' ? PUBLIC_DEFAULT_PRODUCT_IMAGE : item.productImage}
-									alt={item.productName}
+									src={item.product.image === null
+										? PUBLIC_DEFAULT_PRODUCT_IMAGE
+										: item.product.image}
+									alt={item.product.name}
 									loading="lazy"
 									decoding="async"
 								/>
 							</div>
 							<div class="p-4">
-								<span class="text-wrap">{item.productName}</span>
-								<span>{item.fabricName}</span>
-								{#each item.productSets as set}
+								<span class="text-wrap">{item.product.name}</span>
+								<span>{item.fabric.name}</span>
+								{#each item.sets as set}
 									<div>
 										<span>{set.quantity}</span>
 										<span>{set.name}</span>

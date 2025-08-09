@@ -1,26 +1,45 @@
 export type InventoryItem = {
 	id: string;
 	type: string;
-	productId: string;
-	productName: string;
-	productDescription: string;
-	productImage: string;
-	productSets: Array<{
+	product: {
 		id: string;
+		index: number;
+		name: string;
+		description: string | null;
+		image: string | null;
+	};
+	sets: Array<{
+		id: string;
+		index: number;
 		name: string;
 		quantity: number;
 	}>;
-	fabricId: string;
-	fabricName: string;
-	ageGroupId: string;
-	ageGroupName: string;
-	genderGroupId: string;
-	genderGroupName: string;
-	colorId: string;
-	colorName: string;
-	hexCode: string;
-	sizeId: string;
-	sizeName: string;
+	fabric: {
+		id: string;
+		index: number;
+		name: string;
+	};
+	ageGroup: {
+		id: string;
+		index: number;
+		name: string;
+	} | null;
+	genderGroup: {
+		id: string;
+		index: number;
+		name: string;
+	} | null;
+	color: {
+		id: string;
+		index: number;
+		name: string;
+		hexCode: string;
+	};
+	size: {
+		id: string;
+		index: number;
+		name: string;
+	};
 	price: number;
 	quantity: number;
 	image?: string;
@@ -30,21 +49,34 @@ export type InventoryItem = {
 export type Product = {
 	id: string;
 	type: string;
-	productId: string;
-	productName: string;
-	productDescription: string;
-	productImage: string;
-	productSets: Array<{
+	product: {
 		id: string;
+		index: number;
+		name: string;
+		description: string | null;
+		image: string | null;
+	};
+	sets: Array<{
+		id: string;
+		index: number;
 		name: string;
 		quantity: number;
 	}>;
-	fabricId: string;
-	fabricName: string;
-	ageGroupId: string;
-	ageGroupName: string;
-	genderGroupId: string;
-	genderGroupName: string;
+	fabric: {
+		id: string;
+		index: number;
+		name: string;
+	};
+	ageGroup: {
+		id: string;
+		index: number;
+		name: string;
+	} | null;
+	genderGroup: {
+		id: string;
+		index: number;
+		name: string;
+	} | null;
 	price: number;
 	image?: string;
 	status: 'active' | 'inactive' | 'on_hold';
