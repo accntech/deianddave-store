@@ -125,6 +125,7 @@
 		const products = unique.map((x) => ({
 			id: x.id,
 			product: x.product,
+			sets: x.sets,
 			fabric: x.fabric,
 			ageGroup: x.ageGroup,
 			genderGroup: x.genderGroup,
@@ -230,12 +231,14 @@
 							<div class="p-4">
 								<span class="text-wrap">{item.product.name}</span>
 								<span>{item.fabric.name}</span>
-								{#each item.sets as set}
-									<div>
-										<span>{set.quantity}</span>
-										<span>{set.name}</span>
-									</div>
-								{/each}
+								{#if item.sets && item.sets.length > 0}
+									{#each item.sets.sort((a, b) => a.index - b.index) as set}
+										<div>
+											<span>{set.quantity}</span>
+											<span>{set.name}</span>
+										</div>
+									{/each}
+								{/if}
 								<div class="flex flex-col">
 									from
 									<span>{item.price}</span>
