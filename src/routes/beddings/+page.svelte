@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
+	import { getOrderState, setOrderState } from '$lib/client/order.svelte.js';
 	import type { Product } from '$lib/services/inventory';
+	import { setContext } from 'svelte';
 
 	let { data } = $props();
 

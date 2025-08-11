@@ -4,7 +4,7 @@ import { getContext, setContext } from 'svelte';
 
 export class Cart {
 	value = $state<Order[]>() as Order[];
-	key = 'cart';
+	private key = 'cart';
 
 	constructor(value: Order[]) {
 		this.value = value;
