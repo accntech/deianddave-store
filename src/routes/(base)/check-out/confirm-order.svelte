@@ -39,7 +39,7 @@
 			const { status, redirect } = await response.json();
 
 			if (status === 'succeeded') {
-				goto('/check-out/result');
+				goto('/check-out/result?success=true');
 			} else if (status === 'awaiting_next_action') {
 				window.location.href = redirect;
 			}

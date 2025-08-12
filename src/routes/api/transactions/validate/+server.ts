@@ -3,12 +3,18 @@ import { redirect, type RequestHandler } from '@sveltejs/kit';
 
 const list: string[] = [];
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url, cookies }) => {
 	const id = url.searchParams.get('payment_intent_id');
 
 	if (!id) {
 		return new Response('Invalid payment intent ID', { status: 400 });
 	}
+
+	cookies.set('payment_intent_id', id, {
+		path: '/',
+		httpOnly: false,
+		maxAge: 3600
+	});
 
 	if (id) {
 		if (list.includes(id)) {
