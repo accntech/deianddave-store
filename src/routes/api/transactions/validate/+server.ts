@@ -1,0 +1,30 @@
+import { paymongo } from '$lib/services/paymongo';
+import { redirect, type RequestHandler } from '@sveltejs/kit';
+
+const list: string[] = [];
+
+export const GET: RequestHandler = async ({ url }) => {
+	const id = url.searchParams.get('payment_intent_id');
+
+	if (!id) {
+		return new Response('Invalid payment intent ID', { status: 400 });
+	}
+
+	if (id) {
+		if (list.includes(id)) {
+			return new Response('Payment intent ID already processed', { status: 400 });
+		}
+
+		const intent = await paymongo.getPaymentIntent(id);
+
+		if (!intent || !intent.data) {
+			redirect(308, `/check-out/result?success=false`);
+		}
+
+		//send payment notification
+
+		list.push(id);
+		redirect(308, `/check-out/result?success=true`);
+	}
+	redirect(308, `/check-out/result?success=false`);
+};

@@ -31,16 +31,6 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 			0
 		);
 
-		const webhookEnabled = await paymongo.tryEnablingWebhook({
-			limit: 10,
-			url: PAYMONGO_PAYMENT_WEBHOOK_URL,
-			events: ['payment.paid', 'payment.failed', 'payment.refunded']
-		});
-
-		if (!webhookEnabled) {
-			return json({ error: 'Failed to enable webhook' }, { status: 500 });
-		}
-
 		const roundedMinorAmount = Math.round(amount * 10) * 10;
 		const paymentIntentPromise = paymongo.createPaymentIntent({ amount: roundedMinorAmount });
 
@@ -96,6 +86,8 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 		if (!attachment || !attachment.data) {
 			return json({ error: 'Failed to attach payment intent' }, { status: 500 });
 		}
+
+		//send payment notification
 
 		return json({
 			status: attachment.data.attributes.status,
