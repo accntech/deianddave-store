@@ -46,7 +46,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 					state: null
 				},
 				email: body.info.email,
-				name: body.info.fullName,
+				name: body.payment.holderName || body.info.fullName,
 				phone: body.info.contactNumber
 			},
 			details: {
@@ -101,16 +101,20 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 		);
 
 		if (!attachment || !attachment.data) {
-			return json({ error: 'Failed to attach payment intent' }, { status: 500 });
+			return json(
+				{ error: attachment.error || 'Failed to attach payment intent' },
+				{ status: 500 }
+			);
 		}
 
-		if (attachment.data.attributes.status === 'succeeded') {
-			cookies.set('payment_intent_id', attachment.data.id, {
-				path: '/',
-				httpOnly: false,
-				maxAge: 3600
-			});
+		cookies.set('payment_intent_id', attachment.data.id, {
+			path: '/',
+			httpOnly: true,
+			maxAge: 3600,
+			secure: true
+		});
 
+		if (attachment.data.attributes.status === 'succeeded') {
 			await pRetry(() => updatePayment(attachment), {
 				retries: 5,
 				onFailedAttempt: (error) => {

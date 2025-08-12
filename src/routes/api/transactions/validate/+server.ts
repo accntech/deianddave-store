@@ -6,18 +6,15 @@ import pRetry from 'p-retry';
 const list: string[] = [];
 
 export const GET: RequestHandler = async ({ url, cookies }) => {
-	const id = url.searchParams.get('payment_intent_id');
+	let id = url.searchParams.get('payment_intent_id');
 
 	if (!id) {
-		return new Response('Invalid payment intent ID', { status: 400 });
-	}
+		id = cookies.get('payment_intent_id') ?? null;
 
-	cookies.set('payment_intent_id', id, {
-		path: '/',
-		httpOnly: true,
-		maxAge: 3600,
-		secure: true
-	});
+		if (!id) {
+			return new Response('Invalid payment intent ID', { status: 400 });
+		}
+	}
 
 	if (id) {
 		if (list.includes(id)) {
@@ -27,6 +24,11 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 		const intent = await paymongo.getPaymentIntent(id);
 
 		if (!intent || !intent.data) {
+			redirect(308, `/check-out/result?success=false`);
+		}
+
+		if (intent.data.attributes.status !== 'succeeded') {
+			cookies.delete('payment_intent_id', { path: '/' });
 			redirect(308, `/check-out/result?success=false`);
 		}
 

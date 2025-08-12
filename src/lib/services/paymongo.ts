@@ -211,15 +211,24 @@ class Paymongo {
 
 			const response = await fetch(url, opts);
 			if (!response.ok) {
-				console.error('Error attaching payment intent:', await response.json());
-				return {} as PaymentIntentData;
+				const json: { errors: { sub_code: string; detail: string }[] } = await response.json();
+				console.error('Error attaching payment intent:', json);
+
+				const subCode = json.errors[0].sub_code;
+				if (subCode === 'generic_decline') {
+					return { error: json.errors[0].detail } as PaymentIntentData;
+				}
+
+				return {
+					error: 'Unable to process payment. Please try another card or other form of payment.'
+				} as PaymentIntentData;
 			}
 
 			const result: PaymentIntentData = await response.json();
 			return result;
 		} catch (error) {
 			console.error('Error attaching payment intent:', error);
-			return {} as PaymentIntentData;
+			return { error: 'Internal Server Error' } as PaymentIntentData;
 		}
 	}
 
@@ -318,6 +327,7 @@ export type PaymentIntentData = {
 			updated_at: Date;
 		};
 	};
+	error?: string | null;
 };
 
 export type PaymentMethodOptions = {
