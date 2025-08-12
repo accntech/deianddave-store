@@ -26,7 +26,7 @@
 				body: JSON.stringify({
 					info: order.accountInfo,
 					payment: order.paymentMethod,
-					orders: cart.value
+					orders: cart.orders
 				})
 			});
 

@@ -3,19 +3,19 @@ import type { Order } from '$lib/services';
 import { getContext, setContext } from 'svelte';
 
 export class Cart {
-	value = $state<Order[]>() as Order[];
+	orders = $state<Order[]>() as Order[];
 	private key = 'cart';
 
 	constructor(value: Order[]) {
-		this.value = value;
+		this.orders = value;
 
 		if (browser) {
 			const item = localStorage.getItem(this.key);
-			if (item) this.value = this.deserialize(item);
+			if (item) this.orders = this.deserialize(item);
 		}
 
 		$effect(() => {
-			localStorage.setItem(this.key, this.serialize(this.value));
+			localStorage.setItem(this.key, this.serialize(this.orders));
 		});
 	}
 

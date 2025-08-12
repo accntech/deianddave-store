@@ -106,7 +106,7 @@
 
 	const onSubmit = async () => {
 		if (selectedItem) {
-			const matchIndex = cart.value.findIndex(({ item }) => {
+			const matchIndex = cart.orders.findIndex(({ item }) => {
 				return (
 					item.product.id === selectedItem.product.id &&
 					item.fabric.id === selectedItem.fabric.id &&
@@ -118,13 +118,13 @@
 			});
 
 			if (matchIndex !== -1) {
-				const existing = cart.value[matchIndex];
-				cart.value[matchIndex] = {
+				const existing = cart.orders[matchIndex];
+				cart.orders[matchIndex] = {
 					...existing,
 					quantity: existing.quantity + quantity
 				};
 			} else {
-				cart.value.push({
+				cart.orders.push({
 					quantity,
 					item: selectedItem
 				});

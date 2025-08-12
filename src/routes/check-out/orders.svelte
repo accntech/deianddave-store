@@ -19,7 +19,7 @@
 </script>
 
 <div class="space-y-4 p-4">
-	{#each cart.value as { item, quantity }}
+	{#each cart.orders as { item, quantity }}
 		<div class="rounded-lg border p-4">
 			<h2>{item.product.name}</h2>
 			<div class="flex gap-4 text-sm text-muted-foreground">

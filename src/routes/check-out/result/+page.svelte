@@ -7,7 +7,7 @@
 
 	onMount(() => {
 		if (data.success) {
-			getCartState().value = [];
+			getCartState().orders = [];
 		}
 	});
 </script>
