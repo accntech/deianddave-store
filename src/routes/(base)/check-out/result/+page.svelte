@@ -2,25 +2,21 @@
 	import { page } from '$app/state';
 	import { getCartState } from '$lib/client/cart.svelte';
 	import { onMount } from 'svelte';
-	import { deleteCookie, getCookie } from '$lib/utils/cookie-helper';
 
+	let { data } = $props();
 	getCartState();
 
 	const cart = getCartState();
-
 	let success = $derived(page.url.searchParams.get('success') === 'true');
-	let id = $state('') as string | null;
 
 	onMount(() => {
-		id = getCookie('payment_intent_id');
-		if (id) {
+		if (data.id) {
 			cart.orders = [];
-			deleteCookie('payment_intent_id');
 		}
 	});
 </script>
 
-{#if id}
+{#if data.id}
 	<div class="flex flex-col items-center justify-center">
 		{#if success}
 			<h1>Payment is properly processed</h1>

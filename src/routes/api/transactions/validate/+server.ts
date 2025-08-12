@@ -14,8 +14,9 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 
 	cookies.set('payment_intent_id', id, {
 		path: '/',
-		httpOnly: false,
-		maxAge: 3600
+		httpOnly: true,
+		maxAge: 3600,
+		secure: true
 	});
 
 	if (id) {
