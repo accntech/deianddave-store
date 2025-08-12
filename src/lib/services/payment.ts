@@ -1,7 +1,8 @@
 import { PAYMENT_URL } from '$env/static/private';
 import { generateJWT } from '$lib/utils/jwt-generator';
+import type { PaymentIntentData } from './paymongo';
 
-export const updatePayment = async (paymentIntent: string) => {
+export const updatePayment = async (intent: PaymentIntentData) => {
 	const jwt = await generateJWT();
 	const url = PAYMENT_URL;
 	const opts = {
@@ -11,9 +12,7 @@ export const updatePayment = async (paymentIntent: string) => {
 			'content-type': 'application/json',
 			authorization: `Bearer ${jwt}`
 		},
-		body: JSON.stringify({
-			paymentIntent: paymentIntent
-		})
+		body: JSON.stringify(intent)
 	};
 
 	const response = await fetch(url, opts);

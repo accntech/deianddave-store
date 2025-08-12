@@ -30,7 +30,7 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 			redirect(308, `/check-out/result?success=false`);
 		}
 
-		await pRetry(() => updatePayment(id), {
+		await pRetry(() => updatePayment(intent), {
 			retries: 5,
 			onFailedAttempt: (error) => {
 				console.error(`Attempt ${error.attemptNumber} failed. Retrying...`, error);

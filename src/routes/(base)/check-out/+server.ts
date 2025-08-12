@@ -111,7 +111,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 				maxAge: 3600
 			});
 
-			await pRetry(() => updatePayment(attachment.data.id), {
+			await pRetry(() => updatePayment(attachment), {
 				retries: 5,
 				onFailedAttempt: (error) => {
 					console.error(`Attempt ${error.attemptNumber} failed. Retrying...`, error);
