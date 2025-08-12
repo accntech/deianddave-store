@@ -1,14 +1,12 @@
-import {
-	PAYMONGO_PAYMENT_WEBHOOK_URL,
-	PAYMONGO_REDIRECT_URL,
-	SALES_URL
-} from '$env/static/private';
+import { PAYMONGO_REDIRECT_URL } from '$env/static/private';
 import type { AccountInfo, Order, PaymentMethod } from '$lib/services';
 import { paymongo } from '$lib/services/paymongo';
+import { saveSalesOrder } from '$lib/services/sales';
 import { tryParseCardDate } from '$lib/utils/card-helper';
-import { generateJWT } from '$lib/utils/jwt-generator';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import pRetry from 'p-retry';
+import { updatePayment } from '$lib/services/payment';
 
 type Body = {
 	info: AccountInfo;
@@ -72,22 +70,54 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 			return json({ error: 'Failed to create payment method' }, { status: 500 });
 		}
 
-		if (!(await saveSalesOrder(paymentIntent.data.id, body.info, body.orders))) {
+		const savedOrder = await pRetry(
+			() => saveSalesOrder(paymentIntent.data.id, body.info, body.orders),
+			{
+				retries: 5,
+				onFailedAttempt: (error) => {
+					console.error(`Attempt ${error.attemptNumber} failed. Retrying...`, error);
+				}
+			}
+		);
+
+		if (!savedOrder) {
 			return json({ error: 'Failed to save sales order' }, { status: 500 });
 		}
 
-		const attachment = await paymongo.attachPaymentIntent({
-			payment_intent: paymentIntent.data.id,
-			payment_method: paymentMethod.data.id,
-			client_key: paymentIntent.data.attributes.client_key,
-			return_url: PAYMONGO_REDIRECT_URL
-		});
+		const attachment = await pRetry(
+			() =>
+				paymongo.attachPaymentIntent({
+					payment_intent: paymentIntent.data.id,
+					payment_method: paymentMethod.data.id,
+					client_key: paymentIntent.data.attributes.client_key,
+					return_url: PAYMONGO_REDIRECT_URL
+				}),
+			{
+				retries: 5,
+				onFailedAttempt: (error) => {
+					console.error(`Attempt ${error.attemptNumber} failed. Retrying...`, error);
+				}
+			}
+		);
 
 		if (!attachment || !attachment.data) {
 			return json({ error: 'Failed to attach payment intent' }, { status: 500 });
 		}
 
-		//send payment notification
+		if (attachment.data.attributes.status === 'succeeded') {
+			cookies.set('payment_intent_id', attachment.data.id, {
+				path: '/',
+				httpOnly: false,
+				maxAge: 3600
+			});
+
+			await pRetry(() => updatePayment(attachment.data.id), {
+				retries: 5,
+				onFailedAttempt: (error) => {
+					console.error(`Attempt ${error.attemptNumber} failed. Retrying...`, error);
+				}
+			});
+		}
 
 		return json({
 			status: attachment.data.attributes.status,
@@ -96,30 +126,4 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 	} catch (error) {
 		return json({ error: 'An error occurred while processing the request' }, { status: 500 });
 	}
-};
-
-const saveSalesOrder = async (paymentIntent: string, accountInfo: AccountInfo, orders: Order[]) => {
-	const jwt = await generateJWT();
-	const url = SALES_URL;
-	const opts = {
-		method: 'POST',
-		headers: {
-			accept: 'application/json',
-			'content-type': 'application/json',
-			authorization: `Bearer ${jwt}`
-		},
-		body: JSON.stringify({
-			paymentIntent: paymentIntent,
-			accountInfo: accountInfo,
-			orders: orders
-		})
-	};
-
-	const response = await fetch(url, opts);
-	if (!response.ok) {
-		console.error('Error saving sales order:', await response.json());
-		return false;
-	}
-
-	return true;
 };

@@ -1,5 +1,7 @@
+import { updatePayment } from '$lib/services/payment';
 import { paymongo } from '$lib/services/paymongo';
 import { redirect, type RequestHandler } from '@sveltejs/kit';
+import pRetry from 'p-retry';
 
 const list: string[] = [];
 
@@ -27,7 +29,12 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 			redirect(308, `/check-out/result?success=false`);
 		}
 
-		//send payment notification
+		await pRetry(() => updatePayment(id), {
+			retries: 5,
+			onFailedAttempt: (error) => {
+				console.error(`Attempt ${error.attemptNumber} failed. Retrying...`, error);
+			}
+		});
 
 		list.push(id);
 		redirect(308, `/check-out/result?success=true`);
