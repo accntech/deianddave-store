@@ -46,7 +46,7 @@
 							selectedAgeGroup = '';
 						}}
 						class={cn(
-							'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 hover:border-primary/40',
+							'rounded-lg border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 hover:border-primary/40',
 							selectedFabric === fabric.id ? 'bg-primary text-primary-foreground' : ''
 						)}
 					>
@@ -69,7 +69,7 @@
 					{group.name}
 					<div
 						class={cn(
-							'h-1 w-0 rounded-full bg-primary opacity-0 transition-all duration-300',
+							'h-1 w-0 rounded-lg bg-primary opacity-0 transition-all duration-300',
 							selectedAgeGroup === group.id ? 'w-full opacity-100' : ''
 						)}
 					></div>
@@ -87,7 +87,7 @@
 						use:scrollOnFocus={selectedAgeGroup === group.id}
 						onclick={() => (selectedAgeGroup = group.id)}
 						class={cn(
-							'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 last:mr-2 hover:border-primary/40',
+							'rounded-lg border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 last:mr-2 hover:border-primary/40',
 							selectedAgeGroup === group.id ? 'bg-primary text-white' : ''
 						)}
 					>

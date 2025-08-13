@@ -203,7 +203,7 @@
 						use:scrollOnFocus={selectedSize.id === size.id}
 						onclick={() => (selectedSize = size)}
 						class={cn(
-							'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 hover:border-primary/40',
+							'rounded-lg border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 hover:border-primary/40',
 							selectedSize.id === size.id ? 'bg-accent text-accent-foreground' : ''
 						)}
 					>
@@ -233,7 +233,7 @@
 						onclick={() => (selectedColor = color)}
 						style="background-color: {color.hexCode}"
 						class={cn(
-							'size-6 rounded-full transition-all duration-300',
+							'flex size-6 justify-center rounded-full transition-all duration-300',
 							selectedColor.id === color.id ? 'scale-125' : ''
 						)}
 					>
@@ -259,7 +259,7 @@
 			<Button
 				variant="outline"
 				onclick={() => quantity--}
-				class="h-9 w-11 rounded-none rounded-l-full shadow-none focus:z-10"
+				class="h-9 w-11 rounded-none rounded-l-lg shadow-none focus:z-10"
 				size="icon"
 			>
 				<MinusIcon />
@@ -272,7 +272,7 @@
 			<Button
 				variant="outline"
 				onclick={() => quantity++}
-				class="h-9 w-11 rounded-none rounded-r-full shadow-none focus:z-10"
+				class="h-9 w-11 rounded-none rounded-r-lg shadow-none focus:z-10"
 			>
 				<PlusIcon />
 			</Button>
@@ -290,20 +290,20 @@
 
 	<Button
 		variant="outline"
-		class="mx-6 place-self-start rounded-full shadow-none"
+		class="mx-6 place-self-start rounded-lg shadow-none"
 		onclick={() => history.back()}
 	>
 		<ArrowLeftIcon />
 		Back
 	</Button>
 	<div
-		class="sticky bottom-0 flex h-16 w-full justify-center bg-gradient-to-t from-background to-transparent pb-6"
+		class="fixed bottom-0 flex h-16 w-full justify-center bg-gradient-to-t from-background to-transparent pb-6"
 	>
 		<div class="place-self-center rounded-full bg-background">
 			<button
 				onclick={onSubmit}
 				disabled={quantity === 0}
-				class="inline-flex rounded-full bg-primary px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
+				class="inline-flex rounded-xl bg-primary px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				<ShoppingBagIcon class="mr-2 inline-block size-5" />
 				Add to Bag
