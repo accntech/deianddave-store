@@ -186,8 +186,8 @@
 		-moz-appearance: textfield;
 	}
 
-	a:active {
-		background-color: transparent;
+	a {
+		-webkit-tap-highlight-color: transparent; /* iOS Safari */
 	}
 }
 
