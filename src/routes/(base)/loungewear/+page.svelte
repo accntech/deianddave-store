@@ -35,10 +35,9 @@
 	{#if fabrics.length > 1}
 		<div class="relative">
 			<div
-				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/95 to-transparent"
+				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
 			></div>
-			<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-2">
-				<div class="w-1 shrink-0" aria-hidden="true"></div>
+			<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
 				{#each fabrics as fabric}
 					<button
 						use:scrollOnFocus={selectedFabric === fabric.id}
@@ -48,16 +47,15 @@
 						}}
 						class={cn(
 							'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 hover:border-primary/40',
-							selectedFabric === fabric.id ? 'bg-primary text-white' : ''
+							selectedFabric === fabric.id ? 'bg-primary text-primary-foreground' : ''
 						)}
 					>
 						{fabric.name}
 					</button>
 				{/each}
-				<div class="w-1 shrink-0" aria-hidden="true"></div>
 			</div>
 			<div
-				class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/95 to-transparent"
+				class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
 			></div>
 		</div>
 	{/if}
@@ -81,26 +79,24 @@
 	{:else if ageGroup.length > 1}
 		<div class="relative">
 			<div
-				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/95 to-transparent"
+				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
 			></div>
-			<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-2">
-				<div class="w-1 shrink-0" aria-hidden="true"></div>
+			<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
 				{#each ageGroup as group}
 					<button
 						use:scrollOnFocus={selectedAgeGroup === group.id}
 						onclick={() => (selectedAgeGroup = group.id)}
 						class={cn(
-							'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 hover:border-primary/40',
+							'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 last:mr-2 hover:border-primary/40',
 							selectedAgeGroup === group.id ? 'bg-primary text-white' : ''
 						)}
 					>
 						{group.name}
 					</button>
 				{/each}
-				<div class="w-1 shrink-0" aria-hidden="true"></div>
 			</div>
 			<div
-				class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white/95 to-transparent"
+				class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
 			></div>
 		</div>
 	{/if}
