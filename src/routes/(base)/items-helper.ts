@@ -43,7 +43,10 @@ export const getUniqueAgeGroups = (items: InventoryItem[], fabricId: string) => 
 
 	let hasGenericAgeGroup = false;
 	for (const item of items) {
-		if (!item.ageGroup) continue;
+		if (!item.ageGroup) {
+			hasGenericAgeGroup = true;
+			continue;
+		}
 		if (fabricId && item.fabric.id !== fabricId) continue;
 
 		const ageGroupId = item.ageGroup?.id;
@@ -56,9 +59,6 @@ export const getUniqueAgeGroups = (items: InventoryItem[], fabricId: string) => 
 					index: item.ageGroup.index,
 					name: item.ageGroup?.name
 				});
-			}
-			if (ageGroupId === '') {
-				hasGenericAgeGroup = true;
 			}
 		}
 	}
