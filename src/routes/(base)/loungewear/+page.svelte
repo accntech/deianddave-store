@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
 	import { cn } from '$lib/utils';
-	import { scrollOnFocus } from '$lib/utils/scroll-helper.js';
+	import { splitNumberToString } from '$lib/utils/number-helper';
+	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import {
 		filterProducts,
 		getUniqueAgeGroups,
@@ -30,11 +31,11 @@
 	);
 </script>
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-2">
 	{#if fabrics.length > 1}
 		<div class="relative">
 			<div
-				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white/95 to-transparent"
+				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/95 to-transparent"
 			></div>
 			<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-2">
 				<div class="w-1 shrink-0" aria-hidden="true"></div>
@@ -56,36 +57,31 @@
 				<div class="w-1 shrink-0" aria-hidden="true"></div>
 			</div>
 			<div
-				class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white/95 to-transparent"
+				class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/95 to-transparent"
 			></div>
 		</div>
 	{/if}
-	{#if fabrics.length > 1}
-		{#if ageGroup.length > 1}
-			<ul class="flex items-center gap-4">
-				{#each ageGroup as group}
-					<button
-						onclick={() => (selectedAgeGroup = group.id)}
+	{#if fabrics.length > 1 && ageGroup.length > 1}
+		<ul class="flex items-center gap-4">
+			{#each ageGroup as group}
+				<button
+					onclick={() => (selectedAgeGroup = group.id)}
+					class={cn('rounded-full px-4 py-2 ', selectedAgeGroup === group.id ? 'text-primary' : '')}
+				>
+					{group.name}
+					<div
 						class={cn(
-							'rounded-full px-4 py-2 ',
-							selectedAgeGroup === group.id ? 'text-primary' : ''
+							'h-1 w-0 rounded-full bg-primary opacity-0 transition-all duration-300',
+							selectedAgeGroup === group.id ? 'w-full opacity-100' : ''
 						)}
-					>
-						{group.name}
-						<div
-							class={cn(
-								'h-1 w-0 rounded-full bg-primary opacity-0 transition-all duration-300',
-								selectedAgeGroup === group.id ? 'w-full opacity-100' : ''
-							)}
-						></div>
-					</button>
-				{/each}
-			</ul>
-		{/if}
-	{:else}
+					></div>
+				</button>
+			{/each}
+		</ul>
+	{:else if ageGroup.length > 1}
 		<div class="relative">
 			<div
-				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white/95 to-transparent"
+				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/95 to-transparent"
 			></div>
 			<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-2">
 				<div class="w-1 shrink-0" aria-hidden="true"></div>
@@ -110,47 +106,62 @@
 	{/if}
 
 	{#if products.length > 0}
-		{#each groupProducts(products) as [gender, items]}
-			<div class="mb-2">
-				<div class="mb-1 text-lg font-bold">{gender}</div>
-				<ul class="ml-4 flex list-disc gap-4">
-					{#each items ?? [] as item}
-						<a
-							class="group max-w-[300px] overflow-clip rounded-2xl border"
-							href="/add-to-cart?productId={item.product.id}&fabricId={item.fabric
-								.id}&ageGroupId={item.ageGroup?.id}&genderGroupId={item.genderGroup?.id}"
-						>
-							<div class="overflow-clip">
-								<img
-									class="transition-scale size-[300px] object-cover duration-300 group-hover:scale-110"
-									src={item.product.image === null
-										? PUBLIC_DEFAULT_PRODUCT_IMAGE
-										: item.product.image}
-									alt={item.product.name}
-									loading="lazy"
-									decoding="async"
-								/>
-							</div>
-							<div class="p-4">
-								<span class="text-wrap">{item.product.name}</span>
-								<span>{item.fabric.name}</span>
-								{#if item.sets && item.sets.length > 0}
-									{#each item.sets.sort((a, b) => a.index - b.index) as set}
-										<div>
-											<span>{set.quantity}</span>
-											<span>{set.name}</span>
+		<div class="m-6 flex flex-col gap-4">
+			{#each groupProducts(products) as [gender, items]}
+				<div class="flex flex-col gap-4">
+					<span class="text-lg font-bold">{gender}</span>
+					<div class="flex flex-wrap gap-4">
+						{#each items ?? [] as item}
+							{@const { wholeNumber, decimal } = splitNumberToString(item.price)}
+
+							<div
+								class="group transition-width relative isolate w-full overflow-clip rounded-3xl bg-[#EEEEEE] sm:w-[300px]"
+							>
+								<div class="overflow-clip">
+									<img
+										class="flex h-[200px] w-full flex-col object-cover text-center duration-300 group-hover:scale-110 sm:h-[240px]"
+										src={item.product.image === null
+											? PUBLIC_DEFAULT_PRODUCT_IMAGE
+											: item.product.image}
+										alt={item.product.name}
+										loading="lazy"
+										decoding="async"
+									/>
+								</div>
+								<div class=" flex flex-col p-4">
+									<span class="text-sm text-muted-foreground">{item.fabric.name}</span>
+									<a
+										href="/add-to-cart?productId={item.product.id}&fabricId={item.fabric
+											.id}&ageGroupId={item.ageGroup?.id}&genderGroupId={item.genderGroup?.id}"
+										class="font-semibold text-wrap"
+									>
+										<span class="absolute inset-0 z-40"></span>
+										{item.product.name}
+									</a>
+									{#if item.sets && item.sets.length > 0}
+										{#each item.sets.sort((a, b) => a.index - b.index) as set}
+											<div class="space-y-1 text-xs">
+												<span>{set.quantity}</span>
+												<span>{set.name}</span>
+											</div>
+										{/each}
+									{/if}
+									<span class="mt-4 text-xs text-muted-foreground">from</span>
+									<div class="flex items-baseline gap-2">
+										<span class="text-xs font-medium">₱</span>
+										<div class="flex gap-1">
+											<span class="text-lg font-semibold">{wholeNumber}</span>
+											<span class="mt-1 align-top text-xs font-medium">
+												{decimal}
+											</span>
 										</div>
-									{/each}
-								{/if}
-								<div class="flex flex-col">
-									from
-									<span>{item.price}</span>
+									</div>
 								</div>
 							</div>
-						</a>
-					{/each}
-				</ul>
-			</div>
-		{/each}
+						{/each}
+					</div>
+				</div>
+			{/each}
+		</div>
 	{/if}
 </div>
