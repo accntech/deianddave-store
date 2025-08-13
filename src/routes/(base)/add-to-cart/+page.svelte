@@ -290,7 +290,7 @@
 
 	<Button
 		variant="outline"
-		class="mx-6 place-self-start rounded-lg shadow-none"
+		class="mx-6 mb-20 place-self-start rounded-lg shadow-none"
 		onclick={() => history.back()}
 	>
 		<ArrowLeftIcon />
