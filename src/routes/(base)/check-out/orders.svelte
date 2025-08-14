@@ -4,7 +4,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import type { InventoryItem } from '$lib/services/inventory';
 	import { splitNumberToString } from '$lib/utils/number-helper';
-	import { ShoppingCartIcon } from '@lucide/svelte';
+	import { ShoppingCartIcon, XIcon } from '@lucide/svelte';
 	import MasterCard from '$lib/assets/mastercard.svg';
 	import Visa from '$lib/assets/visa.svg';
 	import Gcash from '$lib/assets/gcash.svg';
@@ -83,11 +83,11 @@
 			</div>
 			<button
 				type="button"
-				class="absolute top-4 right-4 rounded-md bg-red-500 px-2 py-1 text-xs font-medium text-primary-foreground transition-all outline-none hover:bg-red-600 focus:ring-3 focus:ring-red-500/50"
+				class="absolute top-3 right-3 shrink-0 rounded-full bg-red-500 p-0.5 text-xs font-medium text-primary-foreground transition-all outline-none hover:bg-red-600 focus:ring-3 focus:ring-red-500/50"
 				onclick={() => cart.remove(item.id)}
 				aria-label={`Remove ${item.product.name}`}
 			>
-				Remove
+				<XIcon class="size-4" />
 			</button>
 		</div>
 	{/each}
