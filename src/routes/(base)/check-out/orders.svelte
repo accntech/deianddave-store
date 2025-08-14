@@ -116,7 +116,8 @@
 	</div>
 	<button
 		onclick={checkout}
-		class="w-full rounded-xl bg-primary px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
+		disabled={cart.orders.length === 0}
+		class="w-full rounded-xl bg-primary px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-all duration-300 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-input/50"
 	>
 		Checkout Now
 	</button>
