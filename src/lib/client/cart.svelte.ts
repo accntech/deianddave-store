@@ -26,6 +26,14 @@ export class Cart {
 	deserialize(item: string): Order[] {
 		return JSON.parse(item);
 	}
+
+	/**
+	 * Remove all orders matching the given inventory item id.
+	 * Triggers persistence via the existing $effect.
+	 */
+	remove(inventoryItemId: string) {
+		this.orders = this.orders.filter((o) => o.item.id !== inventoryItemId);
+	}
 }
 
 const CART_KEY = Symbol('CART');

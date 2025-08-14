@@ -45,7 +45,7 @@
 <div class="space-y-4 px-4 py-6">
 	{#each cart.orders as { item, quantity }}
 		{@const { wholeNumber, decimal } = splitNumberToString(item.price * quantity)}
-		<div class="flex gap-2 rounded-3xl bg-[#EEEEEE] p-4">
+		<div class="relative flex gap-2 rounded-3xl bg-[#EEEEEE] p-4">
 			<object
 				type="image/png"
 				data={item.image === '' ? PUBLIC_DEFAULT_PRODUCT_IMAGE : item.image}
@@ -58,7 +58,7 @@
 					class="h-full w-full object-cover"
 				/>
 			</object>
-			<div>
+			<div class="flex-1">
 				<span class="text-md font-medium">{item.product.name}</span>
 				<span class="flex flex-nowrap gap-4 text-sm whitespace-pre-wrap text-muted-foreground">
 					{createDescription(item)}
@@ -81,6 +81,14 @@
 					</div>
 				</div>
 			</div>
+			<button
+				type="button"
+				class="absolute top-4 right-4 rounded-md bg-red-500 px-2 py-1 text-xs font-medium text-primary-foreground transition-all outline-none hover:bg-red-600 focus:ring-3 focus:ring-red-500/50"
+				onclick={() => cart.remove(item.id)}
+				aria-label={`Remove ${item.product.name}`}
+			>
+				Remove
+			</button>
 		</div>
 	{/each}
 
