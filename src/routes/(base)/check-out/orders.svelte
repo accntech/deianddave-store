@@ -10,6 +10,8 @@
 	import Gcash from '$lib/assets/gcash.svg';
 	import PayMaya from '$lib/assets/paymaya.svg';
 	import GrabPay from '$lib/assets/grabpay.svg';
+	import { getShopState } from '$lib/client/shop.svelte';
+	import { goto } from '$app/navigation';
 
 	type Props = {
 		index: number;
@@ -36,6 +38,8 @@
 			return acc + item.price * quantity;
 		}, 0)
 	);
+
+	const shop = getShopState();
 </script>
 
 <div class="space-y-4 px-4 py-6">
@@ -83,7 +87,7 @@
 	<Button
 		variant="outline"
 		class="mb-56 place-self-start rounded-lg shadow-none"
-		onclick={() => history.back()}
+		onclick={() => goto(shop.lastShop)}
 	>
 		<ShoppingCartIcon />
 		Continue shopping

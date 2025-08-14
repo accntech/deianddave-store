@@ -5,9 +5,11 @@
 	import '../app.css';
 	import { MenuIcon, ShoppingBagIcon } from '@lucide/svelte';
 	import { goto } from '$app/navigation';
+	import { setShopState } from '$lib/client/shop.svelte';
 
 	let { children } = $props();
 	setCartState([]);
+	setShopState('');
 </script>
 
 <svelte:head>

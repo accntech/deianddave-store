@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
+	import { getShopState } from '$lib/client/shop.svelte.js';
 	import { cn } from '$lib/utils';
 	import { splitNumberToString } from '$lib/utils/number-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
+	import { onMount } from 'svelte';
 	import {
 		filterProducts,
 		getUniqueAgeGroups,
@@ -11,6 +13,7 @@
 	} from '../items-helper.js';
 
 	let { data } = $props();
+	const shop = getShopState();
 
 	let selectedFabric = $state('');
 	let fabrics = $derived.by(() => getUniqueFabrics(data.result?.data || []));
@@ -29,6 +32,10 @@
 	let products = $derived.by(() =>
 		filterProducts(data.result?.data || [], selectedFabric, selectedAgeGroup)
 	);
+
+	onMount(() => {
+		shop.lastShop = window.location.href;
+	});
 </script>
 
 <div class="flex flex-col gap-2">
