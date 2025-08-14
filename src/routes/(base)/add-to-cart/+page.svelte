@@ -233,7 +233,7 @@
 						onclick={() => (selectedColor = color)}
 						style="background-color: {color.hexCode}"
 						class={cn(
-							'flex size-6 justify-center rounded-full transition-all duration-300',
+							'flex size-6 justify-center rounded-full border transition-all duration-300',
 							selectedColor.id === color.id ? 'scale-125' : ''
 						)}
 					>
