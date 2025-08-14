@@ -1,8 +1,15 @@
 <script lang="ts">
+	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
 	import { getCartState } from '$lib/client/cart.svelte';
-	import { getOrderState } from '$lib/client/order.svelte';
-	import type { Order } from '$lib/services';
-	import { onMount } from 'svelte';
+	import { Button } from '$lib/components/ui/button';
+	import type { InventoryItem } from '$lib/services/inventory';
+	import { splitNumberToString } from '$lib/utils/number-helper';
+	import { ShoppingCartIcon } from '@lucide/svelte';
+	import MasterCard from '$lib/assets/mastercard.svg';
+	import Visa from '$lib/assets/visa.svg';
+	import Gcash from '$lib/assets/gcash.svg';
+	import PayMaya from '$lib/assets/paymaya.svg';
+	import GrabPay from '$lib/assets/grabpay.svg';
 
 	type Props = {
 		index: number;
@@ -16,29 +23,107 @@
 	};
 
 	const cart = getCartState();
+
+	const createDescription = (item: InventoryItem) => {
+		const ageGroup = item.ageGroup ? `  |  ${item.ageGroup.name}` : '';
+		const genderGroup = item.genderGroup ? ` - ${item.genderGroup.name}` : '';
+
+		return item.fabric.name + ageGroup + genderGroup;
+	};
+
+	const totalAmount = $derived(
+		cart.orders.reduce((acc, { item, quantity }) => {
+			return acc + item.price * quantity;
+		}, 0)
+	);
 </script>
 
-<div class="space-y-4 p-4">
+<div class="space-y-4 p-6">
 	{#each cart.orders as { item, quantity }}
-		<div class="rounded-lg border p-4">
-			<h2>{item.product.name}</h2>
-			<div class="flex gap-4 text-sm text-muted-foreground">
-				<p>{item.fabric.name}</p>
-				{#if item.ageGroup}
-					|
+		{@const { wholeNumber, decimal } = splitNumberToString(item.price * quantity)}
+		<div class="flex gap-2 rounded-3xl bg-[#EEEEEE] p-4">
+			<object
+				type="image/png"
+				data={item.image === '' ? PUBLIC_DEFAULT_PRODUCT_IMAGE : item.image}
+				class="size-24 shrink-0 rounded-xl border object-cover"
+				aria-label={item.product.name}
+			>
+				<img
+					src={PUBLIC_DEFAULT_PRODUCT_IMAGE}
+					alt={item.product.name}
+					class="h-full w-full object-cover"
+				/>
+			</object>
+			<div>
+				<span class="text-md font-medium">{item.product.name}</span>
+				<span class="flex flex-nowrap gap-4 text-sm whitespace-pre-wrap text-muted-foreground">
+					{createDescription(item)}
+				</span>
+				<div class="flex items-center text-sm text-muted-foreground">
+					<span>{quantity} {item.size.name}</span>
+					<div
+						style="background-color: {item.color.hexCode}"
+						class="mr-1 ml-4 size-4 rounded-full"
+					></div>
+					<span>{item.color.name}</span>
+				</div>
+				<div class="mt-2 flex items-baseline gap-2">
+					<span class="text-xs font-medium text-primary">₱</span>
 					<div class="flex gap-1">
-						<p>{item.ageGroup.name}</p>
-						{#if item.genderGroup}
-							- <p>{item.genderGroup.name}</p>
-						{/if}
+						<span class="text-md font-semibold">{wholeNumber}</span>
+						<span class="mt-1 align-top text-xs font-medium">
+							{decimal}
+						</span>
 					</div>
-				{/if}
+				</div>
 			</div>
-			<p>x{quantity} {item.size.name}</p>
-			<p>Price: {item.price * quantity}</p>
 		</div>
 	{/each}
-	<button onclick={checkout} class="place-self-start rounded-md bg-primary px-4 py-2 text-white">
-		Checkout
+
+	<Button
+		variant="outline"
+		class="mb-56 place-self-start rounded-lg shadow-none"
+		onclick={() => history.back()}
+	>
+		<ShoppingCartIcon />
+		Continue shopping
+	</Button>
+</div>
+
+<div
+	class="fixed bottom-0 flex w-full flex-col gap-4 rounded-t-4xl border-t bg-muted/75 p-6 backdrop-blur-sm"
+>
+	<div class="flex flex-col">
+		<span class="-mb-1 text-xs">Total Amount</span>
+		{#if totalAmount > 0}
+			{@const { wholeNumber, decimal } = splitNumberToString(totalAmount)}
+			<div class="flex items-baseline gap-2">
+				<span class="text-xs font-medium text-primary">₱</span>
+				<div class="flex gap-1">
+					<span class="text-xl font-semibold">{wholeNumber}</span>
+					<span class="mt-1 align-top text-xs font-medium">
+						{decimal}
+					</span>
+				</div>
+			</div>
+		{:else}
+			<span class="text-sm text-muted-foreground">₱ 0.00</span>
+		{/if}
+	</div>
+	<button
+		onclick={checkout}
+		class="w-full rounded-xl bg-primary px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
+	>
+		Checkout Now
 	</button>
+	<div class="space-y-1">
+		<p class="text-sm font-medium">You can pay thru the following</p>
+		<div class="flex flex-wrap gap-2">
+			<img class="w-12 rounded-md border object-cover" src={MasterCard} alt="Mastercard" />
+			<img class="w-12 rounded-md border object-cover" src={Visa} alt="Visa" />
+			<img class="w-12 rounded-md border object-cover" src={Gcash} alt="Gcash" />
+			<img class="w-12 rounded-md border object-cover" src={PayMaya} alt="PayMaya" />
+			<img class="w-12 rounded-md border object-cover" src={GrabPay} alt="GrabPay" />
+		</div>
+	</div>
 </div>
