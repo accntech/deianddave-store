@@ -38,7 +38,7 @@
 	);
 </script>
 
-<div class="space-y-4 p-6">
+<div class="space-y-4 px-4 py-6">
 	{#each cart.orders as { item, quantity }}
 		{@const { wholeNumber, decimal } = splitNumberToString(item.price * quantity)}
 		<div class="flex gap-2 rounded-3xl bg-[#EEEEEE] p-4">
@@ -63,7 +63,7 @@
 					<span>{quantity} {item.size.name}</span>
 					<div
 						style="background-color: {item.color.hexCode}"
-						class="mr-1 ml-4 size-4 rounded-full"
+						class="mr-1 ml-4 size-4 shrink-0 rounded-full"
 					></div>
 					<span>{item.color.name}</span>
 				</div>

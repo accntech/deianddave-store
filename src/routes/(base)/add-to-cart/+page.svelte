@@ -299,11 +299,11 @@
 	<div
 		class="fixed bottom-0 flex h-16 w-full justify-center bg-gradient-to-t from-background to-transparent pb-6"
 	>
-		<div class="place-self-center rounded-full bg-background">
+		<div class="place-self-center overflow-clip rounded-xl bg-background">
 			<button
 				onclick={onSubmit}
 				disabled={quantity === 0}
-				class="inline-flex rounded-xl bg-primary px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
+				class="inline-flex bg-primary px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				<ShoppingBagIcon class="mr-2 inline-block size-5" />
 				Add to Bag
