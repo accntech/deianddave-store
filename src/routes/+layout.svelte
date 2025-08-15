@@ -44,7 +44,7 @@
 
 <style>
 	.circle {
-		background-color: var(--muted-foreground);
+		background-color: var(--secondary);
 		border-radius: 50%;
 		animation: pulse-primary 2s infinite;
 		height: 12px;
@@ -54,7 +54,7 @@
 	@keyframes pulse-primary {
 		0% {
 			transform: scale(0.9);
-			box-shadow: 0 0 0 0 var(--foreground);
+			box-shadow: 0 0 0 0 var(--secondary);
 		}
 
 		70% {
