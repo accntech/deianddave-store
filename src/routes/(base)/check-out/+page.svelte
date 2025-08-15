@@ -19,6 +19,7 @@
 		bind:active={pageIndex}
 		steps={['Account Info', 'Payment Details', 'Confirm Order']}
 	/>
+	<div class="col-span-2 mx-6 mt-12 h-[1px] bg-border"></div>
 	<div class="mb-12 flex flex-col">
 		{#if pageIndex === 1}
 			<AccountInfo bind:index={pageIndex} />
@@ -34,7 +35,7 @@
 {#snippet Paymongo()}
 	<span
 		aria-label="Powered by Paymongo"
-		class="inline-flex place-content-center items-center gap-4 text-xs text-muted-foreground"
+		class="my-4 inline-flex place-content-center items-center gap-4 text-xs text-muted-foreground"
 	>
 		Powered by
 		<a href="https://www.paymongo.com/" target="_blank" aria-label="Paymongo">
