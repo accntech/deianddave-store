@@ -11,6 +11,9 @@
 		getUniqueFabrics,
 		groupProducts
 	} from '../items-helper.js';
+	import { Button } from '$lib/components/ui/button/index.js';
+	import { goto } from '$app/navigation';
+	import { ArrowRightIcon } from '@lucide/svelte';
 
 	let { data } = $props();
 	const shop = getShopState();
@@ -171,4 +174,12 @@
 			{/each}
 		</div>
 	{/if}
+	<Button
+		variant="ghost"
+		class="mx-6 mb-20 place-self-end rounded-lg shadow-none"
+		onclick={() => goto('/beddings')}
+	>
+		Go to Beddings
+		<ArrowRightIcon />
+	</Button>
 </div>

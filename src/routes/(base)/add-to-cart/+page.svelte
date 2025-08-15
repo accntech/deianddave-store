@@ -203,8 +203,10 @@
 						use:scrollOnFocus={selectedSize.id === size.id}
 						onclick={() => (selectedSize = size)}
 						class={cn(
-							'rounded-lg border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 hover:border-primary/40',
-							selectedSize.id === size.id ? 'bg-secondary text-secondary-foreground' : ''
+							'rounded-lg px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 ',
+							selectedSize.id === size.id
+								? 'bg-secondary text-secondary-foreground hover:bg-secondary/60'
+								: 'hover:bg-accent'
 						)}
 					>
 						{size.name}
@@ -289,7 +291,7 @@
 	{/if}
 
 	<Button
-		variant="outline"
+		variant="ghost"
 		class="mx-6 mb-20 place-self-start rounded-lg shadow-none"
 		onclick={() => history.back()}
 	>

@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
 	import { getShopState } from '$lib/client/shop.svelte.js';
+	import { Button } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils';
 	import { splitNumberToString } from '$lib/utils/number-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
+	import { ArrowLeftIcon, ArrowRightIcon } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import {
 		filterProducts,
@@ -11,6 +13,7 @@
 		getUniqueFabrics,
 		groupProducts
 	} from '../items-helper.js';
+	import { goto } from '$app/navigation';
 
 	let { data } = $props();
 	const shop = getShopState();
@@ -171,4 +174,13 @@
 			{/each}
 		</div>
 	{/if}
+
+	<Button
+		variant="ghost"
+		class="mx-6 mb-20 place-self-end rounded-lg shadow-none"
+		onclick={() => goto('/loungewear')}
+	>
+		Go to Loungewear
+		<ArrowRightIcon />
+	</Button>
 </div>
