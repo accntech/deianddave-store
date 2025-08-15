@@ -1,5 +1,6 @@
 <script lang="ts" module>
 	import { z } from 'zod/v4';
+	import PaymongoLogo from '$lib/assets/paymongo.svg';
 
 	const schema = z.object({
 		fullName: z.string().min(2, { message: 'Name is too short' }),
@@ -54,7 +55,7 @@
 </script>
 
 <form method="POST" use:enhance use:focusTrap>
-	<Card.Root class="w-full rounded-none shadow-xl sm:w-[375px] sm:rounded-xl">
+	<Card.Root class="rounded-none border-0 shadow-none sm:w-[375px] sm:rounded-3xl">
 		<Card.Header>
 			<Card.Title class="sm:text-lg">Account Information</Card.Title>
 			<Card.Description>Provide your account information below.</Card.Description>
@@ -105,16 +106,14 @@
 				<Form.FieldErrors />
 			</Form.Field>
 		</Card.Content>
-		<Card.Footer>
-			<div class="flex w-full flex-col space-y-2">
-				<Form.Button disabled={$submitting} class="w-full">
-					{#if $submitting}
-						<LoaderCircleIcon class="h-5 w-5 animate-spin" />
-					{/if}
-					Next
-				</Form.Button>
-				<Button variant="outline" onclick={() => (index = 0)}>Cancel</Button>
-			</div>
+		<Card.Footer class="flex w-full flex-row-reverse justify-between gap-4">
+			<Form.Button disabled={$submitting} class="w-32 rounded-lg">
+				{#if $submitting}
+					<LoaderCircleIcon class="h-5 w-5 animate-spin" />
+				{/if}
+				Next
+			</Form.Button>
+			<Button variant="outline" class="w-32 rounded-lg" onclick={() => (index = 0)}>Cancel</Button>
 		</Card.Footer>
 	</Card.Root>
 </form>

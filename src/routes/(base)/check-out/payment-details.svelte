@@ -62,32 +62,23 @@
 </script>
 
 <script lang="ts">
-	import { MaskInput } from '$lib/components/ui/mask-input';
-	import GrabPayLogo from '$lib/assets/grabpay.svg';
 	import GCashLogo from '$lib/assets/gcash.svg';
+	import GrabPayLogo from '$lib/assets/grabpay.svg';
 	import PayMayaLogo from '$lib/assets/paymaya.svg';
 	import VisaMasterCardLogo from '$lib/assets/visa-mastercard.webp';
 	import { getOrderState } from '$lib/client/order.svelte';
-	import { defaults, superForm } from 'sveltekit-superforms';
-	import { zod4 } from 'sveltekit-superforms/adapters';
-	import { onMount } from 'svelte';
-	import { tryParseCardDate, tryParseCardNumber, tryParseCvv } from '$lib/utils/card-helper';
+	import { focusTrap } from '$lib/components/actions/focus-trap';
+	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import * as Form from '$lib/components/ui/form';
-	import { focusTrap } from '$lib/components/actions/focus-trap';
-	import * as RadioGroup from '$lib/components/ui/radio-group';
-	import {
-		CheckCircle2Icon,
-		CheckCircleIcon,
-		CheckIcon,
-		CircleCheckBigIcon,
-		CircleDotIcon,
-		CreditCardIcon,
-		LoaderCircleIcon,
-		WalletIcon
-	} from '@lucide/svelte';
-	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
+	import { MaskInput } from '$lib/components/ui/mask-input';
+	import * as RadioGroup from '$lib/components/ui/radio-group';
+	import { tryParseCardDate, tryParseCardNumber, tryParseCvv } from '$lib/utils/card-helper';
+	import { CheckIcon, CreditCardIcon, LoaderCircleIcon, WalletIcon } from '@lucide/svelte';
+	import { onMount } from 'svelte';
+	import { defaults, superForm } from 'sveltekit-superforms';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 
 	type Props = {
 		index: number;
@@ -142,7 +133,7 @@
 </script>
 
 <form method="POST" use:enhance use:focusTrap>
-	<Card.Root class="w-full rounded-none shadow-xl sm:w-[375px] sm:rounded-xl">
+	<Card.Root class="rounded-none border-0 shadow-none sm:w-[375px] sm:rounded-3xl">
 		<Card.Header>
 			<Card.Title class="sm:text-lg">Payment Details</Card.Title>
 			<Card.Description>Complete your purchase by providing your payment details</Card.Description>
@@ -306,16 +297,14 @@
 				</Form.Fieldset>
 			{/if}
 		</Card.Content>
-		<Card.Footer>
-			<div class="flex w-full flex-col space-y-2">
-				<Form.Button disabled={$submitting} class="w-full">
-					{#if $submitting}
-						<LoaderCircleIcon class="h-5 w-5 animate-spin" />
-					{/if}
-					Next
-				</Form.Button>
-				<Button variant="outline" onclick={() => (index = 1)}>Back</Button>
-			</div>
+		<Card.Footer class="flex w-full flex-row-reverse  justify-between gap-4">
+			<Form.Button disabled={$submitting} class="w-32 rounded-lg">
+				{#if $submitting}
+					<LoaderCircleIcon class="h-5 w-5 animate-spin" />
+				{/if}
+				Next
+			</Form.Button>
+			<Button variant="outline" class="w-32 rounded-lg" onclick={() => (index = 1)}>Back</Button>
 		</Card.Footer>
 	</Card.Root>
 </form>

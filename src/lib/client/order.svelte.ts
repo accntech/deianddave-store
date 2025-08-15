@@ -3,6 +3,7 @@ import { getContext, setContext } from 'svelte';
 
 export class OrderDetails {
 	items: Order[] = $state<Order[]>() as Order[];
+	discount: number = $state<number>(0) as number;
 	accountInfo: AccountInfo = $state<AccountInfo>() as AccountInfo;
 	paymentMethod: PaymentMethod = $state<PaymentMethod>() as PaymentMethod;
 }

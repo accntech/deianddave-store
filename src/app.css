@@ -186,7 +186,8 @@
 		-moz-appearance: textfield;
 	}
 
-	a {
+	a,
+	label {
 		-webkit-tap-highlight-color: transparent; /* iOS Safari */
 	}
 }
