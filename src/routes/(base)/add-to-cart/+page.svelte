@@ -162,7 +162,7 @@
 	<div
 		class="-mt-16 h-[364px] overflow-clip rounded-b-3xl bg-gradient-to-t from-[#EEEEEE] to-transparent"
 	></div>
-	<div class="mx-8 grid grid-cols-[1fr-auto]">
+	<div class="mx-8 grid grid-cols-[1fr-auto] gap-2">
 		{#if info}
 			<span class="text-sm text-muted-foreground">{info.fabric.name}</span>
 			<div class="col-1">
