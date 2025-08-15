@@ -103,7 +103,7 @@
 {/if}
 <Button
 	variant="outline"
-	class="mx-4 mb-56 place-self-start rounded-lg shadow-none"
+	class="mx-4 mb-64 place-self-start rounded-lg shadow-none"
 	onclick={() => goto(shop.lastShop)}
 >
 	<ShoppingCartIcon />
