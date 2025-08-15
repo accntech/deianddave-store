@@ -43,7 +43,7 @@
 </script>
 
 {#if cart.orders.length > 0}
-	<div class="space-y-4 px-4 py-6">
+	<div class="space-y-4 overscroll-none px-4 py-6">
 		{#each cart.orders as { item, quantity }}
 			{@const { wholeNumber, decimal } = splitNumberToString(item.price * quantity)}
 			<div class="relative flex gap-2 rounded-3xl bg-[#EEEEEE] p-4">
