@@ -1,5 +1,6 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
+	import favicon from '$lib/assets/favicon.png';
+	import Logo from '$lib/assets/logo.png';
 	import { getCartState, setCartState } from '$lib/client/cart.svelte';
 	import '@fontsource-variable/geist';
 	import '../app.css';
@@ -25,9 +26,12 @@
 		>
 			<MenuIcon />
 		</button>
+		<a href="/" class="place-self-center">
+			<img src={Logo} alt="Logo" class="h-8" />
+		</a>
 		<button
 			onclick={() => goto('/check-out')}
-			class="relative col-start-3 inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-background p-2 text-sm font-medium whitespace-nowrap transition-all outline-none hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none dark:hover:bg-input/50 [&_svg]:size-5 [&_svg]:opacity-65"
+			class="relative col-3 inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-background p-2 text-sm font-medium whitespace-nowrap transition-all outline-none hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none dark:hover:bg-input/50 [&_svg]:size-5 [&_svg]:opacity-65"
 		>
 			<ShoppingBagIcon />
 			{#if getCartState().orders.length > 0}
