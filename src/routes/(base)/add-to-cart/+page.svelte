@@ -204,7 +204,7 @@
 						onclick={() => (selectedSize = size)}
 						class={cn(
 							'rounded-lg border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 hover:border-primary/40',
-							selectedSize.id === size.id ? 'bg-accent text-accent-foreground' : ''
+							selectedSize.id === size.id ? 'bg-secondary text-secondary-foreground' : ''
 						)}
 					>
 						{size.name}

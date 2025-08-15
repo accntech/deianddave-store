@@ -150,7 +150,7 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label
-								class="transition-color relative flex w-24 cursor-pointer flex-col items-center justify-between gap-2 rounded-lg border-2 border-muted bg-popover p-4 duration-300 hover:bg-accent [&:has([data-state=checked])]:border-primary"
+								class="transition-color relative flex w-24 cursor-pointer flex-col items-center justify-between gap-2 rounded-lg border-2 border-muted bg-popover p-4 duration-300 hover:bg-secondary [&:has([data-state=checked])]:border-primary"
 							>
 								<RadioGroup.Item class="peer sr-only" value="card" {...props} />
 								<CreditCardIcon size="28" />
@@ -165,7 +165,7 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label
-								class="transition-color relative flex w-24 cursor-pointer flex-col items-center justify-between gap-2 rounded-lg border-2 border-muted bg-popover p-4 duration-300 hover:bg-accent [&:has([data-state=checked])]:border-primary"
+								class="transition-color relative flex w-24 cursor-pointer flex-col items-center justify-between gap-2 rounded-lg border-2 border-muted bg-popover p-4 duration-300 hover:bg-secondary [&:has([data-state=checked])]:border-primary"
 							>
 								<RadioGroup.Item class="peer sr-only" value="e-wallet" {...props} />
 								<WalletIcon size="28" />
@@ -253,7 +253,7 @@
 						<Form.Control>
 							{#snippet children({ props })}
 								<Form.Label
-									class="transition-color relative flex w-full cursor-pointer flex-col items-center justify-between gap-2 rounded-lg border-2 border-muted bg-popover p-4 duration-300 hover:bg-accent [&:has([data-state=checked])]:border-primary"
+									class="transition-color relative flex w-full cursor-pointer flex-col items-center justify-between gap-2 rounded-lg border-2 border-muted bg-popover p-4 duration-300 hover:bg-secondary [&:has([data-state=checked])]:border-primary"
 								>
 									<RadioGroup.Item class="peer sr-only" value="gcash" {...props} />
 									<CheckIcon
@@ -267,7 +267,7 @@
 						<Form.Control>
 							{#snippet children({ props })}
 								<Form.Label
-									class="transition-color relative flex w-full cursor-pointer flex-col items-center justify-between gap-2 overflow-clip rounded-lg border-2 border-muted bg-popover duration-300 hover:bg-accent [&:has([data-state=checked])]:border-primary"
+									class="transition-color relative flex w-full cursor-pointer flex-col items-center justify-between gap-2 overflow-clip rounded-lg border-2 border-muted bg-popover duration-300 hover:bg-secondary [&:has([data-state=checked])]:border-primary"
 								>
 									<RadioGroup.Item class="peer sr-only" value="paymaya" {...props} />
 									<CheckIcon
