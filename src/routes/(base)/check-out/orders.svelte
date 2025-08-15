@@ -104,7 +104,7 @@
 <Button
 	variant="outline"
 	class="mx-4 mb-64 place-self-start rounded-lg shadow-none"
-	onclick={() => goto(shop.lastShop)}
+	onclick={() => goto(shop.lastShop === '' ? '/' : shop.lastShop)}
 >
 	<ShoppingCartIcon />
 	Continue shopping
