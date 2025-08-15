@@ -1,17 +1,17 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
+	import Gcash from '$lib/assets/gcash.svg';
+	import GrabPay from '$lib/assets/grabpay.svg';
+	import MasterCard from '$lib/assets/mastercard.svg';
+	import PayMaya from '$lib/assets/paymaya.svg';
+	import Visa from '$lib/assets/visa.svg';
 	import { getCartState } from '$lib/client/cart.svelte';
+	import { getShopState } from '$lib/client/shop.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import type { InventoryItem } from '$lib/services/inventory';
 	import { splitNumberToString } from '$lib/utils/number-helper';
 	import { ShoppingCartIcon, XIcon } from '@lucide/svelte';
-	import MasterCard from '$lib/assets/mastercard.svg';
-	import Visa from '$lib/assets/visa.svg';
-	import Gcash from '$lib/assets/gcash.svg';
-	import PayMaya from '$lib/assets/paymaya.svg';
-	import GrabPay from '$lib/assets/grabpay.svg';
-	import { getShopState } from '$lib/client/shop.svelte';
-	import { goto } from '$app/navigation';
 
 	type Props = {
 		index: number;

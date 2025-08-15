@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	import { z } from 'zod/v4';
-	import PaymongoLogo from '$lib/assets/paymongo.svg';
 
 	const schema = z.object({
 		fullName: z.string().min(2, { message: 'Name is too short' }),
@@ -13,15 +12,15 @@
 <script lang="ts">
 	import { getOrderState } from '$lib/client/order.svelte';
 	import { focusTrap } from '$lib/components/actions/focus-trap';
+	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
+	import { Textarea } from '$lib/components/ui/textarea';
 	import { LoaderCircleIcon } from '@lucide/svelte';
+	import { onMount } from 'svelte';
 	import { defaults, superForm } from 'sveltekit-superforms';
 	import { zod4 } from 'sveltekit-superforms/adapters';
-	import { Textarea } from '$lib/components/ui/textarea';
-	import Button from '$lib/components/ui/button/button.svelte';
-	import { onMount } from 'svelte';
 
 	type Props = {
 		index: number;
