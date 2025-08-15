@@ -16,7 +16,7 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<main class="relative h-full overflow-auto">
+<main class="relative h-full">
 	<nav
 		class="sticky top-0 z-40 grid h-16 grid-cols-[auto_1fr_auto] bg-background/80 p-4 backdrop-blur-sm"
 	>
