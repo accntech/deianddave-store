@@ -132,10 +132,10 @@
 			<span class="mb-2 font-semibold">
 				{`${cart.orders.length > 1 ? 'Items' : 'Item'} Ordered`}
 			</span>
-			<div class="grid grid-cols-[1fr_auto] gap-1">
+			<div class="grid grid-cols-[1fr_auto] gap-3">
 				{#each cart.orders as i}
 					<div class="col-1 flex flex-col">
-						<span class="text-sm font-medium text-wrap">{i.item.product.name}</span>
+						<span class="text-sm font-medium text-wrap">x{i.quantity} {i.item.product.name}</span>
 						<span class="flex flex-nowrap gap-4 text-sm whitespace-pre-wrap text-muted-foreground">
 							{createDescription(i.item)}
 						</span>
@@ -151,13 +151,15 @@
 						</div>
 					</div>
 					<span class="col-2 text-end text-sm">
-						{i.quantity} x {i.item.price.toLocaleString('en-US', {
+						{(i.item.price * i.quantity).toLocaleString('en-US', {
 							style: 'currency',
 							currency: 'PHP'
 						})}
 					</span>
 				{/each}
-				<div class="col-span-2 my-1 h-[1px] bg-border"></div>
+			</div>
+			<div class="col-span-2 my-2 h-[1px] bg-border"></div>
+			<div class="grid grid-cols-[1fr_auto] gap-1">
 				<span class="col-1 text-sm font-medium">Total</span>
 				<span class="col-2 text-end text-sm font-medium">
 					{total.toLocaleString('en-US', {
