@@ -46,7 +46,7 @@
 	<div class="space-y-4 px-4 py-6">
 		{#each cart.orders as { item, quantity }}
 			{@const { wholeNumber, decimal } = splitNumberToString(item.price * quantity)}
-			<div class="relative flex gap-2 rounded-3xl bg-[#EEEEEE] p-4">
+			<div class="relative flex gap-2 rounded-3xl bg-[#EEEEEE] p-4 pr-8">
 				<object
 					type="image/png"
 					data={item.image === '' ? PUBLIC_DEFAULT_PRODUCT_IMAGE : item.image}
@@ -87,7 +87,7 @@
 				</div>
 				<button
 					type="button"
-					class="absolute top-3 right-3 shrink-0 rounded-full border p-0.5"
+					class="absolute top-3 right-3 shrink-0 rounded-full border bg-muted p-0.5"
 					onclick={() => cart.remove(item.id)}
 					aria-label={`Remove ${item.product.name}`}
 				>
