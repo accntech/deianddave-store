@@ -64,13 +64,16 @@
 					<span class="flex flex-nowrap gap-4 text-sm whitespace-pre-wrap text-muted-foreground">
 						{createDescription(item)}
 					</span>
-					<div class="flex items-center text-sm text-muted-foreground">
-						<span>{quantity} {item.size.name}</span>
-						<div
-							style="background-color: {item.color.hexCode}"
-							class="mr-1 ml-4 size-4 shrink-0 rounded-full"
-						></div>
-						<span>{item.color.name}</span>
+					<div class="flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground">
+						<span class="text-base font-semibold text-foreground">x{quantity}</span> |
+						<span>{item.size.name}</span>
+						<div class="flex items-center gap-1">
+							<div
+								style="background-color: {item.color.hexCode}"
+								class="size-4 shrink-0 rounded-full"
+							></div>
+							<span>{item.color.name}</span>
+						</div>
 					</div>
 					<div class="mt-2 flex items-baseline gap-2">
 						<span class="text-xs font-medium text-primary">₱</span>
