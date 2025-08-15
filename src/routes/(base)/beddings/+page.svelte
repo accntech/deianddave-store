@@ -38,6 +38,10 @@
 	});
 </script>
 
+<div class="mx-6 my-4">
+	<p class="text-xl font-medium">Sustainably Luxurious</p>
+	<p class="text-lg font-light">— Choose Your Signature Bedding Fabric</p>
+</div>
 <div class="flex flex-col gap-2">
 	{#if fabrics.length > 1}
 		<div class="relative">
@@ -112,7 +116,7 @@
 		<div class="m-6 flex flex-col gap-4">
 			{#each groupProducts(products) as [gender, items]}
 				<div class="flex flex-col gap-4">
-					<span class="text-lg font-bold">{gender}</span>
+					<span class="text-lg font-semibold">{gender}</span>
 					<div class="flex flex-wrap gap-4">
 						{#each items ?? [] as item}
 							{@const { wholeNumber, decimal } = splitNumberToString(item.price)}
