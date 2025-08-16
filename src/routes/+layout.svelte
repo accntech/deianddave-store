@@ -17,27 +17,29 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<main class="relative h-full">
+<main class="relative">
 	<nav
-		class="sticky top-0 z-40 grid h-16 grid-cols-[auto_1fr_auto] bg-background/10 p-4 backdrop-blur-sm"
+		class="sticky top-0 z-40 grid h-16 grid-cols-[auto_1fr_auto] bg-background/10 p-4 text-primary backdrop-blur-sm"
 	>
 		<button
-			class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-background p-2 text-sm font-medium whitespace-nowrap transition-all outline-none hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none dark:hover:bg-input/50 [&_svg]:size-5 [&_svg]:opacity-65"
+			class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:hover:bg-input/50 [&_svg]:size-5"
 		>
 			<MenuIcon />
 		</button>
-		<a href="/" class="place-self-center">
+		<a href="/" class="absolute place-self-center">
 			<img src={Logo} alt="Logo" class="h-8" />
 		</a>
-		<button
-			onclick={() => goto('/check-out')}
-			class="relative col-3 inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-background p-2 text-sm font-medium whitespace-nowrap transition-all outline-none hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none dark:hover:bg-input/50 [&_svg]:size-5 [&_svg]:opacity-65"
-		>
-			<ShoppingBagIcon />
-			{#if getCartState().orders.length > 0}
-				<div class="circle absolute top-1 right-1"></div>
-			{/if}
-		</button>
+		<div class="col-3">
+			<button
+				onclick={() => goto('/check-out')}
+				class="relative inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:hover:bg-input/50 [&_svg]:size-5"
+			>
+				<ShoppingBagIcon />
+				{#if getCartState().orders.length > 0}
+					<div class="circle absolute top-1 right-1"></div>
+				{/if}
+			</button>
+		</div>
 	</nav>
 	{@render children?.()}
 </main>
