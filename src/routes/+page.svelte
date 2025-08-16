@@ -19,7 +19,7 @@
 	};
 
 	onMount(async () => {
-		typewriter('Matters!');
+		typewriter('matters!');
 	});
 
 	let selectedFeedback = $state('');
@@ -34,12 +34,12 @@
 
 	<div class="absolute top-24 left-0 mx-8">
 		<p class="text-3xl font-medium text-primary">Because your choice</p>
-		<p class="text-3xl font-bold text-[#F5711C]">{displayText}</p>
+		<p class="text-3xl font-black text-primary">{displayText}</p>
 	</div>
 </div>
 <div class="flex flex-col gap-4 bg-[#405C93] p-6 text-primary-foreground">
 	<span class="text-center text-xl font-medium">Our Products</span>
-	<div class="flex w-56 flex-col place-self-center text-sm">
+	<div class="flex w-64 flex-col place-self-center text-sm">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 87.09 64.01"
@@ -49,9 +49,9 @@
 				d="M20.89,61.25c-1.71,1.12-3.52,2.03-5.44,2.76h56.06c-1.92-.69-3.74-1.63-5.44-2.76H20.89ZM55.8,20.76c.07.94.29,1.85.65,2.76h8.45l1.89,2.94c1.41.22,2.76.65,4.06,1.23l-3.85-5.95v-10.63c0-2.76-1.67-5.26-4.21-6.35-2.47-1.09-5.26-1.23-7.84-.51-1.74.58-3.63.11-4.86-1.27l-.11-.11c-1.63-1.81-3.95-2.87-6.42-2.87s-4.79,1.02-6.42,2.83c-1.23,1.41-3.23,1.96-5.01,1.38-2.58-.73-5.3-.58-7.76.47-2.58,1.05-4.28,3.56-4.28,6.35v10.63l-5.59,8.63c1.49-.8,3.01-1.49,4.57-2.07l3.08-4.79h7.66s.11-.22.22-.36c.47-.73.8-1.56.98-2.39h-8.24v-9.65c0-1.67.98-3.19,2.54-3.81,1.89-.83,3.99-.98,5.95-.44,2.83.91,5.91.04,7.87-2.18,1.12-1.23,2.72-1.92,4.39-1.92s3.27.69,4.35,1.92l.11.11c1.92,2.18,4.97,2.98,7.73,2.07,2-.58,4.14-.44,6.02.44,1.52.65,2.5,2.14,2.5,3.77v9.69h-8.45v.07h.02ZM54.78,12.38c-.36-.47-1.05-.65-1.6-.4-5.81,2.61-12.44,2.65-18.29.11-.22-.15-.47-.22-.76-.22-.51,0-.98.29-1.2.73s-.22.98.07,1.41c1.56,3.52,1.23,7.55-.8,10.78-.33.44-.33,1.02-.04,1.49h3.16c5.08-1.85,10.67-1.85,15.75,0h3.05s.11-.22.15-.36c.11-.36,0-.76-.18-1.09-1.56-3.52-1.23-7.55.8-10.78.36-.51.33-1.16-.04-1.67h-.07ZM50.68,23.23c-2.39-.76-4.9-1.12-7.44-1.12s-4.93.36-7.29,1.05c.83-2.43.94-5.04.4-7.58,4.79,1.49,9.9,1.49,14.73.07-.83,2.43-.94,5.04-.4,7.58ZM80.99,43.08c-.76-1.96-1.78-4.64-4.28-6.64-.94-.8-1.81-1.67-2.54-2.65-2.32-3.01-5.88-4.75-9.65-4.75H30.51c-7.33.07-14.4,2.65-20.06,7.33l-.11.07c-.22.18-.4.36-.58.54-.07.04-.11.11-.18.15-1.6,1.71-2.83,3.74-3.52,5.95-.25.73-.54,1.45-.94,2.1C3.94,46.85-.34,60.38.02,62.12c.11.58.62,1.05,1.2,1.09.62.07,14.48,1.38,22.2-7.73,3.05,2.36,8.74,4.68,14.4.94,3.45-2.32,7.98-2.32,11.43,0,5.66,3.74,11.36,1.38,14.4-.94,5.91,6.97,15.38,7.84,19.81,7.84,1.38,0,2.25-.07,2.39-.11.58-.07,1.09-.51,1.2-1.09.33-1.74-3.95-15.27-5.08-16.94-.4-.65-.69-1.38-.94-2.1h-.07.01ZM30.47,31.76h34.01c2.65,0,5.19,1.12,7,3.08-15.82-1.85-38.36,6.53-45.33,9.36-3.08,1.23-4.28,1.2-4.61,1.12.04-.29.15-.58.29-.83.07-.15.11-.29.15-.44.36-1.67-.07-3.45-1.23-4.72-1.52-1.67-4.1-2.36-6.28-2.58,4.72-3.23,10.3-4.97,16-5.01v.02ZM64.9,52.69c-.22-.33-.58-.54-.98-.54h-.11c-.36,0-.69.15-.94.4s-5.88,5.77-12.15,1.6c-4.35-2.94-10.05-2.94-14.4,0-6.24,4.1-11.94-1.38-12.15-1.6-.54-.54-1.38-.54-1.92,0-.04.04-.11.11-.15.18-5.3,7.37-15.46,7.95-19.19,7.87.8-3.52,3.59-12.59,4.43-13.82.51-.83.94-1.74,1.23-2.68.54-1.71,1.41-3.3,2.58-4.68,1.96-.07,6.02.07,7.58,1.81.54.62.76,1.41.58,2.21-.33.65-.98,2.47.11,3.74.62.65,1.52,1.02,2.43.94,1.85-.15,3.63-.58,5.3-1.38,5.22-2.1,31.97-12.37,47.36-8.6.15.15.33.29.47.44,1.96,1.56,2.76,3.63,3.45,5.48.33.94.73,1.85,1.23,2.68.83,1.23,3.63,10.3,4.43,13.82-3.74.07-13.86-.51-19.19-7.87h.04-.03Z"
 			/>
 		</svg>
-		<span class="text-lg font-medium">Beddings</span>
-		<span class="text-sm opacity-75">
-			Made from 100% TENCELTM Lyocell 100% Organic Bamboo 100% Grade 6A Mulberry Silk
+		<span class="text-center text-lg font-medium">Beddings</span>
+		<span class="text-sm whitespace-pre-wrap opacity-75">
+			{'Made from\n100% TENCEL™ Lyocell\n100% Organic Bamboo\n100% Grade 6A Mulberry Silk'}
 		</span>
 		<a
 			href="/beddings"
@@ -62,7 +62,7 @@
 	</div>
 	<div class="col-span-2 my-1 h-[1px] w-56 place-self-center bg-border opacity-50"></div>
 
-	<div class="flex w-56 flex-col place-self-center text-sm">
+	<div class="flex w-64 flex-col place-self-center text-sm">
 		<svg
 			viewBox="0 0 110 96"
 			class="mb-2 size-18 justify-center place-self-center fill-current"
@@ -73,8 +73,10 @@
 			/>
 		</svg>
 
-		<span class="text-lg font-medium">Loungewear</span>
-		<span class="text-sm opacity-75"> Made from 100% Organic Bamboo Lyocell fibers </span>
+		<span class="text-center text-lg font-medium">Loungewear</span>
+		<span class="text-sm whitespace-pre-wrap opacity-75">
+			{'Made from\n100% Organic Bamboo Lyocell fibers'}
+		</span>
 		<a
 			href="/loungewear"
 			class="my-6 place-self-center rounded-full bg-primary px-6 py-2 text-center font-medium"
@@ -158,16 +160,9 @@
 				"This bedding set feels so soft and cozy. Waking up well-rested has never been this easy."
 			</p>
 
-			<div class="flex gap-2">
-				<img
-					src="https://randomuser.me/api/portraits/women/75.jpg"
-					alt="User 1"
-					class="size-10 rounded-full"
-				/>
-				<div class="flex flex-col items-start">
-					<span class="text-sm font-medium">Christine De Guzman</span>
-					<span class="text-sm text-primary/75">Cavite, Philippines</span>
-				</div>
+			<div class="flex flex-col items-end">
+				<span class="text-sm font-medium">Christine De Guzman</span>
+				<span class="text-sm text-primary/75">Cavite, Philippines</span>
 			</div>
 		</button>
 		<button
@@ -183,16 +178,9 @@
 				worth every peso."
 			</p>
 
-			<div class="flex gap-2">
-				<img
-					src="https://randomuser.me/api/portraits/women/54.jpg"
-					alt="User 1"
-					class="size-10 rounded-full"
-				/>
-				<div class="flex flex-col items-start">
-					<span class="text-sm font-medium">Janice Contreras</span>
-					<span class="text-sm text-primary/75">Bulacan, Philippines</span>
-				</div>
+			<div class="flex flex-col items-end">
+				<span class="text-sm font-medium">Janice Contreras</span>
+				<span class="text-sm text-primary/75">Bulacan, Philippines</span>
 			</div>
 		</button>
 		<button
@@ -208,16 +196,9 @@
 				sleeping like a baby."
 			</p>
 
-			<div class="flex gap-2">
-				<img
-					src="https://randomuser.me/api/portraits/women/43.jpg"
-					alt="User 1"
-					class="size-10 rounded-full"
-				/>
-				<div class="flex flex-col items-start">
-					<span class="text-sm font-medium">Abegail Martinez</span>
-					<span class="text-sm text-primary/75">Manila, Philippines</span>
-				</div>
+			<div class="flex flex-col items-end">
+				<span class="text-sm font-medium">Abegail Martinez</span>
+				<span class="text-sm text-primary/75">Manila, Philippines</span>
 			</div>
 		</button>
 		<button
@@ -233,16 +214,9 @@
 				Guests always compliment it!"
 			</p>
 
-			<div class="flex gap-2">
-				<img
-					src="https://randomuser.me/api/portraits/women/31.jpg"
-					alt="User 1"
-					class="size-10 rounded-full"
-				/>
-				<div class="flex flex-col items-start">
-					<span class="text-sm font-medium">Marianne Cruz</span>
-					<span class="text-sm text-primary/75">Manila, Philippines</span>
-				</div>
+			<div class="flex flex-col items-end">
+				<span class="text-sm font-medium">Marianne Cruz</span>
+				<span class="text-sm text-primary/75">Manila, Philippines</span>
 			</div>
 		</button>
 		<button
@@ -258,16 +232,9 @@
 				thoughtful product."
 			</p>
 
-			<div class="flex gap-2">
-				<img
-					src="https://randomuser.me/api/portraits/women/50.jpg"
-					alt="User 1"
-					class="size-10 rounded-full"
-				/>
-				<div class="flex flex-col items-start">
-					<span class="text-sm font-medium">Gladys Mercado</span>
-					<span class="text-sm text-primary/75">Bulacan, Philippines</span>
-				</div>
+			<div class="flex flex-col items-end">
+				<span class="text-sm font-medium">Gladys Mercado</span>
+				<span class="text-sm text-primary/75">Bulacan, Philippines</span>
 			</div>
 		</button>
 	</div>
