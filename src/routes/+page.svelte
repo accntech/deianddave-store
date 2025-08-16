@@ -52,7 +52,7 @@
 		</span>
 		<a
 			href="/beddings"
-			class="my-6 place-self-center rounded-full bg-primary px-6 py-2 text-center"
+			class="my-6 place-self-center rounded-full bg-primary px-6 py-2 text-center font-medium"
 		>
 			Shop Collection
 		</a>
@@ -74,7 +74,7 @@
 		<span class="text-sm opacity-75"> Made from 100% Organic Bamboo Lyocell fibers </span>
 		<a
 			href="/loungewear"
-			class="my-6 place-self-center rounded-full bg-primary px-6 py-2 text-center"
+			class="my-6 place-self-center rounded-full bg-primary px-6 py-2 text-center font-medium"
 		>
 			Shop Collection
 		</a>
@@ -110,7 +110,6 @@
 				d="M99.5695 48.9731H112.485L95.2644 72.4352C94.5918 73.39 94.7263 74.6176 95.668 75.2997C96.0717 75.5726 96.4753 75.709 96.8789 75.709H116.252C117.328 75.709 118.27 74.754 118.27 73.6628C118.27 72.5716 117.328 71.6167 116.252 71.6167H100.915L118.001 48.1548C118.673 47.2 118.539 45.9722 117.597 45.2902C117.193 45.0174 116.79 44.881 116.386 44.881H99.5695C98.4932 44.881 97.5515 45.8359 97.5515 46.9271C97.5515 48.0184 98.3587 48.9731 99.5695 48.9731Z"
 			/>
 		</svg>
-
 		<div class="flex flex-col">
 			<span class="-mb-1 text-end font-medium text-primary">Snuggly sleep</span>
 			<span class="text-end text-sm text-primary/75">
@@ -131,7 +130,6 @@
 				d="M22.7633 41.2353C21.7094 45.6616 21.2879 51.5632 25.0817 54.7249C26.1357 55.7788 27.6112 56.2004 29.0865 56.2004C31.1942 55.9895 33.3019 54.9357 34.9881 53.4603C35.6205 53.0387 36.042 52.6172 36.6743 52.1956C37.3067 52.1956 39.4144 51.9848 40.0468 48.8233C40.679 45.4509 39.4144 37.6523 35.1989 35.9661C33.0912 35.123 30.7727 35.1231 28.665 35.5446C25.7142 36.1768 23.3956 38.2845 22.7633 41.2353ZM29.508 39.76C30.7727 39.3385 32.2482 39.5492 33.7235 39.9707C33.9343 40.1816 34.7774 40.8138 35.4096 42.5001C36.042 44.1863 36.2527 46.294 36.042 48.1909C34.5665 48.6124 33.3019 49.2448 32.2481 50.2986C29.7189 52.4063 29.0865 52.6172 27.8219 51.5632C26.3464 50.2986 25.9248 46.9262 26.9788 42.2893C27.1896 40.8138 28.2434 39.9707 29.508 39.76Z"
 			/>
 		</svg>
-
 		<div class="flex flex-col">
 			<span class="-mb-1 font-medium text-primary">Eco-friendly</span>
 			<span class="text-sm text-primary/75">
