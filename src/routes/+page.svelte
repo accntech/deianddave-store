@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Header from '$lib/assets/header.webp';
+	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import { onMount } from 'svelte';
 
 	let displayText = $state('');
@@ -20,6 +21,8 @@
 	onMount(async () => {
 		typewriter('Matters!');
 	});
+
+	let selectedFeedback = $state('');
 </script>
 
 <div class="relative -mt-16 h-70 w-full">
@@ -136,5 +139,136 @@
 				Made with sustainable materials that are kind to the planet
 			</span>
 		</div>
+	</div>
+</div>
+<div class="flex flex-col gap-4 bg-[#7D90B4] py-8">
+	<span class="px-8 text-lg font-medium text-primary-foreground"
+		>What our customers have to say...</span
+	>
+	<div class="no-scrollbar flex gap-4 overflow-x-auto scroll-smooth px-8 pb-10">
+		<button
+			use:scrollOnFocus={selectedFeedback === '1'}
+			onclick={() => {
+				selectedFeedback = '1';
+			}}
+			class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+			aria-label="Customer feedback 1"
+		>
+			<p class="text-start text-sm">
+				"This bedding set feels so soft and cozy. Waking up well-rested has never been this easy."
+			</p>
+
+			<div class="flex gap-2">
+				<img
+					src="https://randomuser.me/api/portraits/women/75.jpg"
+					alt="User 1"
+					class="size-10 rounded-full"
+				/>
+				<div class="flex flex-col items-start">
+					<span class="text-sm font-medium">Christine De Guzman</span>
+					<span class="text-sm text-primary/75">Cavite, Philippines</span>
+				</div>
+			</div>
+		</button>
+		<button
+			use:scrollOnFocus={selectedFeedback === '2'}
+			onclick={() => {
+				selectedFeedback = '2';
+			}}
+			class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+			aria-label="Customer feedback 2"
+		>
+			<p class="text-start text-sm">
+				"The fabric quality is amazing. After several washes, it still looks brand new. Definitely
+				worth every peso."
+			</p>
+
+			<div class="flex gap-2">
+				<img
+					src="https://randomuser.me/api/portraits/women/54.jpg"
+					alt="User 1"
+					class="size-10 rounded-full"
+				/>
+				<div class="flex flex-col items-start">
+					<span class="text-sm font-medium">Janice Contreras</span>
+					<span class="text-sm text-primary/75">Bulacan, Philippines</span>
+				</div>
+			</div>
+		</button>
+		<button
+			use:scrollOnFocus={selectedFeedback === '3'}
+			onclick={() => {
+				selectedFeedback = '3';
+			}}
+			class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+			aria-label="Customer feedback 3"
+		>
+			<p class="text-start text-sm">
+				"I used to have trouble falling asleep, but ever since I switched to your sheets, I’ve been
+				sleeping like a baby."
+			</p>
+
+			<div class="flex gap-2">
+				<img
+					src="https://randomuser.me/api/portraits/women/43.jpg"
+					alt="User 1"
+					class="size-10 rounded-full"
+				/>
+				<div class="flex flex-col items-start">
+					<span class="text-sm font-medium">Abegail Martinez</span>
+					<span class="text-sm text-primary/75">Manila, Philippines</span>
+				</div>
+			</div>
+		</button>
+		<button
+			use:scrollOnFocus={selectedFeedback === '4'}
+			onclick={() => {
+				selectedFeedback = '4';
+			}}
+			class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+			aria-label="Customer feedback 4"
+		>
+			<p class="text-start text-sm">
+				"The size fits perfectly on my bed, and the design gives my room such a cozy, stylish vibe.
+				Guests always compliment it!"
+			</p>
+
+			<div class="flex gap-2">
+				<img
+					src="https://randomuser.me/api/portraits/women/31.jpg"
+					alt="User 1"
+					class="size-10 rounded-full"
+				/>
+				<div class="flex flex-col items-start">
+					<span class="text-sm font-medium">Marianne Cruz</span>
+					<span class="text-sm text-primary/75">Manila, Philippines</span>
+				</div>
+			</div>
+		</button>
+		<button
+			use:scrollOnFocus={selectedFeedback === '5'}
+			onclick={() => {
+				selectedFeedback = '5';
+			}}
+			class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+			aria-label="Customer feedback 5"
+		>
+			<p class="text-start text-sm">
+				"I bought this as a gift, and my friend absolutely loved it! Beautiful packaging and such a
+				thoughtful product."
+			</p>
+
+			<div class="flex gap-2">
+				<img
+					src="https://randomuser.me/api/portraits/women/50.jpg"
+					alt="User 1"
+					class="size-10 rounded-full"
+				/>
+				<div class="flex flex-col items-start">
+					<span class="text-sm font-medium">Gladys Mercado</span>
+					<span class="text-sm text-primary/75">Bulacan, Philippines</span>
+				</div>
+			</div>
+		</button>
 	</div>
 </div>
