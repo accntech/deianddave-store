@@ -19,7 +19,7 @@
 
 <main class="relative h-full">
 	<nav
-		class="sticky top-0 z-40 grid h-16 grid-cols-[auto_1fr_auto] bg-background/80 p-4 backdrop-blur-sm"
+		class="sticky top-0 z-40 grid h-16 grid-cols-[auto_1fr_auto] bg-background/10 p-4 backdrop-blur-sm"
 	>
 		<button
 			class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-background p-2 text-sm font-medium whitespace-nowrap transition-all outline-none hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none dark:hover:bg-input/50 [&_svg]:size-5 [&_svg]:opacity-65"
