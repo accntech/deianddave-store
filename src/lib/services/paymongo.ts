@@ -3,106 +3,6 @@ import { PAYMONGO_SECRET_KEY } from '$env/static/private';
 class Paymongo {
 	private auth: string = 'Basic ' + Buffer.from(PAYMONGO_SECRET_KEY + ':').toString('base64');
 
-	async tryEnablingWebhook(options: WebhookOptions) {
-		try {
-			const url = `https://api.paymongo.com/v1/webhooks?limit=${options.limit}`;
-			const opts = {
-				method: 'GET',
-				headers: {
-					accept: 'application/json',
-					authorization: this.auth
-				}
-			};
-
-			const response = await fetch(url, opts);
-			if (!response.ok) {
-				console.error('Unable to list webhooks.');
-				return false;
-			}
-
-			const listData: WebhookData = await response.json();
-
-			const existingWebhook = listData.data.find(
-				(webhook) => webhook.attributes.url === options.url
-			);
-
-			if (existingWebhook) {
-				const allEventsIncluded = options.events.every((event) =>
-					existingWebhook.attributes.events.includes(event)
-				);
-				if (!allEventsIncluded) {
-					return await this.createWebhook(options);
-				}
-
-				if (existingWebhook.attributes.status !== 'enabled') {
-					return await this.enableWebhook(existingWebhook.id);
-				}
-				return true;
-			} else {
-				return await this.createWebhook(options);
-			}
-		} catch (error) {
-			console.error('Error enabling webhook:', error);
-			return false;
-		}
-	}
-
-	private async createWebhook(options: Omit<WebhookOptions, 'limit'>) {
-		try {
-			const url = 'https://api.paymongo.com/v1/webhooks';
-			const opts = {
-				method: 'POST',
-				headers: {
-					accept: 'application/json',
-					'content-type': 'application/json',
-					authorization: this.auth
-				},
-				body: JSON.stringify({
-					data: {
-						attributes: {
-							url: url,
-							events: options.events
-						}
-					}
-				})
-			};
-
-			const response = await fetch(url, opts);
-			if (!response.ok) {
-				console.error('Unable to list webhooks.');
-				return false;
-			}
-			return true;
-		} catch (error) {
-			console.log('Error creating webhook:', error);
-			return false;
-		}
-	}
-
-	private async enableWebhook(id: string) {
-		try {
-			const url = `https://api.paymongo.com/v1/webhooks/${id}/enable`;
-			const opts = {
-				method: 'POST',
-				headers: {
-					accept: 'application/json',
-					'content-type': 'application/json',
-					authorization: this.auth
-				}
-			};
-
-			const response = await fetch(url, opts);
-			if (!response.ok) {
-				console.error('Failed to enable webhook');
-				return false;
-			}
-			return true;
-		} catch (error) {
-			console.log('Failed to enable webhook:', error);
-			return false;
-		}
-	}
-
 	async createPaymentIntent(options: PaymentIntentOptions) {
 		try {
 			const url = options.url || 'https://api.paymongo.com/v1/payment_intents';
@@ -257,32 +157,6 @@ class Paymongo {
 		}
 	}
 }
-
-export type Webhook = {
-	id: string;
-	type: string;
-	attributes: {
-		events: string[];
-		livemode: boolean;
-		secret_key: string;
-		status: string;
-		url: string;
-		created_at: Date;
-		updated_at: Date;
-	};
-};
-
-export type WebhookData = {
-	has_more: false;
-	total_records: number;
-	data: Webhook[];
-};
-
-export type WebhookOptions = {
-	limit: number;
-	url: string;
-	events: string[];
-};
 
 export type PaymentIntentOptions = {
 	amount: number;
