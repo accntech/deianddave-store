@@ -31,8 +31,6 @@ export const load: PageServerLoad = async ({ setHeaders, url }) => {
 		}
 
 		const result: Result<InventoryItem[]> = await response.json();
-		setHeaders({ 'cache-control': 'max-age=600' });
-
 		return { result };
 	} catch (error) {
 		console.error('Error fetching items:', error);
