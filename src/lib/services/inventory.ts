@@ -12,6 +12,7 @@ export type InventoryItem = {
 		id: string;
 		index: number;
 		name: string;
+		itemId: string;
 		quantity: number;
 	}>;
 	fabric: {
