@@ -32,10 +32,18 @@ export type AccountInfo = {
 };
 
 export type PaymentMethod = {
+	discountCode: string;
 	method: 'e-wallet' | 'card';
 	holderName: string;
 	cardNumber: string;
 	expiryDate: string;
 	cvv: string;
 	ewallet: 'gcash' | 'paymaya' | 'grab_pay';
+};
+
+export type Discount = {
+	code: string;
+	type: 'percentage' | 'fixed';
+	value: number;
+	status: 'active' | 'expired' | 'upcoming';
 };

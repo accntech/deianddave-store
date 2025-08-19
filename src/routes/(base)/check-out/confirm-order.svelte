@@ -12,6 +12,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import type { InventoryItem } from '$lib/services/inventory';
 	import { getCardType, maskCardNumber } from '$lib/utils/card-helper';
+	import { computeDiscount } from '$lib/utils/discount-helper';
 	import { LoaderCircleIcon } from '@lucide/svelte';
 
 	type Props = {
@@ -49,6 +50,7 @@
 				},
 				body: JSON.stringify({
 					info: order.accountInfo,
+					discount: order.discount,
 					payment: order.paymentMethod,
 					orders: cart.orders
 				})
@@ -169,7 +171,7 @@
 				</span>
 				<span class="col-1 text-sm">Less: Discount</span>
 				<span class="col-2 text-end text-sm">
-					{order.discount.toLocaleString('en-US', {
+					{computeDiscount(total, order.discount).toLocaleString('en-US', {
 						minimumFractionDigits: 2,
 						maximumFractionDigits: 2
 					})}
@@ -177,7 +179,7 @@
 				<div class="col-span-2 my-1 h-[1px] bg-border"></div>
 				<span class="col-1 text-base font-semibold">Amount Due</span>
 				<span class="col-2 text-end text-base font-semibold">
-					{(total - order.discount).toLocaleString('en-US', {
+					{(total - computeDiscount(total, order.discount)).toLocaleString('en-US', {
 						style: 'currency',
 						currency: 'PHP'
 					})}

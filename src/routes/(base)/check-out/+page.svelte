@@ -24,7 +24,7 @@
 		{#if pageIndex === 1}
 			<AccountInfo bind:index={pageIndex} />
 		{:else if pageIndex === 2}
-			<PaymentDetails bind:index={pageIndex} />
+			<PaymentDetails bind:index={pageIndex} discounts={data.discounts} />
 		{:else if pageIndex === 3}
 			<ConfirmOrder bind:index={pageIndex} csrfToken={data.csrfToken} />
 		{/if}

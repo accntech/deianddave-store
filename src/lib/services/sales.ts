@@ -1,9 +1,10 @@
 import { SALES_URL } from '$env/static/private';
 import { generateJWT } from '$lib/utils/jwt-generator';
-import type { AccountInfo, Order } from '.';
+import type { AccountInfo, Discount, Order } from '.';
 
 export const saveSalesOrder = async (
 	paymentIntent: string,
+	discount: Discount,
 	accountInfo: AccountInfo,
 	orders: Order[]
 ) => {
@@ -18,6 +19,7 @@ export const saveSalesOrder = async (
 		},
 		body: JSON.stringify({
 			paymentIntent: paymentIntent,
+			discount: discount,
 			accountInfo: accountInfo,
 			orders: orders
 		})

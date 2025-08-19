@@ -1,11 +1,11 @@
-import type { AccountInfo, Order, PaymentMethod } from '$lib/services';
+import type { AccountInfo, Discount, Order, PaymentMethod } from '$lib/services';
 import { getContext, setContext } from 'svelte';
 
 export class OrderDetails {
 	items: Order[] = $state<Order[]>() as Order[];
-	discount: number = $state<number>(0) as number;
-	accountInfo: AccountInfo = $state<AccountInfo>() as AccountInfo;
-	paymentMethod: PaymentMethod = $state<PaymentMethod>() as PaymentMethod;
+	discount = $state<Discount>() as Discount;
+	accountInfo = $state<AccountInfo>() as AccountInfo;
+	paymentMethod = $state<PaymentMethod>() as PaymentMethod;
 }
 
 const ORDER_DETAILS_KEY = Symbol('ORDER_DETAILS');

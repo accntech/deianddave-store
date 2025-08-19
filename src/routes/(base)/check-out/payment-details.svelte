@@ -1,8 +1,36 @@
-<script lang="ts" module>
+<script lang="ts">
+	import { page } from '$app/state';
+	import GCashLogo from '$lib/assets/gcash.svg';
+	import GrabPayLogo from '$lib/assets/grabpay.svg';
+	import PayMayaLogo from '$lib/assets/paymaya.svg';
+	import VisaMasterCardLogo from '$lib/assets/visa-mastercard.webp';
+	import { getOrderState } from '$lib/client/order.svelte';
+	import { focusTrap } from '$lib/components/actions/focus-trap';
+	import { Button } from '$lib/components/ui/button';
+	import * as Card from '$lib/components/ui/card';
+	import * as Form from '$lib/components/ui/form';
+	import { Input } from '$lib/components/ui/input';
+	import { MaskInput } from '$lib/components/ui/mask-input';
+	import * as RadioGroup from '$lib/components/ui/radio-group';
+	import type { Discount, Result } from '$lib/services';
+	import { tryParseCardDate, tryParseCardNumber, tryParseCvv } from '$lib/utils/card-helper';
+	import { CheckIcon, CreditCardIcon, LoaderCircleIcon, WalletIcon } from '@lucide/svelte';
+	import { onMount } from 'svelte';
+	import { defaults, superForm } from 'sveltekit-superforms';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 	import { z } from 'zod/v4';
 
+	type Props = {
+		index: number;
+		discounts: Discount[];
+	};
+
+	let { index = $bindable<number>(0), discounts }: Props = $props();
+
+	const orderState = getOrderState();
 	const schema = z
 		.object({
+			discountCode: z.string().default(''),
 			methodType: z.enum(['card', 'e-wallet']).default('card'),
 			holderName: z.string().default(''),
 			cardNumber: z.string().default(''),
@@ -10,7 +38,20 @@
 			cvv: z.string().default(''),
 			ewallet: z.enum(['gcash', 'paymaya', 'grab_pay']).default('gcash')
 		})
-		.superRefine((data, ctx) => {
+		.superRefine(async (data, ctx) => {
+			if (data.discountCode !== '') {
+				const discount = discounts.find((d) => d.code === data.discountCode);
+				if (discount?.status === 'active') {
+					orderState.discount = discount;
+				} else {
+					ctx.addIssue({
+						code: 'custom',
+						message: 'Invalid discount code',
+						path: ['discountCode']
+					});
+				}
+			}
+
 			if (data.methodType === 'card') {
 				if (data.holderName.length === 0) {
 					ctx.addIssue({
@@ -59,38 +100,11 @@
 				}
 			}
 		});
-</script>
 
-<script lang="ts">
-	import GCashLogo from '$lib/assets/gcash.svg';
-	import GrabPayLogo from '$lib/assets/grabpay.svg';
-	import PayMayaLogo from '$lib/assets/paymaya.svg';
-	import VisaMasterCardLogo from '$lib/assets/visa-mastercard.webp';
-	import { getOrderState } from '$lib/client/order.svelte';
-	import { focusTrap } from '$lib/components/actions/focus-trap';
-	import { Button } from '$lib/components/ui/button';
-	import * as Card from '$lib/components/ui/card';
-	import * as Form from '$lib/components/ui/form';
-	import { Input } from '$lib/components/ui/input';
-	import { MaskInput } from '$lib/components/ui/mask-input';
-	import * as RadioGroup from '$lib/components/ui/radio-group';
-	import { tryParseCardDate, tryParseCardNumber, tryParseCvv } from '$lib/utils/card-helper';
-	import { CheckIcon, CreditCardIcon, LoaderCircleIcon, WalletIcon } from '@lucide/svelte';
-	import { onMount } from 'svelte';
-	import { defaults, superForm } from 'sveltekit-superforms';
-	import { zod4 } from 'sveltekit-superforms/adapters';
-
-	type Props = {
-		index: number;
-	};
-
-	let { index = $bindable<number>(0) }: Props = $props();
-
-	let orderState = getOrderState();
 	const form = superForm(defaults(zod4(schema)), {
 		validators: zod4(schema),
 		SPA: true,
-		onResult: ({ result }) => {
+		onResult: async ({ result }) => {
 			if (result.status === 200) {
 				orderState.paymentMethod = { method: $formData.methodType, ...$formData };
 				index = 3;
@@ -107,6 +121,7 @@
 			$formData.expiryDate = orderState.paymentMethod.expiryDate;
 			$formData.cvv = orderState.paymentMethod.cvv;
 			$formData.ewallet = orderState.paymentMethod.ewallet;
+			$formData.discountCode = orderState.paymentMethod.discountCode;
 		} else {
 			reset();
 		}
@@ -122,13 +137,18 @@
 			$formData.cvv = '';
 			$formData.ewallet = 'gcash';
 		}
-
 		errors.clear();
 	};
 
 	const onWalletChanged = (value: string) => {
 		$formData.ewallet = value as 'gcash' | 'paymaya' | 'grab_pay';
 		errors.clear();
+	};
+
+	const onDiscountCodeChange = () => {
+		if ($formData.discountCode === '') {
+			orderState.discount = { code: '', type: 'fixed', value: 0 } as Discount;
+		}
 	};
 </script>
 
@@ -296,6 +316,21 @@
 					<Form.FieldErrors />
 				</Form.Fieldset>
 			{/if}
+			<div class="grid grid-cols-2 gap-4">
+				<Form.Field {form} name="discountCode">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Discount Code</Form.Label>
+							<Input
+								{...props}
+								bind:value={$formData.discountCode}
+								onchange={onDiscountCodeChange}
+							/>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+			</div>
 		</Card.Content>
 		<Card.Footer class="flex w-full flex-row-reverse  justify-between gap-4">
 			<Form.Button disabled={$submitting} class="w-32 rounded-lg">

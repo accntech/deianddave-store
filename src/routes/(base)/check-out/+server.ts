@@ -1,15 +1,17 @@
 import { PAYMONGO_REDIRECT_URL } from '$env/static/private';
-import type { AccountInfo, Order, PaymentMethod } from '$lib/services';
+import type { AccountInfo, Discount, Order, PaymentMethod } from '$lib/services';
+import { updatePayment } from '$lib/services/payment';
 import { paymongo } from '$lib/services/paymongo';
 import { saveSalesOrder } from '$lib/services/sales';
 import { tryParseCardDate } from '$lib/utils/card-helper';
 import { json } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
 import pRetry from 'p-retry';
-import { updatePayment } from '$lib/services/payment';
+import type { RequestHandler } from './$types';
+import { computeDiscount } from '$lib/utils/discount-helper';
 
 type Body = {
 	info: AccountInfo;
+	discount: Discount;
 	payment: PaymentMethod;
 	orders: Order[];
 };
@@ -29,7 +31,8 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 			0
 		);
 
-		const roundedMinorAmount = Math.round(amount * 10) * 10;
+		const discount = computeDiscount(amount, body.discount);
+		const roundedMinorAmount = Math.round((amount - discount) * 10) * 10;
 		const paymentIntentPromise = paymongo.createPaymentIntent({ amount: roundedMinorAmount });
 
 		const cardNumber = body.payment.cardNumber.replace(/\s/g, '');
@@ -71,7 +74,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 		}
 
 		const savedOrder = await pRetry(
-			() => saveSalesOrder(paymentIntent.data.id, body.info, body.orders),
+			() => saveSalesOrder(paymentIntent.data.id, body.discount, body.info, body.orders),
 			{
 				retries: 5,
 				onFailedAttempt: (error) => {
