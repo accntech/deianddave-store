@@ -97,11 +97,7 @@ export const filterProducts = (items: InventoryItem[], fabric: string, age: stri
 		if (!existing) {
 			groups.set(key, { item, minPrice: item.price, defaultImage: item.image });
 		} else {
-			let price = item.price;
-
-			if (item.price < existing.minPrice) {
-				price = item.price;
-			}
+			const price = Math.min(existing.minPrice, item.price);
 
 			let image = existing.defaultImage;
 			if (item.defaultItem) {
