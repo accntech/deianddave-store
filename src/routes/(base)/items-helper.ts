@@ -83,7 +83,10 @@ export const filterProducts = (items: InventoryItem[], fabric: string, age: stri
 
 	if (!items.length) return [] as Product[];
 
-	const groups = new Map<string, { item: any; minPrice: number }>();
+	const groups = new Map<
+		string,
+		{ item: any; minPrice: number; defaultImage: string | undefined }
+	>();
 
 	for (const item of items) {
 		if (fabric && item.fabric.id !== fabric) continue;
@@ -92,15 +95,27 @@ export const filterProducts = (items: InventoryItem[], fabric: string, age: stri
 		const key = `${item.product.id}|${item.fabric.id}|${item.genderGroup ? item.genderGroup.id : ''}|${item.status}`;
 		const existing = groups.get(key);
 		if (!existing) {
-			groups.set(key, { item, minPrice: item.price });
-		} else if (item.price < existing.minPrice) {
-			groups.set(key, { item, minPrice: item.price });
+			groups.set(key, { item, minPrice: item.price, defaultImage: item.image });
+		} else {
+			let price = item.price;
+
+			if (item.price < existing.minPrice) {
+				price = item.price;
+			}
+
+			let image = existing.defaultImage;
+			if (item.defaultItem) {
+				image = item.image;
+			}
+
+			groups.set(key, { item, minPrice: price, defaultImage: image });
 		}
 	}
 
-	const unique = Array.from(groups.values()).map(({ item, minPrice }) => ({
+	const unique = Array.from(groups.values()).map(({ item, minPrice, defaultImage }) => ({
 		...item,
-		price: minPrice
+		price: minPrice,
+		image: defaultImage
 	}));
 
 	const products = unique.map((x) => ({

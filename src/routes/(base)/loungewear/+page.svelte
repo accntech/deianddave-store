@@ -130,9 +130,9 @@
 								<div class="overflow-clip">
 									<img
 										class="flex h-[200px] w-full flex-col object-cover text-center duration-300 group-hover:scale-110 sm:h-[240px]"
-										src={item.product.image === null
+										src={item.image === null || item.image === ''
 											? PUBLIC_DEFAULT_PRODUCT_IMAGE
-											: item.product.image}
+											: item.image}
 										alt={item.product.name}
 										loading="lazy"
 										decoding="async"

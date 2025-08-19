@@ -45,6 +45,7 @@ export type InventoryItem = {
 	quantity: number;
 	image?: string;
 	status: 'active' | 'inactive' | 'on_hold';
+	defaultItem: boolean;
 };
 
 export type Product = {
@@ -81,4 +82,5 @@ export type Product = {
 	price: number;
 	image?: string;
 	status: 'active' | 'inactive' | 'on_hold';
+	defaultItem: boolean;
 };
