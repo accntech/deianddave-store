@@ -2,6 +2,8 @@
 	import Header from '$lib/assets/header.webp';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import { onMount } from 'svelte';
+	import { PUBLIC_HERO_IMAGE } from '$env/static/public';
+	import { transform } from '$lib/utils/image-helper';
 
 	let displayText = $state('');
 
@@ -23,14 +25,27 @@
 	});
 
 	let selectedFeedback = $state('');
+
+	const fullHeroImage = PUBLIC_HERO_IMAGE ?? '';
 </script>
 
 <div class="relative isolate -mt-16 flex h-70 w-full flex-col lg:h-96">
-	<img
-		src={Header}
-		alt="Header"
-		class="absolute h-full w-full [mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] object-cover opacity-75 transition-all duration-300 [-webkit-mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)]"
-	/>
+	<picture
+		class="absolute h-70 w-full [mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] object-cover opacity-75 transition-all duration-300 [-webkit-mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] lg:h-96"
+	>
+		<source
+			media="(width <= 800px)"
+			srcset={transform(fullHeroImage, 'g_auto:classic,h_800,w_900,c_fill')}
+		/>
+		<source
+			media="(width <= 1920px)"
+			srcset={transform(fullHeroImage, 'g_auto:classic,h_800,w_1980,c_fill')}
+		/>
+		<img
+			srcset={transform(fullHeroImage, 'g_auto:classic,h_800,w_3400,c_fill')}
+			alt="Bedding set"
+		/>
+	</picture>
 
 	<div class="z-20 mx-8 mt-24 flex w-full flex-col lg:mt-48 xl:max-w-[1280px] xl:place-self-center">
 		<p

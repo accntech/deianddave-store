@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
 	import { getShopState } from '$lib/client/shop.svelte.js';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import { cn } from '$lib/utils';
+	import { transform } from '$lib/utils/image-helper';
 	import { splitNumberToString } from '$lib/utils/number-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
+	import { ArrowLeftIcon } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import {
 		filterProducts,
@@ -11,9 +14,6 @@
 		getUniqueFabrics,
 		groupProducts
 	} from '../items-helper.js';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import { goto } from '$app/navigation';
-	import { ArrowLeftIcon, ArrowRightIcon } from '@lucide/svelte';
 
 	let { data } = $props();
 	const shop = getShopState();
@@ -130,16 +130,17 @@
 							<div class="flex flex-wrap gap-4">
 								{#each items ?? [] as item}
 									{@const { wholeNumber, decimal } = splitNumberToString(item.price)}
-
+									{@const image =
+										item.image === null || item.image === '' || item.image === undefined
+											? PUBLIC_DEFAULT_PRODUCT_IMAGE
+											: item.image}
 									<div
 										class="group transition-width relative isolate w-full overflow-clip rounded-3xl bg-[#EEEEEE] sm:w-[296px]"
 									>
 										<div class="overflow-clip">
 											<img
 												class="flex h-[240px] w-full flex-col object-cover text-center duration-300 group-hover:scale-110"
-												src={item.image === null || item.image === ''
-													? PUBLIC_DEFAULT_PRODUCT_IMAGE
-													: item.image}
+												src={transform(image, 'g_auto:classic,h_400,c_fill')}
 												alt={item.product.name}
 												loading="lazy"
 												decoding="async"
