@@ -25,67 +25,84 @@
 	let selectedFeedback = $state('');
 </script>
 
-<div class="relative -mt-16 h-70 w-full">
+<div class="relative isolate -mt-16 flex h-70 w-full flex-col lg:h-96">
 	<img
 		src={Header}
 		alt="Header"
-		class="h-full w-full [mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] object-cover opacity-75 [-webkit-mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)]"
+		class="absolute h-full w-full [mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] object-cover opacity-75 transition-all duration-300 [-webkit-mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)]"
 	/>
 
-	<div class="absolute top-24 left-0 mx-8">
-		<p class="text-3xl font-medium text-primary">Because your choice</p>
-		<p class="text-3xl font-black text-primary">{displayText}</p>
+	<div class="z-20 mx-8 mt-24 flex w-full flex-col lg:mt-48 xl:max-w-[1280px] xl:place-self-center">
+		<p
+			class="text-3xl font-medium text-primary transition-all duration-300 lg:text-center lg:text-5xl"
+		>
+			Because your choice
+		</p>
+		<p
+			class="text-3xl font-black text-primary transition-all duration-300 lg:text-center lg:text-5xl"
+		>
+			{displayText}
+		</p>
 	</div>
 </div>
-<div class="flex flex-col gap-4 bg-[#405C93] p-6 text-primary-foreground">
-	<span class="text-center text-xl font-medium">Our Products</span>
-	<div class="flex w-64 flex-col place-self-center text-sm">
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 87.09 64.01"
-			class="mb-2 size-20 justify-center place-self-center fill-current"
-		>
-			<path
-				d="M20.89,61.25c-1.71,1.12-3.52,2.03-5.44,2.76h56.06c-1.92-.69-3.74-1.63-5.44-2.76H20.89ZM55.8,20.76c.07.94.29,1.85.65,2.76h8.45l1.89,2.94c1.41.22,2.76.65,4.06,1.23l-3.85-5.95v-10.63c0-2.76-1.67-5.26-4.21-6.35-2.47-1.09-5.26-1.23-7.84-.51-1.74.58-3.63.11-4.86-1.27l-.11-.11c-1.63-1.81-3.95-2.87-6.42-2.87s-4.79,1.02-6.42,2.83c-1.23,1.41-3.23,1.96-5.01,1.38-2.58-.73-5.3-.58-7.76.47-2.58,1.05-4.28,3.56-4.28,6.35v10.63l-5.59,8.63c1.49-.8,3.01-1.49,4.57-2.07l3.08-4.79h7.66s.11-.22.22-.36c.47-.73.8-1.56.98-2.39h-8.24v-9.65c0-1.67.98-3.19,2.54-3.81,1.89-.83,3.99-.98,5.95-.44,2.83.91,5.91.04,7.87-2.18,1.12-1.23,2.72-1.92,4.39-1.92s3.27.69,4.35,1.92l.11.11c1.92,2.18,4.97,2.98,7.73,2.07,2-.58,4.14-.44,6.02.44,1.52.65,2.5,2.14,2.5,3.77v9.69h-8.45v.07h.02ZM54.78,12.38c-.36-.47-1.05-.65-1.6-.4-5.81,2.61-12.44,2.65-18.29.11-.22-.15-.47-.22-.76-.22-.51,0-.98.29-1.2.73s-.22.98.07,1.41c1.56,3.52,1.23,7.55-.8,10.78-.33.44-.33,1.02-.04,1.49h3.16c5.08-1.85,10.67-1.85,15.75,0h3.05s.11-.22.15-.36c.11-.36,0-.76-.18-1.09-1.56-3.52-1.23-7.55.8-10.78.36-.51.33-1.16-.04-1.67h-.07ZM50.68,23.23c-2.39-.76-4.9-1.12-7.44-1.12s-4.93.36-7.29,1.05c.83-2.43.94-5.04.4-7.58,4.79,1.49,9.9,1.49,14.73.07-.83,2.43-.94,5.04-.4,7.58ZM80.99,43.08c-.76-1.96-1.78-4.64-4.28-6.64-.94-.8-1.81-1.67-2.54-2.65-2.32-3.01-5.88-4.75-9.65-4.75H30.51c-7.33.07-14.4,2.65-20.06,7.33l-.11.07c-.22.18-.4.36-.58.54-.07.04-.11.11-.18.15-1.6,1.71-2.83,3.74-3.52,5.95-.25.73-.54,1.45-.94,2.1C3.94,46.85-.34,60.38.02,62.12c.11.58.62,1.05,1.2,1.09.62.07,14.48,1.38,22.2-7.73,3.05,2.36,8.74,4.68,14.4.94,3.45-2.32,7.98-2.32,11.43,0,5.66,3.74,11.36,1.38,14.4-.94,5.91,6.97,15.38,7.84,19.81,7.84,1.38,0,2.25-.07,2.39-.11.58-.07,1.09-.51,1.2-1.09.33-1.74-3.95-15.27-5.08-16.94-.4-.65-.69-1.38-.94-2.1h-.07.01ZM30.47,31.76h34.01c2.65,0,5.19,1.12,7,3.08-15.82-1.85-38.36,6.53-45.33,9.36-3.08,1.23-4.28,1.2-4.61,1.12.04-.29.15-.58.29-.83.07-.15.11-.29.15-.44.36-1.67-.07-3.45-1.23-4.72-1.52-1.67-4.1-2.36-6.28-2.58,4.72-3.23,10.3-4.97,16-5.01v.02ZM64.9,52.69c-.22-.33-.58-.54-.98-.54h-.11c-.36,0-.69.15-.94.4s-5.88,5.77-12.15,1.6c-4.35-2.94-10.05-2.94-14.4,0-6.24,4.1-11.94-1.38-12.15-1.6-.54-.54-1.38-.54-1.92,0-.04.04-.11.11-.15.18-5.3,7.37-15.46,7.95-19.19,7.87.8-3.52,3.59-12.59,4.43-13.82.51-.83.94-1.74,1.23-2.68.54-1.71,1.41-3.3,2.58-4.68,1.96-.07,6.02.07,7.58,1.81.54.62.76,1.41.58,2.21-.33.65-.98,2.47.11,3.74.62.65,1.52,1.02,2.43.94,1.85-.15,3.63-.58,5.3-1.38,5.22-2.1,31.97-12.37,47.36-8.6.15.15.33.29.47.44,1.96,1.56,2.76,3.63,3.45,5.48.33.94.73,1.85,1.23,2.68.83,1.23,3.63,10.3,4.43,13.82-3.74.07-13.86-.51-19.19-7.87h.04-.03Z"
-			/>
-		</svg>
-		<span class="text-center text-lg font-medium">Beddings</span>
-		<span class="text-sm whitespace-pre-wrap opacity-75">
-			{'Made from\n100% TENCEL™ Lyocell\n100% Organic Bamboo\n100% Grade 6A Mulberry Silk'}
-		</span>
-		<a
-			href="/beddings"
-			class="my-6 place-self-center rounded-full bg-primary px-6 py-2 text-center font-medium"
-		>
-			Shop Collection
-		</a>
-	</div>
-	<div class="col-span-2 my-1 h-[1px] w-56 place-self-center bg-border opacity-50"></div>
+<div
+	class="flex flex-col gap-6 bg-[#405C93] p-6 text-primary-foreground transition-all duration-300"
+>
+	<span class="place-self-center text-center text-xl font-medium xl:max-w-[1280px]">
+		Our Products
+	</span>
+	<div
+		class="flex w-full flex-col justify-center gap-4 place-self-center md:flex-row lg:gap-16 xl:max-w-[1280px]"
+	>
+		<div class="flex w-64 flex-col place-self-center text-sm">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 87.09 64.01"
+				class="mb-2 size-20 justify-center place-self-center fill-current"
+			>
+				<path
+					d="M20.89,61.25c-1.71,1.12-3.52,2.03-5.44,2.76h56.06c-1.92-.69-3.74-1.63-5.44-2.76H20.89ZM55.8,20.76c.07.94.29,1.85.65,2.76h8.45l1.89,2.94c1.41.22,2.76.65,4.06,1.23l-3.85-5.95v-10.63c0-2.76-1.67-5.26-4.21-6.35-2.47-1.09-5.26-1.23-7.84-.51-1.74.58-3.63.11-4.86-1.27l-.11-.11c-1.63-1.81-3.95-2.87-6.42-2.87s-4.79,1.02-6.42,2.83c-1.23,1.41-3.23,1.96-5.01,1.38-2.58-.73-5.3-.58-7.76.47-2.58,1.05-4.28,3.56-4.28,6.35v10.63l-5.59,8.63c1.49-.8,3.01-1.49,4.57-2.07l3.08-4.79h7.66s.11-.22.22-.36c.47-.73.8-1.56.98-2.39h-8.24v-9.65c0-1.67.98-3.19,2.54-3.81,1.89-.83,3.99-.98,5.95-.44,2.83.91,5.91.04,7.87-2.18,1.12-1.23,2.72-1.92,4.39-1.92s3.27.69,4.35,1.92l.11.11c1.92,2.18,4.97,2.98,7.73,2.07,2-.58,4.14-.44,6.02.44,1.52.65,2.5,2.14,2.5,3.77v9.69h-8.45v.07h.02ZM54.78,12.38c-.36-.47-1.05-.65-1.6-.4-5.81,2.61-12.44,2.65-18.29.11-.22-.15-.47-.22-.76-.22-.51,0-.98.29-1.2.73s-.22.98.07,1.41c1.56,3.52,1.23,7.55-.8,10.78-.33.44-.33,1.02-.04,1.49h3.16c5.08-1.85,10.67-1.85,15.75,0h3.05s.11-.22.15-.36c.11-.36,0-.76-.18-1.09-1.56-3.52-1.23-7.55.8-10.78.36-.51.33-1.16-.04-1.67h-.07ZM50.68,23.23c-2.39-.76-4.9-1.12-7.44-1.12s-4.93.36-7.29,1.05c.83-2.43.94-5.04.4-7.58,4.79,1.49,9.9,1.49,14.73.07-.83,2.43-.94,5.04-.4,7.58ZM80.99,43.08c-.76-1.96-1.78-4.64-4.28-6.64-.94-.8-1.81-1.67-2.54-2.65-2.32-3.01-5.88-4.75-9.65-4.75H30.51c-7.33.07-14.4,2.65-20.06,7.33l-.11.07c-.22.18-.4.36-.58.54-.07.04-.11.11-.18.15-1.6,1.71-2.83,3.74-3.52,5.95-.25.73-.54,1.45-.94,2.1C3.94,46.85-.34,60.38.02,62.12c.11.58.62,1.05,1.2,1.09.62.07,14.48,1.38,22.2-7.73,3.05,2.36,8.74,4.68,14.4.94,3.45-2.32,7.98-2.32,11.43,0,5.66,3.74,11.36,1.38,14.4-.94,5.91,6.97,15.38,7.84,19.81,7.84,1.38,0,2.25-.07,2.39-.11.58-.07,1.09-.51,1.2-1.09.33-1.74-3.95-15.27-5.08-16.94-.4-.65-.69-1.38-.94-2.1h-.07.01ZM30.47,31.76h34.01c2.65,0,5.19,1.12,7,3.08-15.82-1.85-38.36,6.53-45.33,9.36-3.08,1.23-4.28,1.2-4.61,1.12.04-.29.15-.58.29-.83.07-.15.11-.29.15-.44.36-1.67-.07-3.45-1.23-4.72-1.52-1.67-4.1-2.36-6.28-2.58,4.72-3.23,10.3-4.97,16-5.01v.02ZM64.9,52.69c-.22-.33-.58-.54-.98-.54h-.11c-.36,0-.69.15-.94.4s-5.88,5.77-12.15,1.6c-4.35-2.94-10.05-2.94-14.4,0-6.24,4.1-11.94-1.38-12.15-1.6-.54-.54-1.38-.54-1.92,0-.04.04-.11.11-.15.18-5.3,7.37-15.46,7.95-19.19,7.87.8-3.52,3.59-12.59,4.43-13.82.51-.83.94-1.74,1.23-2.68.54-1.71,1.41-3.3,2.58-4.68,1.96-.07,6.02.07,7.58,1.81.54.62.76,1.41.58,2.21-.33.65-.98,2.47.11,3.74.62.65,1.52,1.02,2.43.94,1.85-.15,3.63-.58,5.3-1.38,5.22-2.1,31.97-12.37,47.36-8.6.15.15.33.29.47.44,1.96,1.56,2.76,3.63,3.45,5.48.33.94.73,1.85,1.23,2.68.83,1.23,3.63,10.3,4.43,13.82-3.74.07-13.86-.51-19.19-7.87h.04-.03Z"
+				/>
+			</svg>
+			<span class="text-center text-lg font-medium">Beddings</span>
+			<span class="text-sm whitespace-pre-wrap opacity-75 sm:h-[80px]">
+				{'Made from\n100% TENCEL™ Lyocell\n100% Organic Bamboo\n100% Grade 6A Mulberry Silk'}
+			</span>
+			<a
+				href="/beddings"
+				class="my-6 place-self-center rounded-full bg-primary px-6 py-2 text-center font-medium"
+			>
+				Shop Collection
+			</a>
+		</div>
+		<div
+			class="col-span-2 my-1 h-[1px] w-80 place-self-center bg-border opacity-50 md:hidden"
+		></div>
+		<div class="flex w-64 flex-col place-self-center text-sm">
+			<svg
+				viewBox="0 0 110 96"
+				class="mb-2 size-18 justify-center place-self-center fill-current"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					d="M109.081 24.675L90.4669 10.5C90.4669 10.5 90.2862 10.245 90.0302 10.245L68.9308 0.164989C67.741 -0.270011 66.4308 0.164989 65.9338 1.34999C65.7531 1.78499 65.7531 2.27999 65.8133 2.65499C65.6928 2.83499 65.6928 2.96999 65.6928 3.14999C65.6928 5.95499 61.3856 9.11999 54.9549 9.11999C48.5242 9.11999 44.1567 5.87999 44.1567 3.14999C44.1567 2.33999 43.7802 1.58999 43.1627 1.34999C42.7862 1.16999 42.726 1.16999 43.0422 1.28999C43.479 1.46999 42.726 1.16999 42.6055 1.03499C42.5453 0.974989 42.485 0.974989 42.485 1.03499C42.485 1.15499 42.1688 0.974989 42.0483 0.974989H41.9278C41.9278 0.974989 41.3706 1.03499 41.1145 1.15499C40.994 1.21499 40.7983 1.21499 40.6778 1.27499L19.8796 10.23C19.8796 10.23 19.3224 10.545 19.0663 10.785L0.873568 24.675C-0.0601669 25.29 -0.316191 26.91 0.436821 27.84L13.238 45.435C13.6748 45.87 14.232 46.425 14.8645 46.425C15.3013 46.425 16.0543 46.425 16.491 45.93L20.7983 42.765L16.7471 93.51C16.7471 94.2 16.9278 94.875 17.3645 95.31C17.8013 95.745 18.2983 96 18.991 96H91.0392C91.732 96 92.229 95.745 92.6657 95.31C93.1025 94.875 93.3585 94.185 93.3585 93.51L89.232 42.765L93.5392 45.93C93.976 46.425 94.473 46.425 95.1657 46.425C95.8585 46.425 96.3555 45.93 96.7922 45.435L109.593 27.84C110.286 26.715 110.09 25.35 109.157 24.675H109.096H109.081ZM15.6778 40.83L5.37658 26.895L18.9308 16.575L21.0543 36.915L15.6778 40.83ZM59.5633 91.395H54.9398V71.55H56.0694C57.5001 71.55 58.3736 70.56 58.3736 69.255C58.3736 67.95 57.4398 67.02 56.0694 67.02H54.9398V55.83H56.0694C57.5001 55.83 58.3736 54.9 58.3736 53.535C58.3736 52.17 57.4398 51.3 56.0694 51.3H54.9398V39.855H56.0694C57.5001 39.855 58.3736 38.925 58.3736 37.56C58.3736 36.195 57.4398 35.325 56.0694 35.325H54.9398V33.03C54.9398 30.045 56.7471 27.555 59.5633 26.625V91.545V91.425V91.395ZM64.1266 91.395V23.73C64.1266 22.305 63.1928 21.435 61.8826 21.435C55.4519 21.435 50.3916 26.475 50.3916 32.88V91.395H21.1748L25.738 38.775V38.16H25.7983V37.725L23.2983 13.785L40.2862 6.38999C42.229 10.68 47.9067 13.725 55.0151 13.725C62.1236 13.725 68.4338 10.365 70.0001 5.63999L86.6718 13.725L84.1718 37.725V38.16L88.479 91.395H64.1266ZM94.2169 40.83L88.8404 36.855L90.9639 16.575L104.518 26.895L94.2169 40.83Z"
+				/>
+			</svg>
 
-	<div class="flex w-64 flex-col place-self-center text-sm">
-		<svg
-			viewBox="0 0 110 96"
-			class="mb-2 size-18 justify-center place-self-center fill-current"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path
-				d="M109.081 24.675L90.4669 10.5C90.4669 10.5 90.2862 10.245 90.0302 10.245L68.9308 0.164989C67.741 -0.270011 66.4308 0.164989 65.9338 1.34999C65.7531 1.78499 65.7531 2.27999 65.8133 2.65499C65.6928 2.83499 65.6928 2.96999 65.6928 3.14999C65.6928 5.95499 61.3856 9.11999 54.9549 9.11999C48.5242 9.11999 44.1567 5.87999 44.1567 3.14999C44.1567 2.33999 43.7802 1.58999 43.1627 1.34999C42.7862 1.16999 42.726 1.16999 43.0422 1.28999C43.479 1.46999 42.726 1.16999 42.6055 1.03499C42.5453 0.974989 42.485 0.974989 42.485 1.03499C42.485 1.15499 42.1688 0.974989 42.0483 0.974989H41.9278C41.9278 0.974989 41.3706 1.03499 41.1145 1.15499C40.994 1.21499 40.7983 1.21499 40.6778 1.27499L19.8796 10.23C19.8796 10.23 19.3224 10.545 19.0663 10.785L0.873568 24.675C-0.0601669 25.29 -0.316191 26.91 0.436821 27.84L13.238 45.435C13.6748 45.87 14.232 46.425 14.8645 46.425C15.3013 46.425 16.0543 46.425 16.491 45.93L20.7983 42.765L16.7471 93.51C16.7471 94.2 16.9278 94.875 17.3645 95.31C17.8013 95.745 18.2983 96 18.991 96H91.0392C91.732 96 92.229 95.745 92.6657 95.31C93.1025 94.875 93.3585 94.185 93.3585 93.51L89.232 42.765L93.5392 45.93C93.976 46.425 94.473 46.425 95.1657 46.425C95.8585 46.425 96.3555 45.93 96.7922 45.435L109.593 27.84C110.286 26.715 110.09 25.35 109.157 24.675H109.096H109.081ZM15.6778 40.83L5.37658 26.895L18.9308 16.575L21.0543 36.915L15.6778 40.83ZM59.5633 91.395H54.9398V71.55H56.0694C57.5001 71.55 58.3736 70.56 58.3736 69.255C58.3736 67.95 57.4398 67.02 56.0694 67.02H54.9398V55.83H56.0694C57.5001 55.83 58.3736 54.9 58.3736 53.535C58.3736 52.17 57.4398 51.3 56.0694 51.3H54.9398V39.855H56.0694C57.5001 39.855 58.3736 38.925 58.3736 37.56C58.3736 36.195 57.4398 35.325 56.0694 35.325H54.9398V33.03C54.9398 30.045 56.7471 27.555 59.5633 26.625V91.545V91.425V91.395ZM64.1266 91.395V23.73C64.1266 22.305 63.1928 21.435 61.8826 21.435C55.4519 21.435 50.3916 26.475 50.3916 32.88V91.395H21.1748L25.738 38.775V38.16H25.7983V37.725L23.2983 13.785L40.2862 6.38999C42.229 10.68 47.9067 13.725 55.0151 13.725C62.1236 13.725 68.4338 10.365 70.0001 5.63999L86.6718 13.725L84.1718 37.725V38.16L88.479 91.395H64.1266ZM94.2169 40.83L88.8404 36.855L90.9639 16.575L104.518 26.895L94.2169 40.83Z"
-			/>
-		</svg>
-
-		<span class="text-center text-lg font-medium">Loungewear</span>
-		<span class="text-sm whitespace-pre-wrap opacity-75">
-			{'Made from\n100% Organic Bamboo Lyocell fibers'}
-		</span>
-		<a
-			href="/loungewear"
-			class="my-6 place-self-center rounded-full bg-primary px-6 py-2 text-center font-medium"
-		>
-			Shop Collection
-		</a>
+			<span class="text-center text-lg font-medium">Loungewear</span>
+			<span class="text-sm whitespace-pre-wrap opacity-75 sm:h-[80px]">
+				{'Made from\n100% Organic Bamboo Lyocell fibers'}
+			</span>
+			<a
+				href="/loungewear"
+				class="my-6 place-self-center rounded-full bg-primary px-6 py-2 text-center font-medium"
+			>
+				Shop Collection
+			</a>
+		</div>
 	</div>
 </div>
-<div class="flex flex-col gap-10 px-8 py-8">
+<div class="flex w-full flex-col gap-10 px-8 py-8 md:px-12 xl:max-w-[1280px] xl:place-self-center">
 	<div class="flex gap-6">
 		<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" class="w-14 fill-primary">
 			<path
@@ -144,98 +161,124 @@
 	</div>
 </div>
 <div class="flex flex-col gap-4 bg-[#7D90B4] py-8">
-	<span class="px-8 text-lg font-medium text-primary-foreground"
-		>What our customers have to say...</span
-	>
-	<div class="no-scrollbar flex gap-4 overflow-x-auto scroll-smooth px-8 pb-10">
-		<button
-			use:scrollOnFocus={selectedFeedback === '1'}
-			onclick={() => {
-				selectedFeedback = '1';
-			}}
-			class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
-			aria-label="Customer feedback 1"
+	<div class="flex flex-col gap-4 overflow-visible xl:max-w-[1280px] xl:place-self-center">
+		<span class="px-8 text-lg font-medium text-primary-foreground sm:px-12">
+			What our customers have to say...
+		</span>
+		<div
+			class="mask-edges no-scrollbar flex gap-4 overflow-x-auto scroll-smooth px-12 pb-10"
+			style="--mask-size: 48px"
 		>
-			<p class="text-start text-sm">
-				"This bedding set feels so soft and cozy. Waking up well-rested has never been this easy."
-			</p>
+			<button
+				use:scrollOnFocus={selectedFeedback === '1'}
+				onclick={() => {
+					selectedFeedback = '1';
+				}}
+				class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+				aria-label="Customer feedback 1"
+			>
+				<p class="text-start text-sm">
+					"This bedding set feels so soft and cozy. Waking up well-rested has never been this easy."
+				</p>
 
-			<div class="flex flex-col items-end">
-				<span class="text-sm font-medium">Christine De Guzman</span>
-				<span class="text-sm text-primary/75">Cavite, Philippines</span>
-			</div>
-		</button>
-		<button
-			use:scrollOnFocus={selectedFeedback === '2'}
-			onclick={() => {
-				selectedFeedback = '2';
-			}}
-			class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
-			aria-label="Customer feedback 2"
-		>
-			<p class="text-start text-sm">
-				"The fabric quality is amazing. After several washes, it still looks brand new. Definitely
-				worth every peso."
-			</p>
+				<div class="flex flex-col items-end">
+					<span class="text-sm font-medium">Christine De Guzman</span>
+					<span class="text-sm text-primary/75">Cavite, Philippines</span>
+				</div>
+			</button>
+			<button
+				use:scrollOnFocus={selectedFeedback === '2'}
+				onclick={() => {
+					selectedFeedback = '2';
+				}}
+				class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+				aria-label="Customer feedback 2"
+			>
+				<p class="text-start text-sm">
+					"The fabric quality is amazing. After several washes, it still looks brand new. Definitely
+					worth every peso."
+				</p>
 
-			<div class="flex flex-col items-end">
-				<span class="text-sm font-medium">Janice Contreras</span>
-				<span class="text-sm text-primary/75">Bulacan, Philippines</span>
-			</div>
-		</button>
-		<button
-			use:scrollOnFocus={selectedFeedback === '3'}
-			onclick={() => {
-				selectedFeedback = '3';
-			}}
-			class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
-			aria-label="Customer feedback 3"
-		>
-			<p class="text-start text-sm">
-				"I used to have trouble falling asleep, but ever since I switched to your sheets, I’ve been
-				sleeping like a baby."
-			</p>
+				<div class="flex flex-col items-end">
+					<span class="text-sm font-medium">Janice Contreras</span>
+					<span class="text-sm text-primary/75">Bulacan, Philippines</span>
+				</div>
+			</button>
+			<button
+				use:scrollOnFocus={selectedFeedback === '3'}
+				onclick={() => {
+					selectedFeedback = '3';
+				}}
+				class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+				aria-label="Customer feedback 3"
+			>
+				<p class="text-start text-sm">
+					"I used to have trouble falling asleep, but ever since I switched to your sheets, I’ve
+					been sleeping like a baby."
+				</p>
 
-			<div class="flex flex-col items-end">
-				<span class="text-sm font-medium">Abegail Martinez</span>
-				<span class="text-sm text-primary/75">Manila, Philippines</span>
-			</div>
-		</button>
-		<button
-			use:scrollOnFocus={selectedFeedback === '4'}
-			onclick={() => {
-				selectedFeedback = '4';
-			}}
-			class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
-			aria-label="Customer feedback 4"
-		>
-			<p class="text-start text-sm">
-				"The size fits perfectly on my bed, and the design gives my room such a cozy, stylish vibe.
-				Guests always compliment it!"
-			</p>
+				<div class="flex flex-col items-end">
+					<span class="text-sm font-medium">Abegail Martinez</span>
+					<span class="text-sm text-primary/75">Manila, Philippines</span>
+				</div>
+			</button>
+			<button
+				use:scrollOnFocus={selectedFeedback === '4'}
+				onclick={() => {
+					selectedFeedback = '4';
+				}}
+				class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+				aria-label="Customer feedback 4"
+			>
+				<p class="text-start text-sm">
+					"The size fits perfectly on my bed, and the design gives my room such a cozy, stylish
+					vibe. Guests always compliment it!"
+				</p>
 
-			<div class="flex flex-col items-end">
-				<span class="text-sm font-medium">Marianne Cruz</span>
-				<span class="text-sm text-primary/75">Manila, Philippines</span>
-			</div>
-		</button>
-		<button
-			use:scrollOnFocus={selectedFeedback === '5'}
-			onclick={() => {
-				selectedFeedback = '5';
-			}}
-			class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
-			aria-label="Customer feedback 5"
-		>
-			<p class="text-start text-sm">
-				"I bought this as a gift, and my friend absolutely loved it! Beautiful packaging and such a
-				thoughtful product."
-			</p>
+				<div class="flex flex-col items-end">
+					<span class="text-sm font-medium">Marianne Cruz</span>
+					<span class="text-sm text-primary/75">Manila, Philippines</span>
+				</div>
+			</button>
+			<button
+				use:scrollOnFocus={selectedFeedback === '5'}
+				onclick={() => {
+					selectedFeedback = '5';
+				}}
+				class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+				aria-label="Customer feedback 5"
+			>
+				<p class="text-start text-sm">
+					"I bought this as a gift, and my friend absolutely loved it! Beautiful packaging and such
+					a thoughtful product."
+				</p>
 
-			<div class="flex flex-col items-end">
-				<span class="text-sm font-medium">Gladys Mercado</span>
-				<span class="text-sm text-primary/75">Bulacan, Philippines</span>
-			</div>
-		</button>
+				<div class="flex flex-col items-end">
+					<span class="text-sm font-medium">Gladys Mercado</span>
+					<span class="text-sm text-primary/75">Bulacan, Philippines</span>
+				</div>
+			</button>
+		</div>
 	</div>
 </div>
+
+<style>
+	/* Fade left/right edges of horizontal scrollers without JS */
+	.mask-edges {
+		/* Uses alpha mask: transparent -> black -> black -> transparent */
+		-webkit-mask-image: linear-gradient(
+			to right,
+			transparent,
+			#000 var(--mask-size, 40px),
+			#000 calc(100% - var(--mask-size, 40px)),
+			transparent
+		);
+		mask-image: linear-gradient(
+			to right,
+			transparent,
+			#000 var(--mask-size, 40px),
+			#000 calc(100% - var(--mask-size, 40px)),
+			transparent
+		);
+	}
+</style>

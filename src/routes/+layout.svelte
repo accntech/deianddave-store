@@ -19,26 +19,28 @@
 
 <main class="relative">
 	<nav
-		class="sticky top-0 z-40 grid h-16 grid-cols-[auto_1fr_auto] bg-background/10 p-4 text-primary backdrop-blur-sm"
+		class="sticky top-0 z-40 flex h-16 flex-col justify-center bg-background/10 p-4 text-primary backdrop-blur-sm xl:items-center"
 	>
-		<button
-			class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:hover:bg-input/50 [&_svg]:size-5"
-		>
-			<MenuIcon />
-		</button>
-		<a href="/" class="absolute place-self-center">
-			<img src={Logo} alt="Logo" class="h-8" />
-		</a>
-		<div class="col-3">
+		<div class="relative grid w-full grid-cols-[auto_1fr_auto] justify-center xl:max-w-[1280px]">
 			<button
-				onclick={() => goto('/check-out')}
-				class="relative inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:hover:bg-input/50 [&_svg]:size-5"
+				class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:hidden dark:hover:bg-input/50 [&_svg]:size-5"
 			>
-				<ShoppingBagIcon />
-				{#if getCartState().orders.length > 0}
-					<div class="circle absolute top-1 right-1"></div>
-				{/if}
+				<MenuIcon />
 			</button>
+			<a href="/" class="absolute place-self-center sm:place-self-start">
+				<img src={Logo} alt="Logo" class="h-8" />
+			</a>
+			<div class="col-3">
+				<button
+					onclick={() => goto('/check-out')}
+					class="relative inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:hover:bg-input/50 [&_svg]:size-5"
+				>
+					<ShoppingBagIcon />
+					{#if getCartState().orders.length > 0}
+						<div class="circle absolute top-1 right-1"></div>
+					{/if}
+				</button>
+			</div>
 		</div>
 	</nav>
 	{@render children?.()}
