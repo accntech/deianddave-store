@@ -301,7 +301,7 @@
 	<div
 		class="fixed bottom-0 flex h-16 w-full justify-center bg-gradient-to-t from-background to-transparent pb-6"
 	>
-		<div class="place-self-center overflow-clip rounded-xl bg-background">
+		<div class="place-self-center overflow-clip rounded-full bg-background">
 			<button
 				onclick={onSubmit}
 				disabled={quantity === 0}
