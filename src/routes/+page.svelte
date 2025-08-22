@@ -35,7 +35,7 @@
 	>
 		<source
 			media="(width <= 800px)"
-			srcset={transform(fullHeroImage, 'g_auto:classic,h_800,w_900,c_fill')}
+			srcset={transform(fullHeroImage, 'g_auto:classic,h_400,w_900,c_fill')}
 		/>
 		<source
 			media="(width <= 1920px)"
