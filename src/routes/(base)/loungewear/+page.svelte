@@ -78,24 +78,33 @@
 				</div>
 			{/if}
 			{#if fabrics.length > 1 && ageGroup.length > 1}
-				<div class="flex items-center gap-4">
-					{#each ageGroup as group}
-						<button
-							onclick={() => (selectedAgeGroup = group.id)}
-							class={cn(
-								'rounded-full px-4 py-2 ',
-								selectedAgeGroup === group.id ? 'text-primary' : ''
-							)}
-						>
-							{group.name}
-							<div
+				<div class="relative">
+					<div
+						class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
+					></div>
+					<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
+						{#each ageGroup as group}
+							<button
+								onclick={() => (selectedAgeGroup = group.id)}
+								use:scrollOnFocus={selectedAgeGroup === group.id}
 								class={cn(
-									'h-1 w-0 rounded-lg bg-primary opacity-0 transition-all duration-300',
-									selectedAgeGroup === group.id ? 'w-full opacity-100' : ''
+									'rounded-full px-4 py-2 text-nowrap',
+									selectedAgeGroup === group.id ? 'text-secondary' : ''
 								)}
-							></div>
-						</button>
-					{/each}
+							>
+								{group.name}
+								<div
+									class={cn(
+										'h-1 w-0 rounded-lg bg-secondary opacity-0 transition-all duration-300',
+										selectedAgeGroup === group.id ? 'w-full opacity-100' : ''
+									)}
+								></div>
+							</button>
+						{/each}
+					</div>
+					<div
+						class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
+					></div>
 				</div>
 			{:else if ageGroup.length > 1}
 				<div class="relative">
@@ -140,7 +149,7 @@
 										<div class="overflow-clip">
 											<img
 												class="flex h-[240px] w-full flex-col object-cover text-center duration-300 group-hover:scale-110"
-												src={transform(image, 'g_auto:classic,h_400,c_fill')}
+												src={transform(image, 'g_auto:classic,h_600,c_fill')}
 												alt={item.product.name}
 												loading="lazy"
 												decoding="async"
