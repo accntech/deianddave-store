@@ -149,7 +149,7 @@
 										<div class="overflow-clip">
 											<img
 												class="flex h-[240px] w-full flex-col object-cover text-center duration-300 group-hover:scale-110"
-												src={transform(image, 'g_auto:classic,h_600,c_fill')}
+												src={transform(image, 'g_auto:classic,w_300,c_fill')}
 												alt={item.product.name}
 												loading="lazy"
 												decoding="async"
