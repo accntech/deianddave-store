@@ -90,7 +90,8 @@ export const filterProducts = (items: InventoryItem[], fabric: string, age: stri
 
 	for (const item of items) {
 		if (fabric && item.fabric.id !== fabric) continue;
-		if (age && item.ageGroup?.id !== age) continue;
+		if (age === '' && item.ageGroup) continue;
+		if (age !== '' && age && item.ageGroup?.id !== age) continue;
 
 		const key = `${item.product.id}|${item.fabric.id}|${item.genderGroup ? item.genderGroup.id : ''}|${item.status}`;
 		const existing = groups.get(key);
