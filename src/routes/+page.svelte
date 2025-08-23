@@ -1,9 +1,8 @@
 <script lang="ts">
-	import Header from '$lib/assets/header.webp';
-	import { scrollOnFocus } from '$lib/utils/scroll-helper';
-	import { onMount } from 'svelte';
 	import { PUBLIC_HERO_IMAGE } from '$env/static/public';
 	import { transform } from '$lib/utils/image-helper';
+	import { scrollOnFocus } from '$lib/utils/scroll-helper';
+	import { onMount } from 'svelte';
 
 	let displayText = $state('');
 
@@ -27,41 +26,55 @@
 	let selectedFeedback = $state('');
 
 	const fullHeroImage = PUBLIC_HERO_IMAGE ?? '';
+
+	function goToShop() {
+		const el = document.getElementById('shop');
+		if (el) {
+			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			(el as HTMLElement).focus({ preventScroll: true });
+		}
+	}
 </script>
 
-<div class="relative isolate -mt-16 flex h-70 w-full flex-col lg:h-96">
+<section id="home" class="relative isolate -mt-16 flex h-screen w-full flex-col justify-center">
 	<picture
-		class="absolute h-70 w-full [mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] object-cover opacity-75 transition-all duration-300 [-webkit-mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] lg:h-96"
+		class="absolute h-full w-full [mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] transition-all duration-300 [-webkit-mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)]"
 	>
 		<source
 			media="(width <= 800px)"
-			srcset={transform(fullHeroImage, 'g_auto:classic,h_400,w_900,c_fill')}
+			srcset={transform(fullHeroImage, 'g_auto:classic,w_1000,c_fill')}
 		/>
 		<source
 			media="(width <= 1920px)"
-			srcset={transform(fullHeroImage, 'g_auto:classic,h_800,w_1980,c_fill')}
+			srcset={transform(fullHeroImage, 'g_auto:classic,w_2000,c_fill')}
 		/>
 		<img
-			srcset={transform(fullHeroImage, 'g_auto:classic,h_800,w_3400,c_fill')}
+			srcset={transform(fullHeroImage, 'g_auto:classic,w_3400,c_fill')}
 			alt="Bedding set"
+			class="h-full w-full object-cover object-center"
 		/>
 	</picture>
 
-	<div class="z-20 mx-8 mt-24 flex w-full flex-col lg:mt-48 xl:max-w-[1280px] xl:place-self-center">
-		<p
-			class="text-3xl font-medium text-primary transition-all duration-300 lg:text-center lg:text-5xl"
+	<div class="z-20 -mt-16 flex w-full flex-col gap-6 place-self-center-safe xl:max-w-[1280px]">
+		<div
+			class="text-center text-3xl font-medium text-primary transition-all duration-300 sm:text-5xl md:text-7xl"
 		>
-			Because your choice
-		</p>
-		<p
-			class="text-3xl font-black text-primary transition-all duration-300 lg:text-center lg:text-5xl"
+			<span>Because your choice</span>
+			<p class="font-bold">{displayText}</p>
+		</div>
+
+		<button
+			onclick={goToShop}
+			class="place-self-center rounded-full bg-primary px-6 py-3 text-center font-semibold text-white transition-all duration-300 hover:scale-105"
 		>
-			{displayText}
-		</p>
+			Shop Now
+		</button>
 	</div>
-</div>
-<div
-	class="flex flex-col gap-6 bg-[#405C93] p-6 text-primary-foreground transition-all duration-300"
+</section>
+<section
+	id="shop"
+	tabindex="-1"
+	class="flex scroll-mt-16 flex-col gap-4 bg-[#405C93] p-6 py-4 text-primary-foreground transition-all duration-300"
 >
 	<span class="place-self-center text-center text-xl font-medium xl:max-w-[1280px]">
 		Our Products
@@ -116,8 +129,8 @@
 			</a>
 		</div>
 	</div>
-</div>
-<div class="flex flex-col">
+</section>
+<section id="fabric" class="flex flex-col">
 	<div class="flex w-full flex-col gap-10 place-self-center p-12 md:px-12 xl:max-w-[1280px]">
 		<div class="flex gap-6">
 			<svg
@@ -184,8 +197,8 @@
 			</div>
 		</div>
 	</div>
-</div>
-<div class="flex flex-col gap-4 bg-[#7D90B4] py-8">
+</section>
+<section id="testimonials" class="flex flex-col gap-4 bg-[#7D90B4] py-8">
 	<div class="flex flex-col gap-4 overflow-visible xl:max-w-[1280px] xl:place-self-center">
 		<span class="px-8 text-lg font-medium text-primary-foreground sm:px-12">
 			What our customers have to say...
@@ -285,7 +298,7 @@
 			</button>
 		</div>
 	</div>
-</div>
+</section>
 
 <style>
 	.mask-edges {

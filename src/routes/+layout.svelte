@@ -7,11 +7,22 @@
 	import { MenuIcon, ShoppingBagIcon } from '@lucide/svelte';
 	import { goto } from '$app/navigation';
 	import { setShopState } from '$lib/client/shop.svelte';
+	import { onMount } from 'svelte';
 
 	let { children } = $props();
 	setCartState([]);
 	setShopState('');
+
+	let scrolled = $state(false);
+	function handleScroll() {
+		scrolled = typeof window !== 'undefined' ? window.scrollY > 4 : false;
+	}
+	onMount(() => {
+		handleScroll();
+	});
 </script>
+
+<svelte:window on:scroll={handleScroll} />
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
@@ -19,7 +30,7 @@
 
 <main class="relative">
 	<nav
-		class="sticky top-0 z-40 flex h-16 flex-col justify-center bg-background/10 p-4 text-primary backdrop-blur-sm xl:items-center"
+		class={`sticky top-0 z-40 flex h-16 flex-col justify-center p-4 text-primary transition-all duration-300 xl:items-center ${scrolled ? 'bg-white/85 backdrop-blur' : 'bg-background/10'}`}
 	>
 		<div class="relative grid w-full grid-cols-[auto_1fr_auto] justify-center xl:max-w-[1280px]">
 			<button
