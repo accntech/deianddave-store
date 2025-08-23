@@ -3,7 +3,15 @@ import { paymongo } from '$lib/services/paymongo';
 import { redirect, type RequestHandler } from '@sveltejs/kit';
 import pRetry from 'p-retry';
 
-const list: string[] = [];
+const processedPaymentIntents = new Set<string>();
+const MAX_PROCESSED_INTENTS = 1000;
+
+const maintainSetSize = () => {
+	if (processedPaymentIntents.size > MAX_PROCESSED_INTENTS) {
+		const oldest = Array.from(processedPaymentIntents)[0];
+		processedPaymentIntents.delete(oldest);
+	}
+};
 
 export const GET: RequestHandler = async ({ url, cookies }) => {
 	let id = url.searchParams.get('payment_intent_id');
@@ -17,7 +25,7 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 	}
 
 	if (id) {
-		if (list.includes(id)) {
+		if (processedPaymentIntents.has(id)) {
 			return new Response('Payment intent ID already processed', { status: 400 });
 		}
 
@@ -29,7 +37,7 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 
 		if (intent.data.attributes.status !== 'succeeded') {
 			cookies.delete('payment_intent_id', { path: '/' });
-			redirect(308, `/check-out/result?success=false`);
+			redirect(308, '/check-out/result?success=false');
 		}
 
 		await pRetry(() => updatePayment(intent), {
@@ -39,8 +47,9 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 			}
 		});
 
-		list.push(id);
-		redirect(308, `/check-out/result?success=true`);
+		processedPaymentIntents.add(id);
+		maintainSetSize();
+		redirect(308, '/check-out/result?success=true');
 	}
-	redirect(308, `/check-out/result?success=false`);
+	redirect(308, '/check-out/result?success=false');
 };
