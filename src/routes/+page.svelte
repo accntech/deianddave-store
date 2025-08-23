@@ -4,10 +4,10 @@
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import { onMount } from 'svelte';
 
-	let displayText = $state('');
+	let displayText = $state('\u00A0');
 
 	const typewriter = (content: string) => {
-		displayText = '';
+		displayText = '\u00A0';
 		let index = 0;
 
 		const interval = setInterval(() => {
@@ -55,7 +55,9 @@
 		/>
 	</picture>
 
-	<div class="z-20 -mt-16 flex w-full flex-col gap-6 place-self-center-safe xl:max-w-[1280px]">
+	<div
+		class="will-change-opacity transform-all z-20 -mt-16 flex w-full animate-in flex-col gap-6 place-self-center-safe duration-500 ease-out will-change-transform fade-in-50 slide-in-from-bottom-12 xl:max-w-[1280px]"
+	>
 		<div
 			class="text-center text-3xl font-medium text-primary transition-all duration-300 sm:text-5xl md:text-7xl"
 		>
