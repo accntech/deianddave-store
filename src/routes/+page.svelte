@@ -76,7 +76,7 @@
 <section
 	id="shop"
 	tabindex="-1"
-	class="flex scroll-mt-16 flex-col gap-4 bg-[#405C93] p-6 py-4 text-primary-foreground transition-all duration-300"
+	class="flex h-[calc(100vh-64px)] scroll-mt-16 flex-col gap-4 bg-[#405C93] p-6 py-4 text-primary-foreground transition-all duration-300 md:h-auto"
 >
 	<span class="place-self-center text-center text-xl font-medium xl:max-w-[1280px]">
 		Our Products
@@ -118,7 +118,7 @@
 
 			<span class="text-lg font-medium">Loungewear</span>
 			<span class="mt-4 text-sm whitespace-pre-wrap opacity-75 sm:h-[80px]">
-				{'100% Organic Bamboo \nLyocell fibers'}
+				{'100% Organic Bamboo \nLyocell'}
 			</span>
 			<a href="/loungewear" class="my-4 rounded-full bg-primary px-6 py-2 font-medium">
 				Shop Collection
