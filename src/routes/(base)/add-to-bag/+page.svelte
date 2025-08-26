@@ -4,6 +4,7 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { cn } from '$lib/utils';
 	import { textColorBasedOnBackground } from '$lib/utils/color-helper.js';
+	import { transform } from '$lib/utils/image-helper';
 	import { splitNumberToString } from '$lib/utils/number-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import { ArrowLeftIcon, CheckIcon, MinusIcon, PlusIcon, ShoppingBagIcon } from '@lucide/svelte';
@@ -68,6 +69,40 @@
 		});
 	});
 
+	let selectedImage = $state('');
+	let images = $derived.by(() => {
+		const result = data.result;
+		const list = result?.data ?? [];
+		if (!list.length) return [] as string[];
+
+		const seen = new Set<string>();
+		const entries: { image: string; colorIndex: number; colorName: string }[] = [];
+
+		for (let i = 0; i < list.length; i++) {
+			const item = list[i];
+			const colorId = item?.color?.id as string | undefined;
+			if (!colorId || seen.has(colorId)) continue;
+
+			const img = (item?.image ?? '') as string;
+			const trimmed = typeof img === 'string' ? img.trim() : '';
+			if (!trimmed) continue;
+
+			seen.add(colorId);
+			entries.push({
+				image: trimmed,
+				colorIndex: (item.color?.index ?? 0) as number,
+				colorName: (item.color?.name ?? '') as string
+			});
+		}
+
+		entries.sort((a, b) => {
+			if (a.colorIndex !== b.colorIndex) return a.colorIndex - b.colorIndex;
+			return a.colorName.localeCompare(b.colorName);
+		});
+
+		return entries.map((x) => x.image);
+	});
+
 	let selectedSize = $state({}) as { id: string; name: string };
 	let selectedColor = $state({}) as { id: string; name: string; hexCode: string };
 
@@ -120,6 +155,9 @@
 	});
 
 	onMount(() => {
+		if (images.length > 0) {
+			selectedImage = images[0];
+		}
 		selectedSize = sizes[0];
 		selectedColor = colors[0];
 		quantity = available > 0 ? 1 : 0;
@@ -160,8 +198,40 @@
 
 <div class="relative flex flex-col gap-4">
 	<div
-		class="-mt-16 h-[364px] overflow-clip rounded-b-3xl bg-gradient-to-t from-[#EEEEEE] to-transparent"
-	></div>
+		class="relative -mt-16 h-[364px] overflow-clip rounded-b-3xl bg-gradient-to-t from-[#EEEEEE] to-transparent"
+	>
+		<img
+			src={transform(selectedImage, 'h_650,c_fill')}
+			class="h-full w-full [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_35%,rgba(0,0,0,1)_100%)] [mask-size:100%_100%] [mask-repeat:no-repeat] object-cover [-webkit-mask-image:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_35%,rgba(0,0,0,1)_100%)] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:100%_100%]"
+			alt={info.product.name}
+		/>
+		{#if images.length}
+			<div
+				class={cn(
+					'absolute bottom-0 isolate m-1 no-scrollbar flex w-full gap-1 overflow-x-auto overflow-y-hidden scroll-smooth p-8',
+					images.length === 1 ? 'justify-center' : ''
+				)}
+			>
+				{#each images as image}
+					<button
+						class={cn(
+							'shrink-0 overflow-clip rounded-md opacity-75 transition-all duration-300',
+							selectedImage === image ? 'z-10 scale-125 opacity-100 shadow-lg' : ''
+						)}
+						use:scrollOnFocus={selectedImage === image}
+						onclick={() => (selectedImage = image)}
+					>
+						<img
+							src={transform(image, 'h_375,c_fill')}
+							alt={info.product.name}
+							class="h-24 w-46 object-cover"
+							loading="lazy"
+						/>
+					</button>
+				{/each}
+			</div>
+		{/if}
+	</div>
 	<div class="mx-8 grid grid-cols-[1fr-auto] gap-2">
 		{#if info}
 			<span class="text-sm text-muted-foreground">{info.fabric.name}</span>
