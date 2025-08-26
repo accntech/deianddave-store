@@ -95,7 +95,7 @@
 				/>
 			</svg>
 			<span class="text-center text-lg font-medium">Beddings</span>
-			<span class="text-sm whitespace-pre-wrap opacity-75 sm:h-[80px]">
+			<span class="mt-4 text-center text-sm whitespace-pre-wrap opacity-75 sm:h-[80px]">
 				{'Made from\n100% TENCEL™ Lyocell\n100% Organic Bamboo\n100% Grade 6A Mulberry Silk'}
 			</span>
 			<a
@@ -120,7 +120,7 @@
 			</svg>
 
 			<span class="text-center text-lg font-medium">Loungewear</span>
-			<span class="text-sm whitespace-pre-wrap opacity-75 sm:h-[80px]">
+			<span class="mt-6 text-center text-sm whitespace-pre-wrap opacity-75 sm:h-[80px]">
 				{'Made from\n100% Organic Bamboo Lyocell fibers'}
 			</span>
 			<a
