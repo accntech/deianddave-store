@@ -41,10 +41,8 @@ export const getUniqueAgeGroups = (items: InventoryItem[], fabricId: string) => 
 	const seen = new Set();
 	const unique = [];
 
-	let hasGenericAgeGroup = false;
 	for (const item of items) {
 		if (!item.ageGroup) {
-			hasGenericAgeGroup = true;
 			continue;
 		}
 		if (fabricId && item.fabric.id !== fabricId) continue;
@@ -74,7 +72,6 @@ export const getUniqueAgeGroups = (items: InventoryItem[], fabricId: string) => 
 		return a.name.localeCompare(b.name);
 	});
 
-	if (hasGenericAgeGroup) return [...unique, { id: '', name: 'Generic' }];
 	return unique;
 };
 
