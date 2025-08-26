@@ -201,16 +201,13 @@
 		class="relative -mt-16 h-[364px] overflow-clip rounded-b-3xl bg-gradient-to-t from-[#EEEEEE] to-transparent"
 	>
 		<img
-			src={transform(selectedImage, 'h_650,c_fill')}
+			src={transform(selectedImage, 'h_500,c_fill')}
 			class="h-full w-full [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_35%,rgba(0,0,0,1)_100%)] [mask-size:100%_100%] [mask-repeat:no-repeat] object-cover [-webkit-mask-image:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_35%,rgba(0,0,0,1)_100%)] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:100%_100%]"
 			alt={info.product.name}
 		/>
-		{#if images.length}
+		{#if images.length > 1}
 			<div
-				class={cn(
-					'absolute bottom-0 isolate m-1 no-scrollbar flex w-full gap-1 overflow-x-auto overflow-y-hidden scroll-smooth p-8',
-					images.length === 1 ? 'justify-center' : ''
-				)}
+				class="absolute bottom-0 isolate m-1 no-scrollbar flex w-full gap-1 overflow-x-auto overflow-y-hidden scroll-smooth p-8"
 			>
 				{#each images as image}
 					<button
@@ -222,10 +219,9 @@
 						onclick={() => (selectedImage = image)}
 					>
 						<img
-							src={transform(image, 'h_375,c_fill')}
+							src={transform(image, 'h_275,c_fill')}
 							alt={info.product.name}
 							class="h-24 w-46 object-cover"
-							loading="lazy"
 						/>
 					</button>
 				{/each}
