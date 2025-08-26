@@ -56,10 +56,10 @@
 	</picture>
 
 	<div
-		class="will-change-opacity transform-all z-20 -mt-16 flex w-full animate-in flex-col gap-6 place-self-center-safe duration-500 ease-out will-change-transform fade-in-50 slide-in-from-bottom-12 xl:max-w-[1280px]"
+		class="will-change-opacity transform-all z-20 flex w-full animate-in flex-col gap-6 place-self-center-safe duration-500 ease-out will-change-transform fade-in-50 slide-in-from-bottom-12 xl:max-w-[1280px]"
 	>
 		<div
-			class="text-center text-3xl font-medium text-primary transition-all duration-300 sm:text-5xl md:text-7xl"
+			class="text-center text-3xl font-medium text-primary transition-all duration-300 sm:text-4xl md:text-7xl"
 		>
 			<span>Because your choice</span>
 			<p class="font-bold">{displayText}</p>
@@ -76,7 +76,7 @@
 <section
 	id="shop"
 	tabindex="-1"
-	class="flex h-[calc(100vh-64px)] scroll-mt-16 flex-col gap-4 bg-[#405C93] p-6 py-4 text-primary-foreground transition-all duration-300 md:h-auto"
+	class="flex h-[calc(100vh-64px)] scroll-mt-16 flex-col gap-4 bg-[#405C93] p-6 py-4 text-primary-foreground transition-all duration-300 sm:h-auto"
 >
 	<span class="place-self-center text-center text-xl font-medium xl:max-w-[1280px]">
 		Our Products
