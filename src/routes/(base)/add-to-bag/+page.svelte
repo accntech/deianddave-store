@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
 	import { getCartState } from '$lib/client/cart.svelte.js';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { cn } from '$lib/utils';
@@ -200,11 +201,19 @@
 	<div
 		class="relative -mt-16 h-[364px] overflow-clip rounded-b-3xl bg-gradient-to-t from-[#EEEEEE] to-transparent"
 	>
-		<img
-			src={transform(selectedImage, 'h_500,c_fill')}
-			class="h-full w-full [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_35%,rgba(0,0,0,1)_100%)] [mask-size:100%_100%] [mask-repeat:no-repeat] object-cover [-webkit-mask-image:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_35%,rgba(0,0,0,1)_100%)] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:100%_100%]"
-			alt={info.product.name}
-		/>
+		{#if selectedImage}
+			<img
+				src={transform(selectedImage, 'h_500,c_fill')}
+				class="h-full w-full [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_35%,rgba(0,0,0,1)_100%)] [mask-size:100%_100%] [mask-repeat:no-repeat] object-cover [-webkit-mask-image:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_35%,rgba(0,0,0,1)_100%)] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:100%_100%]"
+				alt={info.product.name}
+			/>
+		{:else}
+			<img
+				src={transform(PUBLIC_DEFAULT_PRODUCT_IMAGE, 'h_500,c_fill')}
+				class="h-full w-full [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_35%,rgba(0,0,0,1)_100%)] [mask-size:100%_100%] [mask-repeat:no-repeat] object-cover [-webkit-mask-image:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_35%,rgba(0,0,0,1)_100%)] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:100%_100%]"
+				alt={info.product.name}
+			/>
+		{/if}
 		{#if images.length > 1}
 			<div
 				class="absolute bottom-0 isolate m-1 no-scrollbar flex w-full gap-1 overflow-x-auto overflow-y-hidden scroll-smooth p-8"
