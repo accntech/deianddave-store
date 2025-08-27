@@ -15,6 +15,7 @@
 		getUniqueFabrics,
 		groupProducts
 	} from '../items-helper';
+	import { CircleLoader } from '$lib/components/ui/loader';
 
 	let { data } = $props();
 	const shop = getShopState();
@@ -38,10 +39,12 @@
 
 	let products = $derived.by(() => filterProducts(items, selectedFabric, selectedAgeGroup));
 
+	let loaded = $state(false);
 	onMount(async () => {
 		const action = await data.streamed.result;
 		items = action?.result.data || [];
 		shop.lastShop = window.location.href;
+		loaded = true;
 	});
 </script>
 
@@ -135,6 +138,11 @@
 				</div>
 			{/if}
 
+			{#if !loaded}
+				<div class="flex h-16 justify-center">
+					<CircleLoader />
+				</div>
+			{/if}
 			{#if products.length > 0}
 				<div class="m-6 flex flex-col gap-4">
 					{#each groupProducts(products) as [gender, items]}
