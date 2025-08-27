@@ -5,7 +5,9 @@ import { generateJWT } from '$lib/utils/jwt-generator';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ setHeaders }) => {
-	try {
+	setHeaders({ 'cache-control': 'max-age=600' });
+
+	const result = async () => {
 		const jwt = await generateJWT();
 		const url = new URL(INVENTORIES_URL);
 		url.searchParams.append('type', 'loungewear');
@@ -23,13 +25,13 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 		}
 
 		const result: Result<InventoryItem[]> = await response.json();
-		setHeaders({ 'cache-control': 'max-age=600' });
+
 		return { result };
-	} catch (error) {
-		console.error('Error fetching items:', error);
-		return {
-			items: [],
-			error: 'Failed to fetch items'
-		};
-	}
+	};
+
+	return {
+		streamed: {
+			result: result()
+		}
+	};
 };

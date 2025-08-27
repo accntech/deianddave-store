@@ -3,6 +3,7 @@
 	import { getShopState } from '$lib/client/shop.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Image } from '$lib/components/ui/image';
+	import type { InventoryItem } from '$lib/services/inventory';
 	import { cn } from '$lib/utils';
 	import { splitNumberToString } from '$lib/utils/number-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
@@ -19,10 +20,13 @@
 	const shop = getShopState();
 
 	let selectedFabric = $state('');
-	let fabrics = $derived.by(() => getUniqueFabrics(data.result?.data || []));
+
+	let items = $state<InventoryItem[]>([]);
+
+	let fabrics = $derived.by(() => getUniqueFabrics(items));
 
 	let selectedAgeGroup = $state('');
-	let ageGroup = $derived.by(() => getUniqueAgeGroups(data.result?.data || [], selectedFabric));
+	let ageGroup = $derived.by(() => getUniqueAgeGroups(items, selectedFabric));
 
 	$effect(() => {
 		selectedFabric = fabrics.length >= 1 ? fabrics[0].id : '';
@@ -32,11 +36,11 @@
 		selectedAgeGroup = ageGroup.length >= 1 ? ageGroup[0].id : '';
 	});
 
-	let products = $derived.by(() =>
-		filterProducts(data.result?.data || [], selectedFabric, selectedAgeGroup)
-	);
+	let products = $derived.by(() => filterProducts(items, selectedFabric, selectedAgeGroup));
 
-	onMount(() => {
+	onMount(async () => {
+		const action = await data.streamed.result;
+		items = action?.result.data || [];
 		shop.lastShop = window.location.href;
 	});
 </script>
@@ -161,7 +165,8 @@
 												{item.product.name}
 											</a>
 											{#if item.sets && item.sets.length > 0}
-												{#each item.sets.sort((a, b) => a.index - b.index) as set}
+												{@const sortedSets = [...item.sets].sort((a, b) => a.index - b.index)}
+												{#each sortedSets as set}
 													<div class="space-y-1 text-xs">
 														<span>{set.quantity}</span>
 														<span>{set.name}</span>
