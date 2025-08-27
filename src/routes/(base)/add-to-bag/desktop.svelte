@@ -26,19 +26,19 @@
 	const source = (image: string) => image || PUBLIC_DEFAULT_PRODUCT_IMAGE;
 </script>
 
-<div class="flex flex-col">
-	<section class="grid w-full grid-cols-[1fr_auto] gap-8 xl:max-w-[1280px] xl:place-self-center">
+<div class="flex flex-col justify-center">
+	<section class="grid grid-cols-[1fr_auto] gap-12 xl:max-w-[1280px] xl:place-self-center">
 		<div class="col-1">
-			<div class="relative isolate h-[800px] overflow-clip rounded-2xl bg-muted/50">
+			<div class="relative isolate h-[838px] overflow-clip rounded-2xl bg-muted/50">
 				{#if images.length <= 1}
 					<Image
-						imageClass={cn(isDefaultImage(source(images[0])) ? '' : 'object-top')}
+						imageClass="object-cover"
 						src={source(images[0])}
 						alt={info.product.name}
 						transform="h_1000,c_fill"
 					/>
 				{:else}
-					<div class="relative inset-0 flex h-full w-full">
+					<div class="relative inset-0 flex h-full w-full min-w-[630px]">
 						{#each images as image}
 							<div
 								class={cn(
@@ -47,7 +47,7 @@
 								)}
 							>
 								<Image
-									imageClass={cn(isDefaultImage(source(image)) ? '' : 'object-top')}
+									imageClass="object-cover"
 									src={source(image)}
 									alt={info.product.name}
 									transform="h_1000,c_fill"

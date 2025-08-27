@@ -29,28 +29,28 @@
 </script>
 
 <section class="relative flex flex-col gap-4">
-	<div class="relative h-[360px] overflow-clip rounded-b-3xl">
+	<div class="relative h-[400px] overflow-clip rounded-b-3xl">
 		{#if images.length <= 1}
 			<Image
-				imageClass={cn(isDefaultImage(source(images[0])) ? '' : 'object-top')}
+				imageClass="object-scale-down"
 				src={source(images[0])}
 				alt={info.product.name}
-				transform="h_500,c_fill"
+				transform="h_400,c_fill"
 			/>
 		{:else}
 			<div class="relative inset-0 flex h-full flex-col">
 				{#each images as image}
 					<div
 						class={cn(
-							'absolute inset-0 h-full w-full opacity-0 transition-opacity duration-500',
+							'absolute inset-0 h-full w-full opacity-0 transition-opacity duration-300',
 							selectedImage === image ? 'opacity-100' : ''
 						)}
 					>
 						<Image
-							imageClass={cn(isDefaultImage(source(image)) ? '' : 'object-top')}
+							imageClass={cn(isDefaultImage(source(image)) ? '' : 'object-scale-down')}
 							src={source(image)}
 							alt={info.product.name}
-							transform="h_500,c_fill"
+							transform="h_400,c_fill"
 						/>
 					</div>
 				{/each}

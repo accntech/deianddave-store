@@ -49,6 +49,7 @@
 <style>
 	.skeleton-img {
 		background-color: #e2e2e2;
+		position: relative;
 		overflow: hidden;
 	}
 
