@@ -38,7 +38,7 @@
 				transform="h_500,c_fill"
 			/>
 		{:else}
-			<div class="relative inset-0 flex">
+			<div class="relative inset-0 flex h-full flex-col">
 				{#each images as image}
 					<div
 						class={cn(
