@@ -35,7 +35,7 @@
 				imageClass="object-scale-down"
 				src={source(images[0])}
 				alt={info.product.name}
-				transform="h_400,c_fill"
+				transform="h_600,c_fill,q_auto,f_auto"
 			/>
 		{:else}
 			<div class="relative inset-0 flex h-full flex-col">
@@ -50,7 +50,7 @@
 							imageClass={cn(isDefaultImage(source(image)) ? '' : 'object-scale-down')}
 							src={source(image)}
 							alt={info.product.name}
-							transform="h_400,c_fill"
+							transform="h_600,c_fill,q_auto,f_auto"
 						/>
 					</div>
 				{/each}
