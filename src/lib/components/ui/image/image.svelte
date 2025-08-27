@@ -36,10 +36,10 @@
 	});
 </script>
 
-<div bind:this={ref} class={cn('skeleton-img h-full w-full', className)}>
+<div bind:this={ref} class={cn('skeleton-img h-full', className)}>
 	<img
 		src={`${transform(src, transformStr)}`}
-		class={cn('h-full w-full object-cover', imageClass)}
+		class={imageClass}
 		loading="lazy"
 		decoding="async"
 		{alt}

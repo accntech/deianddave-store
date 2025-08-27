@@ -26,7 +26,7 @@
 	const source = (image: string) => image || PUBLIC_DEFAULT_PRODUCT_IMAGE;
 </script>
 
-<div class="flex flex-col justify-center">
+<div class="flex flex-col justify-center px-4">
 	<section class="grid grid-cols-[1fr_auto] gap-12 xl:max-w-[1280px] xl:place-self-center">
 		<div class="col-1">
 			<div class="relative isolate h-[838px] overflow-clip rounded-2xl bg-muted/50">

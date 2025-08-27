@@ -23,48 +23,20 @@
 		quantity = $bindable<number>(),
 		onSubmit = $bindable<() => void>()
 	}: Props = $props();
-
-	const isDefaultImage = (image: string) => image === PUBLIC_DEFAULT_PRODUCT_IMAGE;
-	const source = (image: string) => image || PUBLIC_DEFAULT_PRODUCT_IMAGE;
 </script>
 
 <section class="relative flex flex-col gap-4">
-	<div class="relative h-[400px] overflow-clip rounded-b-3xl">
-		{#if images.length <= 1}
-			<Image
-				imageClass="object-scale-down"
-				src={source(images[0])}
-				alt={info.product.name}
-				transform="h_600,c_fill,q_auto,f_auto"
-			/>
-		{:else}
-			<div class="relative inset-0 flex h-full flex-col">
-				{#each images as image}
-					<div
-						class={cn(
-							'absolute inset-0 h-full w-full opacity-0 transition-opacity duration-300',
-							selectedImage === image ? 'opacity-100' : ''
-						)}
-					>
-						<Image
-							imageClass={cn(isDefaultImage(source(image)) ? '' : 'object-scale-down')}
-							src={source(image)}
-							alt={info.product.name}
-							transform="h_600,c_fill,q_auto,f_auto"
-						/>
-					</div>
-				{/each}
-			</div>
-		{/if}
-		{#if images.length > 1}
+	<div class="h-[356px] overflow-clip">
+		{#if images.length > 0}
 			<div
-				class="absolute bottom-0 isolate m-1 no-scrollbar flex w-full gap-1 overflow-x-auto overflow-y-hidden scroll-smooth p-8"
+				class="isolate no-scrollbar flex h-full w-full gap-1 overflow-x-auto overflow-y-hidden scroll-smooth"
 			>
 				{#each images as image}
 					<button
 						class={cn(
-							'shrink-0 overflow-clip rounded-md opacity-75 transition-all duration-300',
-							selectedImage === image ? 'z-10 scale-125 opacity-100 shadow-lg' : ''
+							'flex h-full shrink-0 flex-col overflow-clip transition-all duration-300 ',
+							selectedImage === image ? 'z-10' : '',
+							images.length > 1 ? 'first:ml-10 last:mr-8' : 'w-full justify-center'
 						)}
 						use:scrollOnFocus={selectedImage === image}
 						onclick={() => (selectedImage = image)}
@@ -72,9 +44,8 @@
 						<Image
 							src={image}
 							alt={info.product.name}
-							imageClass="object-cover object-middle"
-							class="h-24 w-46 object-cover"
-							transform="h_275,c_fill"
+							imageClass="h-full w-full object-scale-down"
+							transform="h_600,c_fill"
 						/>
 					</button>
 				{/each}
