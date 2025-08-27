@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
-	import { getShopState } from '$lib/client/shop.svelte.js';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { getShopState } from '$lib/client/shop.svelte';
+	import { Button } from '$lib/components/ui/button';
+	import { Image } from '$lib/components/ui/image';
 	import { cn } from '$lib/utils';
-	import { transform } from '$lib/utils/image-helper.js';
 	import { splitNumberToString } from '$lib/utils/number-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import { ArrowLeftIcon } from '@lucide/svelte';
@@ -139,21 +139,15 @@
 							<div class="flex flex-wrap gap-4">
 								{#each items ?? [] as item}
 									{@const { wholeNumber, decimal } = splitNumberToString(item.price)}
-									{@const image =
-										item.image === null || item.image === '' || item.image === undefined
-											? PUBLIC_DEFAULT_PRODUCT_IMAGE
-											: item.image}
-
 									<div
 										class="group transition-width relative isolate w-full overflow-clip rounded-3xl bg-[#EEEEEE] sm:w-[296px]"
 									>
 										<div class="overflow-clip">
-											<img
-												class="flex h-[240px] w-full flex-col object-cover text-center duration-300 group-hover:scale-110"
-												src={transform(image, 'g_auto:classic,w_500,c_fill')}
+											<Image
+												class="h-[240px] w-full"
+												src={item.image || PUBLIC_DEFAULT_PRODUCT_IMAGE}
 												alt={item.product.name}
-												loading="lazy"
-												decoding="async"
+												transform="g_auto:classic,w_500,c_fill"
 											/>
 										</div>
 										<div class=" flex flex-col p-4">
