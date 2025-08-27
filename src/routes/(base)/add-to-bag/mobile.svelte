@@ -43,7 +43,7 @@
 					>
 						<Image
 							src={image}
-							alt={info.product.name}
+							alt={info?.product.name ?? ''}
 							imageClass="h-full w-full object-scale-down"
 							transform="h_600,c_fill"
 						/>
@@ -93,11 +93,11 @@
 			<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-6">
 				{#each sizes as size}
 					<button
-						use:scrollOnFocus={selectedSize.id === size.id}
+						use:scrollOnFocus={selectedSize?.id === size.id}
 						onclick={() => (selectedSize = size)}
 						class={cn(
 							'rounded-lg px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 ',
-							selectedSize.id === size.id
+							selectedSize?.id === size.id
 								? 'bg-secondary text-secondary-foreground hover:bg-secondary/60'
 								: 'hover:bg-accent'
 						)}
@@ -114,7 +114,7 @@
 
 	{#if colors}
 		<div class="relative isolate">
-			<span class="z-40 mx-6 text-sm">Color - {selectedColor.name}</span>
+			<span class="z-40 mx-6 text-sm">Color {selectedColor ? `- ${selectedColor.name}` : ''}</span>
 			<div
 				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
 			></div>
@@ -124,19 +124,19 @@
 				{#each colors as color}
 					<button
 						aria-label={color.name}
-						use:scrollOnFocus={selectedColor.id === color.id}
+						use:scrollOnFocus={selectedColor?.id === color.id}
 						onclick={() => (selectedColor = color)}
 						style="background-color: {color.hexCode}"
 						class={cn(
 							'flex size-6 justify-center rounded-full border transition-all duration-300',
-							selectedColor.id === color.id ? 'scale-125' : ''
+							selectedColor?.id === color.id ? 'scale-125' : ''
 						)}
 					>
 						<CheckIcon
 							style={`stroke:${textColorBasedOnBackground(color.hexCode)}`}
 							class={cn(
 								'size-4 place-self-center opacity-0 transition-opacity duration-300',
-								selectedColor.id === color.id ? 'opacity-100' : ''
+								selectedColor?.id === color.id ? 'opacity-100' : ''
 							)}
 						/>
 					</button>
@@ -174,7 +174,7 @@
 		</div>
 	</div>
 
-	{#if info.product.description}
+	{#if info && info.product.description}
 		<div class="flex flex-col gap-2">
 			<span class="mx-6 text-sm">Description</span>
 			<p class="mx-6 text-sm whitespace-pre-line text-muted-foreground">

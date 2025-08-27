@@ -27,12 +27,12 @@ export type Info = {
 export type Props = {
 	selectedImage: string;
 	images: string[];
-	info: Info;
+	info: Info | null;
 	price: number;
 	selectedSize: {
 		id: string;
 		name: string;
-	};
+	} | null;
 	sizes: Array<{
 		id: string;
 		name: string;
@@ -41,7 +41,7 @@ export type Props = {
 		id: string;
 		name: string;
 		hexCode: string;
-	};
+	} | null;
 	colors: Array<{
 		id: string;
 		name: string;

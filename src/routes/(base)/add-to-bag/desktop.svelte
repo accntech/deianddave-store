@@ -34,7 +34,7 @@
 					<Image
 						imageClass="object-cover"
 						src={source(images[0])}
-						alt={info.product.name}
+						alt={info?.product.name ?? ''}
 						transform="h_1000,c_fill"
 					/>
 				{:else}
@@ -49,7 +49,7 @@
 								<Image
 									imageClass="object-cover"
 									src={source(image)}
-									alt={info.product.name}
+									alt={info?.product.name ?? ''}
 									transform="h_1000,c_fill"
 								/>
 							</div>
@@ -71,7 +71,7 @@
 							>
 								<Image
 									src={image}
-									alt={info.product.name}
+									alt={info?.product.name ?? ''}
 									imageClass="object-cover object-middle"
 									class="h-24 w-46 object-cover"
 									transform="h_275,c_fill"
@@ -81,7 +81,7 @@
 					</div>
 				{/if}
 			</div>
-			{#if info.product.description}
+			{#if info && info.product.description}
 				<div class="mt-8 flex flex-col gap-2">
 					<span class="text-sm">Description</span>
 					<p class="text-sm whitespace-pre-line text-muted-foreground">
@@ -137,7 +137,7 @@
 									onclick={() => (selectedSize = size)}
 									class={cn(
 										'rounded-lg px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 ',
-										selectedSize.id === size.id
+										selectedSize?.id === size.id
 											? 'bg-secondary text-secondary-foreground hover:bg-secondary/60'
 											: 'hover:bg-accent'
 									)}
@@ -151,7 +151,7 @@
 				{#if colors}
 					<div class="mt-4 flex flex-col gap-1 font-medium">
 						<span class="text-sm">
-							Color {selectedColor.name === undefined ? '' : `- ${selectedColor.name}`}
+							Color {selectedColor ? `- ${selectedColor.name}` : ''}
 						</span>
 
 						<div class="flex items-center gap-4 py-4">
@@ -162,14 +162,14 @@
 									style="background-color: {color.hexCode}"
 									class={cn(
 										'flex size-7 justify-center rounded-full border transition-all duration-300',
-										selectedColor.id === color.id ? 'scale-125' : ''
+										selectedColor?.id === color.id ? 'scale-125' : ''
 									)}
 								>
 									<CheckIcon
 										style={`stroke:${textColorBasedOnBackground(color.hexCode)}`}
 										class={cn(
 											'size-5 place-self-center opacity-0 transition-opacity duration-300',
-											selectedColor.id === color.id ? 'opacity-100' : ''
+											selectedColor?.id === color.id ? 'opacity-100' : ''
 										)}
 									/>
 								</button>

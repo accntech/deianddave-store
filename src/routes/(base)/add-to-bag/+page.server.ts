@@ -4,8 +4,8 @@ import type { InventoryItem } from '$lib/services/inventory';
 import { generateJWT } from '$lib/utils/jwt-generator';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ setHeaders, url }) => {
-	try {
+export const load: PageServerLoad = async ({ url }) => {
+	const result = async () => {
 		const productId = url.searchParams.get('productId') || '';
 		const fabricId = url.searchParams.get('fabricId') || '';
 		const ageGroupId = url.searchParams.get('ageGroupId') || '';
@@ -32,11 +32,11 @@ export const load: PageServerLoad = async ({ setHeaders, url }) => {
 
 		const result: Result<InventoryItem[]> = await response.json();
 		return { result };
-	} catch (error) {
-		console.error('Error fetching items:', error);
-		return {
-			items: [],
-			error: 'Failed to fetch items'
-		};
-	}
+	};
+
+	return {
+		streamed: {
+			result: result()
+		}
+	};
 };

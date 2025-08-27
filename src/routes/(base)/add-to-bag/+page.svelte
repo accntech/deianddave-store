@@ -5,11 +5,14 @@
 	import { onMount } from 'svelte';
 	import Desktop from './desktop.svelte';
 	import Mobile from './mobile.svelte';
+	import type { InventoryItem } from '$lib/services/inventory';
 
 	let { data } = $props();
 
+	let items = $state<InventoryItem[]>([]);
+
 	let info = $derived.by(() => {
-		const items = data.result!.data;
+		if (items.length === 0) return null;
 
 		const item = items[0];
 		return {
@@ -22,14 +25,12 @@
 	});
 
 	let sizes = $derived.by(() => {
-		const result = data.result;
-
-		if (!result?.data?.length) return [];
+		if (items.length === 0) return [];
 
 		const seen = new Set();
 		const unique = [];
 
-		for (const item of result.data) {
+		for (const item of items) {
 			if (!seen.has(item.size.id)) {
 				seen.add(item.size.id);
 				unique.push(item.size);
@@ -44,14 +45,12 @@
 	});
 
 	let colors = $derived.by(() => {
-		const result = data.result;
-
-		if (!result?.data?.length) return [];
+		if (items.length === 0) return [];
 
 		const seen = new Set();
 		const unique = [];
 
-		for (const item of result.data) {
+		for (const item of items) {
 			if (!seen.has(item.color.id)) {
 				seen.add(item.color.id);
 				unique.push(item.color);
@@ -67,15 +66,13 @@
 
 	let selectedImage = $state('');
 	let images = $derived.by(() => {
-		const result = data.result;
-		const list = result?.data ?? [];
-		if (!list.length) return [] as string[];
+		if (items.length === 0) return [] as string[];
 
 		const seen = new Set<string>();
 		const entries: { image: string; colorIndex: number; colorName: string }[] = [];
 
-		for (let i = 0; i < list.length; i++) {
-			const item = list[i];
+		for (let i = 0; i < items.length; i++) {
+			const item = items[i];
 			const colorId = item?.color?.id as string | undefined;
 			if (!colorId || seen.has(colorId)) continue;
 
@@ -103,11 +100,9 @@
 	let selectedColor = $state({}) as { id: string; name: string; hexCode: string };
 
 	let selectedItem = $derived.by(() => {
-		const result = data.result;
+		if (items.length === 0 || !selectedSize?.id || !selectedColor?.id) return null;
 
-		if (!result?.data?.length) return null;
-
-		return result.data.find(
+		return items.find(
 			(item) => item.size.id === selectedSize.id && item.color.id === selectedColor.id
 		);
 	});
@@ -138,11 +133,9 @@
 	});
 
 	let price = $derived.by(() => {
-		const result = data.result;
+		if (items.length === 0 || !selectedSize?.id || !selectedColor?.id) return 0;
 
-		if (!result?.data?.length) return 0;
-
-		const item = result.data.find(
+		const item = items.find(
 			(item) => item.size.id === selectedSize.id && item.color.id === selectedColor.id
 		);
 		const price = item?.price || 0;
@@ -150,7 +143,12 @@
 		return price * quantity;
 	});
 
-	onMount(() => {
+	onMount(async () => {
+		const action = await data.streamed.result;
+
+		console.log('action', action);
+		items = action.result.data || [];
+
 		if (images.length > 0) {
 			selectedImage = images[0];
 		}
