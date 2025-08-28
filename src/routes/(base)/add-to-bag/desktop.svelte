@@ -22,21 +22,15 @@
 		onSubmit = $bindable<() => void>()
 	}: Props = $props();
 
-	const isDefaultImage = (image: string) => image === PUBLIC_DEFAULT_PRODUCT_IMAGE;
 	const source = (image: string) => image || PUBLIC_DEFAULT_PRODUCT_IMAGE;
 </script>
 
-<div class="flex flex-col justify-center px-4">
+<div class="flex items-center justify-center px-4">
 	<section class="grid grid-cols-[1fr_auto] gap-12 xl:max-w-[1280px] xl:place-self-center">
-		<div class="col-1">
+		<div class="col-1 w-[623px]">
 			<div class="relative isolate h-[838px] overflow-clip rounded-2xl bg-muted/50">
 				{#if images.length <= 1}
-					<Image
-						imageClass="object-cover"
-						src={source(images[0])}
-						alt={info?.product.name ?? ''}
-						transform="h_1000,c_fill"
-					/>
+					{@render baseImage(images[0], info?.product.name ?? '')}
 				{:else}
 					<div class="relative inset-0 flex h-full w-full min-w-[630px]">
 						{#each images as image}
@@ -46,24 +40,19 @@
 									selectedImage === image ? 'opacity-100' : ''
 								)}
 							>
-								<Image
-									imageClass="object-cover"
-									src={source(image)}
-									alt={info?.product.name ?? ''}
-									transform="h_1000,c_fill"
-								/>
+								{@render baseImage(image, info?.product.name ?? '')}
 							</div>
 						{/each}
 					</div>
 				{/if}
 				{#if images.length > 1}
 					<div
-						class="absolute bottom-0 isolate mx-4 mb-1 no-scrollbar flex w-full gap-1 overflow-x-auto overflow-y-hidden scroll-smooth p-8"
+						class="absolute bottom-0 isolate mb-1 no-scrollbar flex w-full gap-1 overflow-x-auto overflow-y-hidden scroll-smooth bg-background/1 p-8 backdrop-blur-xs"
 					>
 						{#each images as image}
 							<button
 								class={cn(
-									'shrink-0 overflow-clip rounded-md opacity-75 transition-all duration-300',
+									'h-24 w-46 shrink-0 overflow-clip rounded-md opacity-75 transition-all duration-300 first:ml-4 last:mr-4',
 									selectedImage === image ? 'z-10 scale-125 opacity-100 shadow-lg' : ''
 								)}
 								use:scrollOnFocus={selectedImage === image}
@@ -72,8 +61,8 @@
 								<Image
 									src={image}
 									alt={info?.product.name ?? ''}
-									imageClass="object-cover object-middle"
-									class="h-24 w-46 object-cover"
+									imageClass="object-cover h-full"
+									class="flex items-center justify-center"
 									transform="h_275,c_fill"
 								/>
 							</button>
@@ -215,3 +204,13 @@
 		{/if}
 	</section>
 </div>
+
+{#snippet baseImage(image: string, alt: string)}
+	<Image
+		imageClass="w-full"
+		class="flex items-center align-middle"
+		src={source(image)}
+		{alt}
+		transform="h_1000,c_fill"
+	/>
+{/snippet}

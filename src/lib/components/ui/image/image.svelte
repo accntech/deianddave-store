@@ -9,6 +9,7 @@
 		src: string;
 		alt: string;
 		transform: string;
+		background?: string;
 	};
 
 	let {
@@ -16,7 +17,8 @@
 		imageClass,
 		src = $bindable<string>(),
 		alt,
-		transform: transformStr
+		transform: transformStr,
+		background
 	}: Props = $props();
 
 	let ref: HTMLDivElement;
@@ -36,7 +38,11 @@
 	});
 </script>
 
-<div bind:this={ref} class={cn('skeleton-img h-full', className)}>
+<div
+	bind:this={ref}
+	class={cn('skeleton-img h-full', className)}
+	style={`background-color: ${background ?? '#e2e2e2'}`}
+>
 	<img
 		src={`${transform(src, transformStr)}`}
 		class={imageClass}
@@ -48,7 +54,6 @@
 
 <style>
 	.skeleton-img {
-		background-color: #e2e2e2;
 		position: relative;
 		overflow: hidden;
 	}
