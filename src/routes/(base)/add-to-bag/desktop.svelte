@@ -7,19 +7,21 @@
 	import { splitNumberToString } from '$lib/utils/number-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import { ArrowLeftIcon, CheckIcon, MinusIcon, PlusIcon, ShoppingBagIcon } from '@lucide/svelte';
-	import type { Info, Props } from './types';
+	import type { Props } from './types';
 	let {
-		selectedImage = $bindable<string>(),
-		images = $bindable<string[]>(),
-		info = $bindable<Info>(),
+		info,
+		aspectRatio,
+		onColorChanged,
+		onSubmit,
+		selectedImage = $bindable<{ source: string; colorId: string }>(),
+		images = $bindable<Array<{ source: string; colorId: string }>>(),
 		price = $bindable<number>(),
 		selectedSize = $bindable<{ id: string; name: string }>(),
 		sizes = $bindable<Array<{ id: string; name: string }>>(),
 		selectedColor = $bindable<{ id: string; name: string; hexCode: string }>(),
 		colors = $bindable<Array<{ id: string; name: string; hexCode: string }>>(),
 		available = $bindable<number>(),
-		quantity = $bindable<number>(),
-		onSubmit = $bindable<() => void>()
+		quantity = $bindable<number>()
 	}: Props = $props();
 
 	const source = (image: string) => image || PUBLIC_DEFAULT_PRODUCT_IMAGE;
@@ -28,47 +30,23 @@
 <div class="flex items-center justify-center px-4">
 	<section class="grid grid-cols-[1fr_auto] gap-12 xl:max-w-[1280px] xl:place-self-center">
 		<div class="col-1 w-[623px]">
-			<div class="relative isolate h-[838px] overflow-clip rounded-2xl bg-muted/50">
-				{#if images.length <= 1}
-					{@render baseImage(images[0], info?.product.name ?? '')}
-				{:else}
-					<div class="relative inset-0 flex h-full w-full min-w-[630px]">
-						{#each images as image}
-							<div
-								class={cn(
-									'absolute inset-0 h-full w-full opacity-0 transition-opacity duration-500',
-									selectedImage === image ? 'opacity-100' : ''
-								)}
-							>
-								{@render baseImage(image, info?.product.name ?? '')}
-							</div>
-						{/each}
-					</div>
-				{/if}
-				{#if images.length > 1}
+			<div class="grid w-full">
+				{#each images as image}
 					<div
-						class="absolute bottom-0 isolate mb-1 no-scrollbar flex w-full gap-1 overflow-x-auto overflow-y-hidden scroll-smooth bg-background/1 p-8 backdrop-blur-xs"
+						class={cn(
+							'col-1 row-1 h-full flex-[0_0_100%] shrink-0 snap-start flex-col overflow-clip rounded-xl opacity-0 transition-all duration-300 ',
+							selectedImage.source === image.source ? 'z-10 opacity-100' : '',
+							aspectRatio
+						)}
 					>
-						{#each images as image}
-							<button
-								class={cn(
-									'h-24 w-46 shrink-0 overflow-clip rounded-md opacity-75 transition-all duration-300 first:ml-4 last:mr-4',
-									selectedImage === image ? 'z-10 scale-125 opacity-100 shadow-lg' : ''
-								)}
-								use:scrollOnFocus={selectedImage === image}
-								onclick={() => (selectedImage = image)}
-							>
-								<Image
-									src={image}
-									alt={info?.product.name ?? ''}
-									imageClass="object-cover h-full"
-									class="flex items-center justify-center"
-									transform="h_275,c_fill"
-								/>
-							</button>
-						{/each}
+						<Image
+							src={image.source}
+							alt={info?.product.name ?? ''}
+							imageClass="w-full h-full object-cover"
+							transform="h_900,c_fill"
+						/>
 					</div>
-				{/if}
+				{/each}
 			</div>
 			{#if info && info.product.description}
 				<div class="mt-8 flex flex-col gap-2">
@@ -147,7 +125,7 @@
 							{#each colors as color}
 								<button
 									aria-label={color.name}
-									onclick={() => (selectedColor = color)}
+									onclick={() => onColorChanged(color)}
 									style="background-color: {color.hexCode}"
 									class={cn(
 										'flex size-7 justify-center rounded-full border transition-all duration-300',
@@ -204,13 +182,3 @@
 		{/if}
 	</section>
 </div>
-
-{#snippet baseImage(image: string, alt: string)}
-	<Image
-		imageClass="w-full"
-		class="flex items-center align-middle"
-		src={source(image)}
-		{alt}
-		transform="h_1000,c_fill"
-	/>
-{/snippet}

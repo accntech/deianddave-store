@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
 	import { Button } from '$lib/components/ui/button';
 	import { Image } from '$lib/components/ui/image';
 	import { cn } from '$lib/utils';
@@ -8,46 +7,44 @@
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import { ArrowLeftIcon, CheckIcon, MinusIcon, PlusIcon, ShoppingBagIcon } from '@lucide/svelte';
 
-	import type { Info, Props } from './types';
+	import type { Props, Info } from './types';
 
 	let {
-		selectedImage = $bindable<string>(),
-		images = $bindable<string[]>(),
-		info = $bindable<Info>(),
+		info = {} as Info,
+		aspectRatio,
+		onColorChanged,
+		onSubmit,
+		selectedImage = $bindable<{ source: string; colorId: string }>(),
+		images = $bindable<Array<{ source: string; colorId: string }>>(),
 		price = $bindable<number>(),
 		selectedSize = $bindable<{ id: string; name: string }>(),
 		sizes = $bindable<Array<{ id: string; name: string }>>(),
 		selectedColor = $bindable<{ id: string; name: string; hexCode: string }>(),
 		colors = $bindable<Array<{ id: string; name: string; hexCode: string }>>(),
 		available = $bindable<number>(),
-		quantity = $bindable<number>(),
-		onSubmit = $bindable<() => void>()
+		quantity = $bindable<number>()
 	}: Props = $props();
 </script>
 
 <section class="relative flex flex-col gap-4">
-	<div class="h-[356px] overflow-clip">
+	<div class="overflow-clip">
 		{#if images.length > 0}
-			<div
-				class="isolate no-scrollbar flex h-full w-full gap-1 overflow-x-auto overflow-y-hidden scroll-smooth"
-			>
+			<div class="grid w-full p-4">
 				{#each images as image}
-					<button
+					<div
 						class={cn(
-							'flex h-full shrink-0 flex-col overflow-clip transition-all duration-300 ',
-							selectedImage === image ? 'z-10' : '',
-							images.length > 1 ? 'first:ml-10 last:mr-8' : 'w-full justify-center'
+							'col-1 row-1 h-full flex-[0_0_100%] shrink-0 snap-start flex-col overflow-clip rounded-xl opacity-0 transition-all duration-300 ',
+							selectedImage.source === image.source ? 'z-10 opacity-100' : '',
+							aspectRatio
 						)}
-						use:scrollOnFocus={selectedImage === image}
-						onclick={() => (selectedImage = image)}
 					>
 						<Image
-							src={image}
+							src={image.source}
 							alt={info?.product.name ?? ''}
-							imageClass="h-full w-full object-scale-down"
+							imageClass="w-full h-full object-cover"
 							transform="h_600,c_fill"
 						/>
-					</button>
+					</div>
 				{/each}
 			</div>
 		{/if}
@@ -125,7 +122,7 @@
 					<button
 						aria-label={color.name}
 						use:scrollOnFocus={selectedColor?.id === color.id}
-						onclick={() => (selectedColor = color)}
+						onclick={() => onColorChanged(color)}
 						style="background-color: {color.hexCode}"
 						class={cn(
 							'flex size-6 justify-center rounded-full border transition-all duration-300',

@@ -51,10 +51,8 @@
 <div class="flex flex-col">
 	<div class="w-full xl:max-w-[1280px] xl:place-self-center">
 		<div class="mx-6 my-4">
-			<p class="text-xl font-medium">
-				Silky-soft, naturally breathable, and gentle on sensitive skin
-			</p>
-			<p class="text-lg font-light">— made for dreamers of all ages.</p>
+			<p class="text-xl font-medium">Sustainably Luxurious</p>
+			<p class="text-lg font-light">— Choose Your Signature Bedding Fabric</p>
 		</div>
 		<div class="flex flex-col gap-2">
 			{#if fabrics.length > 1}

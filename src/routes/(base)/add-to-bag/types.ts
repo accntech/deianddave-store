@@ -25,8 +25,8 @@ export type Info = {
 };
 
 export type Props = {
-	selectedImage: string;
-	images: string[];
+	selectedImage: { source: string; colorId: string };
+	images: Array<{ source: string; colorId: string }>;
 	info: Info | null;
 	price: number;
 	selectedSize: {
@@ -49,5 +49,7 @@ export type Props = {
 	}>;
 	available: number;
 	quantity: number;
+	aspectRatio: string;
+	onColorChanged: (color: { id: string; name: string; hexCode: string }) => void;
 	onSubmit: () => void;
 };

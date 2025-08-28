@@ -6,11 +6,13 @@
 	import Desktop from './desktop.svelte';
 	import Mobile from './mobile.svelte';
 	import type { InventoryItem } from '$lib/services/inventory';
+	import type { Info } from './types';
 
 	let { data } = $props();
 
 	let items = $state<InventoryItem[]>([]);
 
+	let type = $derived.by(() => (items.length > 0 ? items[0].type : ''));
 	let info = $derived.by(() => {
 		if (items.length === 0) return null;
 
@@ -64,12 +66,17 @@
 		});
 	});
 
-	let selectedImage = $state('');
+	let selectedImage = $state({ source: '', colorId: '' });
 	let images = $derived.by(() => {
-		if (items.length === 0) return [] as string[];
+		if (items.length === 0) return [] as Array<{ source: string; colorId: string }>;
 
 		const seen = new Set<string>();
-		const entries: { image: string; colorIndex: number; colorName: string }[] = [];
+		const entries: {
+			source: string;
+			colorId: string;
+			colorIndex: number;
+			colorName: string;
+		}[] = [];
 
 		for (let i = 0; i < items.length; i++) {
 			const item = items[i];
@@ -82,7 +89,8 @@
 
 			seen.add(colorId);
 			entries.push({
-				image: trimmed,
+				source: trimmed,
+				colorId,
 				colorIndex: (item.color?.index ?? 0) as number,
 				colorName: (item.color?.name ?? '') as string
 			});
@@ -93,7 +101,7 @@
 			return a.colorName.localeCompare(b.colorName);
 		});
 
-		return entries.map((x) => x.image);
+		return entries.map(({ source, colorId }) => ({ source, colorId }));
 	});
 
 	let selectedSize = $state({}) as { id: string; name: string };
@@ -146,7 +154,6 @@
 	onMount(async () => {
 		const action = await data.streamed.result;
 
-		console.log('action', action);
 		items = action.result.data || [];
 
 		if (images.length > 0) {
@@ -158,6 +165,22 @@
 	});
 
 	const cart = getCartState();
+
+	let aspectRatio = $derived.by(() => {
+		if (type === 'loungewear') {
+			return 'aspect-4/5';
+		}
+		if (type === 'beddings') {
+			return 'aspect-3/2';
+		}
+
+		return 'aspect-square';
+	});
+
+	const onColorChanged = (color: { id: string; name: string; hexCode: string }) => {
+		selectedColor = color;
+		selectedImage = images.find((img) => img.colorId === color.id) || images[0];
+	};
 
 	const onSubmit = async () => {
 		if (selectedItem) {
@@ -192,9 +215,12 @@
 
 {#if isMobile.current}
 	<Mobile
+		{info}
+		{aspectRatio}
+		{onColorChanged}
+		{onSubmit}
 		bind:selectedImage
 		bind:images
-		bind:info
 		bind:price
 		bind:selectedSize
 		bind:sizes
@@ -202,13 +228,15 @@
 		bind:colors
 		bind:available
 		bind:quantity
-		{onSubmit}
 	/>
 {:else}
 	<Desktop
+		{info}
+		{aspectRatio}
+		{onColorChanged}
+		{onSubmit}
 		bind:selectedImage
 		bind:images
-		bind:info
 		bind:price
 		bind:selectedSize
 		bind:sizes
@@ -216,6 +244,5 @@
 		bind:colors
 		bind:available
 		bind:quantity
-		{onSubmit}
 	/>
 {/if}
