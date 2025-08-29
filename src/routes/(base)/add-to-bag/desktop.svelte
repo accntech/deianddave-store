@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
 	import { Button } from '$lib/components/ui/button';
 	import { Image } from '$lib/components/ui/image';
 	import { cn } from '$lib/utils';
 	import { textColorBasedOnBackground } from '$lib/utils/color-helper';
 	import { splitNumberToString } from '$lib/utils/number-helper';
-	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import { ArrowLeftIcon, CheckIcon, MinusIcon, PlusIcon, ShoppingBagIcon } from '@lucide/svelte';
 	import type { Props } from './types';
 	let {
@@ -23,8 +21,6 @@
 		available = $bindable<number>(),
 		quantity = $bindable<number>()
 	}: Props = $props();
-
-	const source = (image: string) => image || PUBLIC_DEFAULT_PRODUCT_IMAGE;
 </script>
 
 <div class="flex items-center justify-center px-4">
