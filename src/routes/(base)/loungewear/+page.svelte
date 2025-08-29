@@ -199,11 +199,11 @@
 				{/if}
 				<Button
 					variant="ghost"
-					href="/loungewear"
+					href="/beddings"
 					class="mx-6 mb-20 place-self-start rounded-lg shadow-none"
 				>
 					<ArrowLeftIcon />
-					Go to Loungewear
+					Go to Beddings
 				</Button>
 			</div>
 		{:else}
