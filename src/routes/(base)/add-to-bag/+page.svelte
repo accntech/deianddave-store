@@ -2,11 +2,11 @@
 	import { goto } from '$app/navigation';
 	import { getCartState } from '$lib/client/cart.svelte.js';
 	import { isMobile } from '$lib/hooks/is-mobile.svelte';
+	import type { InventoryItem } from '$lib/services/inventory';
 	import { onMount } from 'svelte';
 	import Desktop from './desktop.svelte';
 	import Mobile from './mobile.svelte';
-	import type { InventoryItem } from '$lib/services/inventory';
-	import type { Info } from './types';
+	import Preview from './preview.svelte';
 
 	let { data } = $props();
 
@@ -151,6 +151,7 @@
 		return price * quantity;
 	});
 
+	let loaded = $state(false);
 	onMount(async () => {
 		const action = await data.streamed.result;
 
@@ -162,6 +163,7 @@
 		selectedSize = sizes[0];
 		selectedColor = colors[0];
 		quantity = available > 0 ? 1 : 0;
+		loaded = true;
 	});
 
 	const cart = getCartState();
@@ -213,36 +215,40 @@
 	};
 </script>
 
-{#if isMobile.current}
-	<Mobile
-		{info}
-		{aspectRatio}
-		{onColorChanged}
-		{onSubmit}
-		bind:selectedImage
-		bind:images
-		bind:price
-		bind:selectedSize
-		bind:sizes
-		bind:selectedColor
-		bind:colors
-		bind:available
-		bind:quantity
-	/>
+{#if loaded}
+	{#if isMobile.current}
+		<Mobile
+			{info}
+			{aspectRatio}
+			{onColorChanged}
+			{onSubmit}
+			bind:selectedImage
+			bind:images
+			bind:price
+			bind:selectedSize
+			bind:sizes
+			bind:selectedColor
+			bind:colors
+			bind:available
+			bind:quantity
+		/>
+	{:else}
+		<Desktop
+			{info}
+			{aspectRatio}
+			{onColorChanged}
+			{onSubmit}
+			bind:selectedImage
+			bind:images
+			bind:price
+			bind:selectedSize
+			bind:sizes
+			bind:selectedColor
+			bind:colors
+			bind:available
+			bind:quantity
+		/>
+	{/if}
 {:else}
-	<Desktop
-		{info}
-		{aspectRatio}
-		{onColorChanged}
-		{onSubmit}
-		bind:selectedImage
-		bind:images
-		bind:price
-		bind:selectedSize
-		bind:sizes
-		bind:selectedColor
-		bind:colors
-		bind:available
-		bind:quantity
-	/>
+	<Preview {aspectRatio}></Preview>
 {/if}
