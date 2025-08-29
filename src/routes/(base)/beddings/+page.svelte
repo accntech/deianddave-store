@@ -15,7 +15,7 @@
 		getUniqueFabrics,
 		groupProducts
 	} from '../items-helper';
-	import { CircleLoader } from '$lib/components/ui/loader';
+	import Preview from '../preview.svelte';
 
 	let { data } = $props();
 	const shop = getShopState();
@@ -54,158 +54,158 @@
 			<p class="text-xl font-medium">Sustainably Luxurious</p>
 			<p class="text-lg font-light">— Choose Your Signature Bedding Fabric</p>
 		</div>
-		<div class="flex flex-col gap-2">
-			{#if fabrics.length > 1}
-				<div class="relative">
-					<div
-						class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
-					></div>
-					<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
-						{#each fabrics as fabric}
-							<button
-								use:scrollOnFocus={selectedFabric === fabric.id}
-								onclick={() => {
-									selectedFabric = fabric.id;
-									selectedAgeGroup = '';
-								}}
-								class={cn(
-									'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 hover:border-primary/40',
-									selectedFabric === fabric.id ? 'bg-primary text-primary-foreground' : ''
-								)}
-							>
-								{fabric.name}
-							</button>
-						{/each}
-					</div>
-					<div
-						class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
-					></div>
-				</div>
-			{/if}
-			{#if fabrics.length > 1 && ageGroup.length > 1}
-				<div class="relative">
-					<div
-						class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
-					></div>
-					<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
-						{#each ageGroup as group}
-							<button
-								onclick={() => (selectedAgeGroup = group.id)}
-								use:scrollOnFocus={selectedAgeGroup === group.id}
-								class={cn(
-									'rounded-full px-4 py-2 text-nowrap',
-									selectedAgeGroup === group.id ? 'text-secondary' : ''
-								)}
-							>
-								{group.name}
-								<div
+		{#if loaded}
+			<div class="flex flex-col gap-2">
+				{#if fabrics.length > 1}
+					<div class="relative">
+						<div
+							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
+						></div>
+						<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
+							{#each fabrics as fabric}
+								<button
+									use:scrollOnFocus={selectedFabric === fabric.id}
+									onclick={() => {
+										selectedFabric = fabric.id;
+										selectedAgeGroup = '';
+									}}
 									class={cn(
-										'h-1 w-0 rounded-lg bg-secondary opacity-0 transition-all duration-300',
-										selectedAgeGroup === group.id ? 'w-full opacity-100' : ''
+										'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 hover:border-primary/40',
+										selectedFabric === fabric.id ? 'bg-primary text-primary-foreground' : ''
 									)}
-								></div>
-							</button>
-						{/each}
+								>
+									{fabric.name}
+								</button>
+							{/each}
+						</div>
+						<div
+							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
+						></div>
 					</div>
-					<div
-						class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
-					></div>
-				</div>
-			{:else if ageGroup.length > 1}
-				<div class="relative">
-					<div
-						class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
-					></div>
-					<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
-						{#each ageGroup as group}
-							<button
-								use:scrollOnFocus={selectedAgeGroup === group.id}
-								onclick={() => (selectedAgeGroup = group.id)}
-								class={cn(
-									'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 last:mr-2 hover:border-primary/40',
-									selectedAgeGroup === group.id ? 'bg-primary text-white' : ''
-								)}
-							>
-								{group.name}
-							</button>
-						{/each}
-					</div>
-					<div
-						class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
-					></div>
-				</div>
-			{/if}
-
-			{#if !loaded}
-				<div class="flex h-16 justify-center">
-					<CircleLoader />
-				</div>
-			{/if}
-			{#if products.length > 0}
-				<div class="m-6 flex flex-col gap-4">
-					{#each groupProducts(products) as [gender, items]}
-						<div class="flex flex-col gap-4">
-							<span class="text-lg font-semibold">{gender}</span>
-							<div class="flex flex-wrap gap-4">
-								{#each items ?? [] as item}
-									{@const { wholeNumber, decimal } = splitNumberToString(item.price)}
+				{/if}
+				{#if fabrics.length > 1 && ageGroup.length > 1}
+					<div class="relative">
+						<div
+							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
+						></div>
+						<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
+							{#each ageGroup as group}
+								<button
+									onclick={() => (selectedAgeGroup = group.id)}
+									use:scrollOnFocus={selectedAgeGroup === group.id}
+									class={cn(
+										'rounded-full px-4 py-2 text-nowrap',
+										selectedAgeGroup === group.id ? 'text-secondary' : ''
+									)}
+								>
+									{group.name}
 									<div
-										class="group transition-width relative isolate w-full overflow-clip rounded-3xl bg-[#EEEEEE] sm:w-[296px]"
-									>
-										<div class="overflow-clip">
-											<Image
-												class="h-[240px] w-full"
-												imageClass="h-full w-full object-cover"
-												src={item.image || PUBLIC_DEFAULT_PRODUCT_IMAGE}
-												alt={item.product.name}
-												transform="g_auto:classic,w_500,c_fill"
-											/>
-										</div>
-										<div class=" flex flex-col p-4">
-											<span class="text-sm text-muted-foreground">{item.fabric.name}</span>
-											<a
-												href="/add-to-bag?productId={item.product.id}&fabricId={item.fabric
-													.id}&ageGroupId={item.ageGroup?.id}&genderGroupId={item.genderGroup?.id}"
-												class="font-semibold text-wrap"
-											>
-												<span class="absolute inset-0 z-40"></span>
-												{item.product.name}
-											</a>
-											{#if item.sets && item.sets.length > 0}
-												{@const sortedSets = [...item.sets].sort((a, b) => a.index - b.index)}
-												{#each sortedSets as set}
-													<div class="space-y-1 text-xs">
-														<span>{set.quantity}</span>
-														<span>{set.name}</span>
+										class={cn(
+											'h-1 w-0 rounded-lg bg-secondary opacity-0 transition-all duration-300',
+											selectedAgeGroup === group.id ? 'w-full opacity-100' : ''
+										)}
+									></div>
+								</button>
+							{/each}
+						</div>
+						<div
+							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
+						></div>
+					</div>
+				{:else if ageGroup.length > 1}
+					<div class="relative">
+						<div
+							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
+						></div>
+						<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
+							{#each ageGroup as group}
+								<button
+									use:scrollOnFocus={selectedAgeGroup === group.id}
+									onclick={() => (selectedAgeGroup = group.id)}
+									class={cn(
+										'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 last:mr-2 hover:border-primary/40',
+										selectedAgeGroup === group.id ? 'bg-primary text-white' : ''
+									)}
+								>
+									{group.name}
+								</button>
+							{/each}
+						</div>
+						<div
+							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
+						></div>
+					</div>
+				{/if}
+
+				{#if products.length > 0}
+					<div class="m-6 flex flex-col gap-4">
+						{#each groupProducts(products) as [gender, items]}
+							<div class="flex flex-col gap-4">
+								<span class="text-lg font-semibold">{gender}</span>
+								<div class="flex flex-wrap gap-4">
+									{#each items ?? [] as item}
+										{@const { wholeNumber, decimal } = splitNumberToString(item.price)}
+										<div
+											class="group transition-width relative isolate w-full overflow-clip rounded-3xl bg-[#EEEEEE] sm:w-[296px]"
+										>
+											<div class="overflow-clip">
+												<Image
+													class="h-[240px] w-full"
+													imageClass="h-full w-full object-cover"
+													src={item.image || PUBLIC_DEFAULT_PRODUCT_IMAGE}
+													alt={item.product.name}
+													transform="g_auto:classic,w_500,c_fill"
+												/>
+											</div>
+											<div class=" flex flex-col p-4">
+												<span class="text-sm text-muted-foreground">{item.fabric.name}</span>
+												<a
+													href="/add-to-bag?productId={item.product.id}&fabricId={item.fabric
+														.id}&ageGroupId={item.ageGroup?.id}&genderGroupId={item.genderGroup
+														?.id}"
+													class="font-semibold text-wrap"
+												>
+													<span class="absolute inset-0 z-40"></span>
+													{item.product.name}
+												</a>
+												{#if item.sets && item.sets.length > 0}
+													{@const sortedSets = [...item.sets].sort((a, b) => a.index - b.index)}
+													{#each sortedSets as set}
+														<div class="space-y-1 text-xs">
+															<span>{set.quantity}</span>
+															<span>{set.name}</span>
+														</div>
+													{/each}
+												{/if}
+												<span class="mt-4 text-xs text-muted-foreground">from</span>
+												<div class="flex items-baseline gap-2">
+													<span class="text-xs font-medium">₱</span>
+													<div class="flex gap-1">
+														<span class="text-lg font-semibold">{wholeNumber}</span>
+														<span class="mt-1 align-top text-xs font-medium">
+															{decimal}
+														</span>
 													</div>
-												{/each}
-											{/if}
-											<span class="mt-4 text-xs text-muted-foreground">from</span>
-											<div class="flex items-baseline gap-2">
-												<span class="text-xs font-medium">₱</span>
-												<div class="flex gap-1">
-													<span class="text-lg font-semibold">{wholeNumber}</span>
-													<span class="mt-1 align-top text-xs font-medium">
-														{decimal}
-													</span>
 												</div>
 											</div>
 										</div>
-									</div>
-								{/each}
+									{/each}
+								</div>
 							</div>
-						</div>
-					{/each}
-				</div>
-			{/if}
-			<Button
-				variant="ghost"
-				href="/loungewear"
-				class="mx-6 mb-20 place-self-start rounded-lg shadow-none"
-			>
-				<ArrowLeftIcon />
-				Go to Loungewear
-			</Button>
-		</div>
+						{/each}
+					</div>
+				{/if}
+				<Button
+					variant="ghost"
+					href="/loungewear"
+					class="mx-6 mb-20 place-self-start rounded-lg shadow-none"
+				>
+					<ArrowLeftIcon />
+					Go to Loungewear
+				</Button>
+			</div>
+		{:else}
+			<Preview />
+		{/if}
 	</div>
 </div>
