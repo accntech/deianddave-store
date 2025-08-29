@@ -153,7 +153,6 @@
 											<div class="overflow-clip">
 												<Image
 													class="h-[240px] w-full"
-													imageClass="h-full w-full object-cover"
 													src={item.image || PUBLIC_DEFAULT_PRODUCT_IMAGE}
 													alt={item.product.name}
 													transform="g_auto:classic,w_500,c_fill"
