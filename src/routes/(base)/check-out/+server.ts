@@ -1,13 +1,42 @@
-import { PAYMONGO_REDIRECT_URL } from '$env/static/private';
-import type { AccountInfo, Discount, Order, PaymentMethod } from '$lib/services';
+import { CART_ITEMS_URL, PAYMONGO_REDIRECT_URL } from '$env/static/private';
+import type { AccountInfo, Discount, Order, PaymentMethod, Result } from '$lib/services';
+import type { InventoryItem } from '$lib/services/inventory';
 import { updatePayment } from '$lib/services/payment';
 import { paymongo } from '$lib/services/paymongo';
 import { saveSalesOrder } from '$lib/services/sales';
 import { tryParseCardDate } from '$lib/utils/card-helper';
-import { json } from '@sveltejs/kit';
+import { computeDiscount } from '$lib/utils/discount-helper';
+import { generateJWT } from '$lib/utils/jwt-generator';
+import { error, json } from '@sveltejs/kit';
 import pRetry from 'p-retry';
 import type { RequestHandler } from './$types';
-import { computeDiscount } from '$lib/utils/discount-helper';
+
+export const GET: RequestHandler = async ({ url }) => {
+	const idsParam = url.searchParams.get('ids');
+
+	if (!idsParam) {
+		return error(400, 'No ids provided');
+	}
+
+	const path = new URL(CART_ITEMS_URL);
+	path.searchParams.set('ids', idsParam);
+
+	const jwt = await generateJWT();
+	const response = await fetch(path.toString(), {
+		method: 'GET',
+		headers: {
+			Authorization: `Bearer ${jwt}`,
+			'Content-Type': 'application/json'
+		}
+	});
+
+	if (!response.ok) {
+		return error(response.status, `Status: ${response.status}`);
+	}
+
+	const result: Result<InventoryItem[]> = await response.json();
+	return json(result);
+};
 
 type Body = {
 	info: AccountInfo;

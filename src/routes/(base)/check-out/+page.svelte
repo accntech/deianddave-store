@@ -1,6 +1,11 @@
 <script lang="ts">
+	import { page } from '$app/state';
+	import { getCartState } from '$lib/client/cart.svelte';
 	import { setOrderState } from '$lib/client/order.svelte';
 	import { Stepper } from '$lib/components/ui/stepper';
+	import type { Order, Result } from '$lib/services';
+	import type { InventoryItem } from '$lib/services/inventory';
+	import { onMount } from 'svelte';
 	import AccountInfo from './account-info.svelte';
 	import ConfirmOrder from './confirm-order.svelte';
 	import Orders from './orders.svelte';
@@ -8,7 +13,46 @@
 
 	let { data } = $props();
 	let pageIndex = $state(0);
+
 	setOrderState();
+
+	const cart = getCartState();
+	const getCurrentItems = async () => {
+		const ids = cart.orders.map(({ item }) => item.id);
+
+		const url = new URL(`${page.url}?ids=${ids.join(',')}`);
+		const response = await fetch(url);
+
+		if (!response.ok) return;
+
+		const items: Result<InventoryItem[]> = await response.json();
+
+		const orders: Order[] = [];
+
+		for (const item of items.data) {
+			let order = cart.orders.find((o) => o.item.id === item.id);
+
+			if (!order) continue;
+
+			if (item.quantity < 1) continue;
+
+			orders.push({
+				item,
+				quantity: item.quantity < order.quantity ? item.quantity : order.quantity
+			});
+		}
+
+		const index = new Map(ids.map((id, i) => [id, i] as const));
+		const sorted = [...orders].sort(
+			(a, b) => (index.get(a.item.id) ?? 0) - (index.get(b.item.id) ?? 0)
+		);
+
+		cart.orders = sorted;
+	};
+
+	onMount(async () => {
+		await getCurrentItems();
+	});
 </script>
 
 {#if pageIndex === 0}
