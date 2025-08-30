@@ -7,7 +7,7 @@
 	import { cn } from '$lib/utils';
 	import { splitNumberToString } from '$lib/utils/number-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
-	import { ArrowLeftIcon } from '@lucide/svelte';
+	import { ArrowLeftIcon, FullscreenIcon } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import {
 		filterProducts,
@@ -16,6 +16,7 @@
 		groupProducts
 	} from '../items-helper.js';
 	import Preview from '../preview.svelte';
+	import ImageDialog from '../image-dialog.svelte';
 
 	let { data } = $props();
 	const shop = getShopState();
@@ -46,6 +47,8 @@
 		shop.lastShop = window.location.href;
 		loaded = true;
 	});
+
+	let imageDialog: { show: (url: string) => void };
 </script>
 
 <div class="flex flex-col">
@@ -148,11 +151,12 @@
 									{#each items ?? [] as item}
 										{@const { wholeNumber, decimal } = splitNumberToString(item.price)}
 										<div
-											class="group transition-width relative isolate w-full overflow-clip rounded-3xl bg-[#EEEEEE] sm:w-[296px]"
+											class="group transition-width relative isolate w-full overflow-clip rounded-3xl bg-accent sm:w-[296px]"
 										>
 											<div class="overflow-clip">
 												<Image
 													class="h-[240px] w-full"
+													imageClass="group-hover:scale-105"
 													src={item.image || PUBLIC_DEFAULT_PRODUCT_IMAGE}
 													alt={item.product.name}
 													transform="g_auto:classic,w_500,c_fill"
@@ -189,6 +193,14 @@
 													</div>
 												</div>
 											</div>
+											{#if item.image}
+												<button
+													onclick={() => imageDialog.show(item.image!)}
+													class="absolute top-0 left-0 z-50 col-1 row-1 m-4 flex items-center justify-center rounded-md border bg-background/75 p-1 text-foreground/50 transition-all duration-300 hover:bg-accent/75"
+												>
+													<FullscreenIcon class="size-6" />
+												</button>
+											{/if}
 										</div>
 									{/each}
 								</div>
@@ -210,3 +222,4 @@
 		{/if}
 	</div>
 </div>
+<ImageDialog bind:this={imageDialog} />

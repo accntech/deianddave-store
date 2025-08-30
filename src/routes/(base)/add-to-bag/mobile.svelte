@@ -5,9 +5,17 @@
 	import { textColorBasedOnBackground } from '$lib/utils/color-helper';
 	import { splitNumberToString } from '$lib/utils/number-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
-	import { ArrowLeftIcon, CheckIcon, MinusIcon, PlusIcon, ShoppingBagIcon } from '@lucide/svelte';
+	import {
+		ArrowLeftIcon,
+		CheckIcon,
+		FullscreenIcon,
+		MinusIcon,
+		PlusIcon,
+		ShoppingBagIcon
+	} from '@lucide/svelte';
 
-	import type { Props, Info } from './types';
+	import ImageDialog from '../image-dialog.svelte';
+	import type { Info, Props } from './types';
 
 	let {
 		info = {} as Info,
@@ -24,6 +32,8 @@
 		available = $bindable<number>(),
 		quantity = $bindable<number>()
 	}: Props = $props();
+
+	let imageDialog: { show: (url: string) => void };
 </script>
 
 <section class="relative flex flex-col gap-4">
@@ -46,6 +56,12 @@
 						/>
 					</div>
 				{/each}
+				<button
+					onclick={() => imageDialog.show(selectedImage.source)}
+					class="z-20 col-1 row-1 m-4 flex items-center justify-center place-self-start rounded-md border bg-background/75 p-1 text-foreground/50 transition-all duration-300 hover:bg-accent/75"
+				>
+					<FullscreenIcon class="size-6" />
+				</button>
 			</div>
 		{/if}
 	</div>
@@ -203,3 +219,4 @@
 		</div>
 	</div>
 </section>
+<ImageDialog bind:this={imageDialog} />

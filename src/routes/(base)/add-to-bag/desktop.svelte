@@ -4,8 +4,16 @@
 	import { cn } from '$lib/utils';
 	import { textColorBasedOnBackground } from '$lib/utils/color-helper';
 	import { splitNumberToString } from '$lib/utils/number-helper';
-	import { ArrowLeftIcon, CheckIcon, MinusIcon, PlusIcon, ShoppingBagIcon } from '@lucide/svelte';
+	import {
+		ArrowLeftIcon,
+		CheckIcon,
+		FullscreenIcon,
+		MinusIcon,
+		PlusIcon,
+		ShoppingBagIcon
+	} from '@lucide/svelte';
 	import type { Props } from './types';
+	import ImageDialog from '../image-dialog.svelte';
 	let {
 		info,
 		aspectRatio,
@@ -21,6 +29,8 @@
 		available = $bindable<number>(),
 		quantity = $bindable<number>()
 	}: Props = $props();
+
+	let imageDialog: { show: (url: string) => void };
 </script>
 
 <div class="flex items-center justify-center px-4">
@@ -43,6 +53,12 @@
 						/>
 					</div>
 				{/each}
+				<button
+					onclick={() => imageDialog.show(selectedImage.source)}
+					class="z-20 col-1 row-1 m-4 flex items-center justify-center place-self-start rounded-md border bg-background/75 p-1 text-foreground/50 transition-all duration-300 hover:bg-accent/75"
+				>
+					<FullscreenIcon class="size-6" />
+				</button>
 			</div>
 			{#if info && info.product.description}
 				<div class="mt-8 flex flex-col gap-2">
@@ -178,3 +194,4 @@
 		{/if}
 	</section>
 </div>
+<ImageDialog bind:this={imageDialog} />

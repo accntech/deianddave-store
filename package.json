@@ -47,5 +47,8 @@
 		"typescript-eslint": "^8.40.0",
 		"vite": "^7.1.3",
 		"zod": "4.0.10"
+	},
+	"dependencies": {
+		"svelte-image-viewer": "^5.0.0"
 	}
 }

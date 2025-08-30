@@ -8,8 +8,9 @@
 		imageClass?: string;
 		src: string;
 		alt: string;
-		transform: string;
+		transform?: string;
 		background?: string;
+		onLoaded?: () => void;
 	};
 
 	let {
@@ -18,7 +19,8 @@
 		src = $bindable<string>(),
 		alt,
 		transform: transformStr,
-		background
+		background,
+		onLoaded = () => {}
 	}: Props = $props();
 
 	let ref: HTMLDivElement;
@@ -26,7 +28,8 @@
 	onMount(() => {
 		const img = ref.querySelector('img');
 		function loaded() {
-			ref.classList?.add('loaded');
+			ref?.classList?.add('loaded');
+			onLoaded();
 		}
 		if (!img) return;
 
@@ -44,7 +47,7 @@
 	style={`background-color: ${background ?? '#e2e2e2'}`}
 >
 	<img
-		src={`${transform(src, transformStr)}`}
+		src={`${transform(src, transformStr ?? '')}`}
 		class={imageClass}
 		loading="lazy"
 		decoding="async"
@@ -60,7 +63,7 @@
 
 	.skeleton-img img {
 		opacity: 0;
-		transition: opacity 500ms ease-in-out;
+		transition: all 300ms;
 	}
 
 	.skeleton-img::before {
