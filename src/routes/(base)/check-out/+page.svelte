@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { getCartState } from '$lib/client/cart.svelte';
 	import { setOrderState } from '$lib/client/order.svelte';
 	import { Stepper } from '$lib/components/ui/stepper';
 	import { onMount } from 'svelte';

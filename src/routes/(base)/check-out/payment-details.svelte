@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import GCashLogo from '$lib/assets/gcash.svg';
 	import GrabPayLogo from '$lib/assets/grabpay.svg';
 	import PayMayaLogo from '$lib/assets/paymaya.svg';
@@ -12,7 +11,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { MaskInput } from '$lib/components/ui/mask-input';
 	import * as RadioGroup from '$lib/components/ui/radio-group';
-	import type { Discount, Result } from '$lib/services';
+	import type { Discount } from '$lib/services';
 	import { tryParseCardDate, tryParseCardNumber, tryParseCvv } from '$lib/utils/card-helper';
 	import { CheckIcon, CreditCardIcon, LoaderCircleIcon, WalletIcon } from '@lucide/svelte';
 	import { onMount } from 'svelte';
