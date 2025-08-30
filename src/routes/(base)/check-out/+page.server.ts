@@ -13,22 +13,26 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		path: '/'
 	});
 
-	const jwt = await generateJWT();
+	const result = async () => {
+		const jwt = await generateJWT();
 
-	const urlPath = new URL(DISCOUNTS_URL);
-	const response = await fetch(urlPath.toString(), {
-		method: 'GET',
-		headers: {
-			Authorization: `Bearer ${jwt}`,
-			'Content-Type': 'application/json'
+		const urlPath = new URL(DISCOUNTS_URL);
+		const response = await fetch(urlPath.toString(), {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+				'Content-Type': 'application/json'
+			}
+		});
+
+		let discounts: Discount[] = [];
+		if (response.ok) {
+			const result: Result<Discount[]> = await response.json();
+			discounts = result.data;
 		}
-	});
 
-	let discounts: Discount[] = [];
-	if (response.ok) {
-		const result: Result<Discount[]> = await response.json();
-		discounts = result.data;
-	}
+		return discounts;
+	};
 
-	return { csrfToken, discounts };
+	return { streamed: { csrfToken, result: result() } };
 };

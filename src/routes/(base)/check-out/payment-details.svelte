@@ -26,10 +26,9 @@
 
 	let { index = $bindable<number>(0), discounts }: Props = $props();
 
-	const orderState = getOrderState();
+	const order = getOrderState();
 	const schema = z
 		.object({
-			discountCode: z.string().default(''),
 			methodType: z.enum(['card', 'e-wallet']).default('card'),
 			holderName: z.string().default(''),
 			cardNumber: z.string().default(''),
@@ -38,19 +37,6 @@
 			ewallet: z.enum(['gcash', 'paymaya', 'grab_pay']).default('gcash')
 		})
 		.superRefine(async (data, ctx) => {
-			if (data.discountCode !== '') {
-				const discount = discounts.find((d) => d.code === data.discountCode);
-				if (discount?.status === 'active') {
-					orderState.discount = discount;
-				} else {
-					ctx.addIssue({
-						code: 'custom',
-						message: 'Invalid discount code',
-						path: ['discountCode']
-					});
-				}
-			}
-
 			if (data.methodType === 'card') {
 				if (data.holderName.length === 0) {
 					ctx.addIssue({
@@ -105,7 +91,11 @@
 		SPA: true,
 		onResult: async ({ result }) => {
 			if (result.status === 200) {
-				orderState.paymentMethod = { method: $formData.methodType, ...$formData };
+				order.paymentMethod = {
+					method: $formData.methodType,
+					discountCode: order.discount.code,
+					...$formData
+				};
 				index = 3;
 			}
 		}
@@ -113,14 +103,13 @@
 	const { form: formData, enhance, submitting, reset, errors } = form;
 
 	onMount(() => {
-		if (orderState.paymentMethod) {
-			$formData.methodType = orderState.paymentMethod.holderName ? 'card' : 'e-wallet';
-			$formData.holderName = orderState.paymentMethod.holderName;
-			$formData.cardNumber = orderState.paymentMethod.cardNumber;
-			$formData.expiryDate = orderState.paymentMethod.expiryDate;
-			$formData.cvv = orderState.paymentMethod.cvv;
-			$formData.ewallet = orderState.paymentMethod.ewallet;
-			$formData.discountCode = orderState.paymentMethod.discountCode;
+		if (order.paymentMethod) {
+			$formData.methodType = order.paymentMethod.holderName ? 'card' : 'e-wallet';
+			$formData.holderName = order.paymentMethod.holderName;
+			$formData.cardNumber = order.paymentMethod.cardNumber;
+			$formData.expiryDate = order.paymentMethod.expiryDate;
+			$formData.cvv = order.paymentMethod.cvv;
+			$formData.ewallet = order.paymentMethod.ewallet;
 		} else {
 			reset();
 		}
@@ -142,12 +131,6 @@
 	const onWalletChanged = (value: string) => {
 		$formData.ewallet = value as 'gcash' | 'paymaya' | 'grab_pay';
 		errors.clear();
-	};
-
-	const onDiscountCodeChange = () => {
-		if ($formData.discountCode === '') {
-			orderState.discount = { code: '', type: 'fixed', value: 0 } as Discount;
-		}
 	};
 </script>
 
@@ -315,21 +298,6 @@
 					<Form.FieldErrors />
 				</Form.Fieldset>
 			{/if}
-			<div class="grid grid-cols-2 gap-4">
-				<Form.Field {form} name="discountCode">
-					<Form.Control>
-						{#snippet children({ props })}
-							<Form.Label>Discount Code</Form.Label>
-							<Input
-								{...props}
-								bind:value={$formData.discountCode}
-								onchange={onDiscountCodeChange}
-							/>
-						{/snippet}
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
-			</div>
 		</Card.Content>
 		<Card.Footer class="flex w-full flex-row-reverse  justify-between gap-4">
 			<Form.Button disabled={$submitting} class="w-32 rounded-lg">

@@ -13,7 +13,7 @@
 	import type { InventoryItem } from '$lib/services/inventory';
 	import { getCardType, maskCardNumber } from '$lib/utils/card-helper';
 	import { computeDiscount } from '$lib/utils/discount-helper';
-	import { LoaderCircleIcon } from '@lucide/svelte';
+	import { LoaderCircleIcon, TagIcon } from '@lucide/svelte';
 
 	type Props = {
 		index: number;
@@ -146,7 +146,7 @@
 							<div class="inline-flex items-center gap-1">
 								<div
 									style="background-color: {i.item.color.hexCode}"
-									class="size-4 shrink-0 rounded-full"
+									class="size-4 shrink-0 rounded-full border"
 								></div>
 								<span>{i.item.color.name}</span>
 							</div>
@@ -162,14 +162,18 @@
 			</div>
 			<div class="col-span-2 my-2 h-[1px] bg-border"></div>
 			<div class="grid grid-cols-[1fr_auto] gap-1">
-				<span class="col-1 text-sm font-medium">Total</span>
+				<span class="col-1 text-sm font-medium uppercase">Subtotal</span>
 				<span class="col-2 text-end text-sm font-medium">
 					{total.toLocaleString('en-US', {
 						style: 'currency',
 						currency: 'PHP'
 					})}
 				</span>
-				<span class="col-1 text-sm">Less: Discount</span>
+				<div class="col-1 flex items-center text-sm">
+					<span>Discount</span>
+					<span class="mr-1 ml-2">{order.discount.code}</span>
+					<TagIcon class="size-4" />
+				</div>
 				<span class="col-2 text-end text-sm">
 					{computeDiscount(total, order.discount).toLocaleString('en-US', {
 						minimumFractionDigits: 2,
@@ -177,7 +181,7 @@
 					})}
 				</span>
 				<div class="col-span-2 my-1 h-[1px] bg-border"></div>
-				<span class="col-1 text-base font-semibold">Amount Due</span>
+				<span class="col-1 text-base font-semibold uppercase">Total Due</span>
 				<span class="col-2 text-end text-base font-semibold">
 					{(total - computeDiscount(total, order.discount)).toLocaleString('en-US', {
 						style: 'currency',
@@ -189,7 +193,7 @@
 	</Card.Content>
 	<Card.Footer class="flex flex-col gap-4 ">
 		<span class="text-sm text-muted-foreground">
-			By pressing the 'Confirm and Pay' button, you agree to our terms and conditions privacy
+			By pressing the 'Confirm and Pay' button, you agree to our terms & conditions and privacy
 			policy.
 		</span>
 		<Button onclick={submit} disabled={submitting} class="w-full rounded-lg">

@@ -8,36 +8,46 @@
 	import ConfirmOrder from './confirm-order.svelte';
 	import Orders from './orders.svelte';
 	import PaymentDetails from './payment-details.svelte';
+	import type { Discount } from '$lib/services';
+	import Preview from './preview.svelte';
 
 	let { data } = $props();
 	let pageIndex = $state(0);
 
 	setOrderState();
 
+	let discounts = $state<Discount[]>([]);
+	let loaded = $state(false);
 	onMount(async () => {
 		await getCurrentItems(page.url.origin);
+		discounts = await data.streamed.result;
+		loaded = true;
 	});
 </script>
 
-{#if pageIndex === 0}
-	<Orders bind:index={pageIndex} />
+{#if loaded}
+	{#if pageIndex === 0}
+		<Orders bind:index={pageIndex} {discounts} />
+	{:else}
+		<Stepper
+			containerClass="mx-12"
+			bind:active={pageIndex}
+			steps={['Account Info', 'Payment Details', 'Confirm Order']}
+		/>
+		<div class="col-span-2 mx-6 mt-12 h-[1px] bg-border"></div>
+		<div class="mb-12 flex flex-col">
+			{#if pageIndex === 1}
+				<AccountInfo bind:index={pageIndex} />
+			{:else if pageIndex === 2}
+				<PaymentDetails bind:index={pageIndex} {discounts} />
+			{:else if pageIndex === 3}
+				<ConfirmOrder bind:index={pageIndex} csrfToken={data.streamed.csrfToken} />
+			{/if}
+			{@render Paymongo()}
+		</div>
+	{/if}
 {:else}
-	<Stepper
-		containerClass="mx-12"
-		bind:active={pageIndex}
-		steps={['Account Info', 'Payment Details', 'Confirm Order']}
-	/>
-	<div class="col-span-2 mx-6 mt-12 h-[1px] bg-border"></div>
-	<div class="mb-12 flex flex-col">
-		{#if pageIndex === 1}
-			<AccountInfo bind:index={pageIndex} />
-		{:else if pageIndex === 2}
-			<PaymentDetails bind:index={pageIndex} discounts={data.discounts} />
-		{:else if pageIndex === 3}
-			<ConfirmOrder bind:index={pageIndex} csrfToken={data.csrfToken} />
-		{/if}
-		{@render Paymongo()}
-	</div>
+	<Preview />
 {/if}
 
 {#snippet Paymongo()}
