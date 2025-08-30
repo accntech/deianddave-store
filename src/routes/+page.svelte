@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { PUBLIC_HERO_IMAGE, PUBLIC_SHOW_BANNER } from '$env/static/public';
+	import { PUBLIC_APP_TITLE, PUBLIC_HERO_IMAGE, PUBLIC_SHOW_BANNER } from '$env/static/public';
 	import { cn } from '$lib/utils';
 	import { transform } from '$lib/utils/image-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
+	import { Home } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
 	let displayText = $state('\u00A0');
@@ -38,6 +39,11 @@
 
 	let showBanner = $derived(PUBLIC_SHOW_BANNER === 'true');
 </script>
+
+<svelte:head>
+	<title>{PUBLIC_APP_TITLE} | Home</title>
+	<meta name="description" content="Welcome to our store" />
+</svelte:head>
 
 <section id="home" class="relative isolate -mt-16 flex h-[100dvh] w-full flex-col justify-center">
 	<picture

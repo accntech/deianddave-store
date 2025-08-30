@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { PUBLIC_APP_TITLE } from '$env/static/public';
 	import { getCartState } from '$lib/client/cart.svelte';
-	import { MailCheckIcon, MailIcon, SendIcon } from '@lucide/svelte';
+	import { MailCheckIcon } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
 	let { data } = $props();
@@ -19,6 +20,14 @@
 	const emailString =
 		"An email receipt including the details about your order has been sent to the email address you provided. If you didn't receive it, please check your spam folder.\n\nFor further assistance, please contact our support team.";
 </script>
+
+<svelte:head>
+	<title>{PUBLIC_APP_TITLE} | Result</title>
+	<meta
+		name="description"
+		content="Thank you for your order! Here you can find the result of your checkout process."
+	/>
+</svelte:head>
 
 <div class="flex h-[calc(100dvh-4rem)] flex-col items-center justify-center">
 	{#if data.id}

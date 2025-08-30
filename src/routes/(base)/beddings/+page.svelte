@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
+	import { PUBLIC_APP_TITLE, PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
 	import { getShopState } from '$lib/client/shop.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Image } from '$lib/components/ui/image';
@@ -9,6 +9,7 @@
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import { ArrowLeftIcon, FullscreenIcon } from '@lucide/svelte';
 	import { onMount } from 'svelte';
+	import ImageDialog from '../image-dialog.svelte';
 	import {
 		filterProducts,
 		getUniqueAgeGroups,
@@ -16,7 +17,6 @@
 		groupProducts
 	} from '../items-helper';
 	import Preview from '../preview.svelte';
-	import ImageDialog from '../image-dialog.svelte';
 
 	let { data } = $props();
 	const shop = getShopState();
@@ -50,6 +50,14 @@
 
 	let imageDialog: { show: (url: string) => void };
 </script>
+
+<svelte:head>
+	<title>{PUBLIC_APP_TITLE} | Beddings</title>
+	<meta
+		name="description"
+		content="Explore our luxurious bedding collection, featuring sustainable materials and exquisite designs."
+	/>
+</svelte:head>
 
 <div class="flex flex-col">
 	<div class="w-full xl:max-w-[1280px] xl:place-self-center">

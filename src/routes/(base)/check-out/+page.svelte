@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { PUBLIC_APP_TITLE } from '$env/static/public';
 	import { setOrderState } from '$lib/client/order.svelte';
 	import { Stepper } from '$lib/components/ui/stepper';
+	import type { Discount } from '$lib/services';
 	import { onMount } from 'svelte';
 	import { getCurrentItems } from '../items-helper';
 	import AccountInfo from './account-info.svelte';
 	import ConfirmOrder from './confirm-order.svelte';
 	import Orders from './orders.svelte';
 	import PaymentDetails from './payment-details.svelte';
-	import type { Discount } from '$lib/services';
 	import Preview from './preview.svelte';
+	import { Check } from '@lucide/svelte';
 
 	let { data } = $props();
 	let pageIndex = $state(0);
@@ -24,6 +26,14 @@
 		loaded = true;
 	});
 </script>
+
+<svelte:head>
+	<title>{PUBLIC_APP_TITLE} | Checkout</title>
+	<meta
+		name="description"
+		content="Secure checkout — review items, apply discounts, enter account info, and complete payment securely via PayMongo."
+	/>
+</svelte:head>
 
 <section class="flex flex-col sm:items-center">
 	{#if loaded}

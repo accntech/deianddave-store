@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
+	import { PUBLIC_APP_TITLE, PUBLIC_DEFAULT_PRODUCT_IMAGE } from '$env/static/public';
 	import { getShopState } from '$lib/client/shop.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Image } from '$lib/components/ui/image';
@@ -50,6 +50,14 @@
 
 	let imageDialog: { show: (url: string) => void };
 </script>
+
+<svelte:head>
+	<title>{PUBLIC_APP_TITLE} | Loungewear</title>
+	<meta
+		name="description"
+		content="Explore our comfortable loungewear collection, designed for relaxation and style."
+	/>
+</svelte:head>
 
 <div class="flex flex-col">
 	<div class="w-full xl:max-w-[1280px] xl:place-self-center">

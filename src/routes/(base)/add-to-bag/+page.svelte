@@ -9,6 +9,7 @@
 	import Preview from './preview.svelte';
 	import { getCurrentItems } from '../items-helper';
 	import { page } from '$app/state';
+	import { PUBLIC_APP_TITLE } from '$env/static/public';
 
 	let { data } = $props();
 
@@ -225,6 +226,11 @@
 		}
 	};
 </script>
+
+<svelte:head>
+	<title>{PUBLIC_APP_TITLE} | Add to Bag</title>
+	<meta name="description" content="Add items to your bag" />
+</svelte:head>
 
 {#if loaded}
 	{#if isMobile.current}
