@@ -35,12 +35,12 @@
 
 <div class="flex items-center justify-center px-4">
 	<section class="grid grid-cols-[1fr_auto] gap-12 xl:max-w-[1280px] xl:place-self-center">
-		<div class="col-1 w-[623px]">
+		<div class="col-1">
 			<div class="grid w-full">
 				{#each images as image}
 					<div
 						class={cn(
-							'col-1 row-1 h-full flex-[0_0_100%] shrink-0 snap-start flex-col overflow-clip rounded-xl opacity-0 transition-all duration-300 ',
+							'col-1 row-1 flex h-full flex-col overflow-clip rounded-xl opacity-0 transition-all duration-300 ',
 							selectedImage.source === image.source ? 'z-10 opacity-100' : '',
 							aspectRatio
 						)}

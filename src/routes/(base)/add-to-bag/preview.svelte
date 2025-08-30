@@ -4,10 +4,12 @@
 	let { aspectRatio = '' } = $props();
 </script>
 
-<div class="flex flex-col">
-	<div class="mx-4 grid gap-12 sm:grid-cols-[1fr_auto] sm:place-self-center xl:max-w-[1280px]">
-		<div class={cn('row-1animate-pulse col-1 rounded-xl bg-muted sm:w-[623px]', aspectRatio)}></div>
-		<div class="sm:mx-0 sm:w-80 lg:w-90">
+<div class="flex flex-col px-4 lg:items-center">
+	<div class="grid gap-12 md:grid-cols-[1fr_auto] lg:w-full lg:max-w-[1128px]">
+		<div class={cn('grid', aspectRatio)}>
+			<div class="animate-pulse rounded-xl bg-muted"></div>
+		</div>
+		<div class="mt-8 sm:w-80 md:mt-0 lg:w-90">
 			<div class="row-2 mb-2 h-4 w-36 animate-pulse justify-start rounded bg-muted"></div>
 			<div class="row-2 h-8 w-full animate-pulse rounded-md bg-muted"></div>
 
