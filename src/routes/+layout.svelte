@@ -14,9 +14,10 @@
 	setShopState('');
 
 	let scrolled = $state(false);
-	function handleScroll() {
+	const handleScroll = () => {
 		scrolled = typeof window !== 'undefined' ? window.scrollY > 4 : false;
-	}
+	};
+
 	onMount(() => {
 		handleScroll();
 	});

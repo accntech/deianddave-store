@@ -76,7 +76,7 @@
 <section
 	id="shop"
 	tabindex="-1"
-	class="flex h-[calc(100dvh-64px)] min-h-[618px] scroll-mt-16 flex-col gap-4 bg-[#405C93] p-6 py-4 text-primary-foreground transition-all duration-300 sm:h-auto sm:min-h-auto"
+	class="flex scroll-mt-16 flex-col gap-4 bg-[#405C93] p-6 py-4 text-primary-foreground transition-all duration-300 sm:h-auto sm:min-h-auto"
 >
 	<span class="place-self-center text-center text-xl font-medium xl:max-w-[1280px]">
 		Our Products
