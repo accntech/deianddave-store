@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { PUBLIC_HERO_IMAGE } from '$env/static/public';
+	import { PUBLIC_HERO_IMAGE, PUBLIC_SHOW_BANNER } from '$env/static/public';
+	import { cn } from '$lib/utils';
 	import { transform } from '$lib/utils/image-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import { onMount } from 'svelte';
@@ -34,6 +35,8 @@
 			(el as HTMLElement).focus({ preventScroll: true });
 		}
 	}
+
+	let showBanner = $derived(PUBLIC_SHOW_BANNER === 'true');
 </script>
 
 <section id="home" class="relative isolate -mt-16 flex h-[100dvh] w-full flex-col justify-center">
@@ -76,7 +79,10 @@
 <section
 	id="shop"
 	tabindex="-1"
-	class="flex scroll-mt-16 flex-col gap-4 bg-[#405C93] p-6 py-4 text-primary-foreground transition-all duration-300 sm:h-auto sm:min-h-auto"
+	class={cn(
+		'flex flex-col gap-4 bg-[#405C93] p-6 py-4 text-primary-foreground transition-all duration-300 sm:h-auto sm:min-h-auto',
+		showBanner ? 'scroll-mt-26' : 'scroll-mt-16'
+	)}
 >
 	<span class="place-self-center text-center text-xl font-medium xl:max-w-[1280px]">
 		Our Products

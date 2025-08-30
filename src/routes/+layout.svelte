@@ -8,6 +8,9 @@
 	import { goto } from '$app/navigation';
 	import { setShopState } from '$lib/client/shop.svelte';
 	import { onMount } from 'svelte';
+	import Banner from './banner.svelte';
+	import { PUBLIC_SHOW_BANNER } from '$env/static/public';
+	import { page } from '$app/state';
 
 	let { children } = $props();
 	setCartState([]);
@@ -21,6 +24,8 @@
 	onMount(() => {
 		handleScroll();
 	});
+
+	let showBanner = $derived(PUBLIC_SHOW_BANNER === 'true');
 </script>
 
 <svelte:window on:scroll={handleScroll} />
@@ -31,30 +36,36 @@
 
 <main class="relative">
 	<nav
-		class={`sticky top-0 z-40 flex h-16 flex-col justify-center p-4 text-primary transition-all duration-300 xl:items-center ${scrolled ? 'bg-white/85 backdrop-blur' : 'bg-background/10'}`}
+		class={`sticky top-0 z-40 flex min-h-16 flex-col justify-center text-primary transition-all duration-300 xl:items-center ${scrolled ? 'bg-white/85 backdrop-blur' : 'bg-background/10'}`}
 	>
-		<div class="relative grid w-full grid-cols-[auto_1fr_auto] justify-center xl:max-w-[1280px]">
-			<button
-				class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:hidden dark:hover:bg-input/50 [&_svg]:size-5"
-			>
-				<MenuIcon />
-			</button>
-			<a href="/" class="absolute place-self-center sm:place-self-start">
-				<img src={Logo} alt="Logo" class="h-8" />
-			</a>
-			<div class="col-3">
+		<div class="flex w-full flex-col items-center p-4">
+			<div class="relative grid w-full grid-cols-[auto_1fr_auto] justify-center xl:max-w-[1280px]">
 				<button
-					onclick={() => goto('/check-out')}
-					class="relative inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:hover:bg-input/50 [&_svg]:size-5"
+					class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:hidden dark:hover:bg-input/50 [&_svg]:size-5"
 				>
-					<ShoppingBagIcon />
-					{#if getCartState().orders.length > 0}
-						<div class="circle absolute top-1 right-1"></div>
-					{/if}
+					<MenuIcon />
 				</button>
+				<a href="/" class="absolute place-self-center sm:place-self-start">
+					<img src={Logo} alt="Logo" class="h-8" />
+				</a>
+				<div class="col-3">
+					<button
+						onclick={() => goto('/check-out')}
+						class="relative inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:hover:bg-input/50 [&_svg]:size-5"
+					>
+						<ShoppingBagIcon />
+						{#if getCartState().orders.length > 0}
+							<div class="circle absolute top-1 right-1"></div>
+						{/if}
+					</button>
+				</div>
 			</div>
 		</div>
+		{#if showBanner && page.url.pathname === '/'}
+			<Banner />
+		{/if}
 	</nav>
+
 	{@render children?.()}
 </main>
 
