@@ -7,6 +7,8 @@
 	import Desktop from './desktop.svelte';
 	import Mobile from './mobile.svelte';
 	import Preview from './preview.svelte';
+	import { getCurrentItems } from '../items-helper';
+	import { page } from '$app/state';
 
 	let { data } = $props();
 
@@ -115,10 +117,20 @@
 		);
 	});
 
+	const cart = getCartState();
+
 	let available = $derived.by(() => {
 		if (!selectedItem) return 0;
 
-		return selectedItem?.quantity || 0;
+		const existing = cart.orders.find(
+			({ item }) =>
+				item.id === selectedItem.id &&
+				item.size.id === selectedItem.size.id &&
+				item.color.id === selectedItem.color.id
+		);
+
+		const remaining = existing ? selectedItem.quantity - existing.quantity : selectedItem.quantity;
+		return remaining < 0 ? 0 : remaining;
 	});
 
 	let quantity = $state(1);
@@ -153,6 +165,7 @@
 
 	let loaded = $state(false);
 	onMount(async () => {
+		await getCurrentItems(page.url.origin);
 		const action = await data.streamed.result;
 
 		items = action.result.data || [];
@@ -165,8 +178,6 @@
 		quantity = available > 0 ? 1 : 0;
 		loaded = true;
 	});
-
-	const cart = getCartState();
 
 	let aspectRatio = $derived.by(() => {
 		if (type === 'loungewear') {

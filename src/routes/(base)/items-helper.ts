@@ -1,3 +1,5 @@
+import { getCartState } from '$lib/client/cart.svelte';
+import type { Order, Result } from '$lib/services';
 import type { InventoryItem, Product } from '$lib/services/inventory';
 
 export const getUniqueFabrics = (items: InventoryItem[]) => {
@@ -163,4 +165,44 @@ export const groupProducts = (products: Product[]) => {
 		return an.localeCompare(bn);
 	});
 	return entries as [string, Product[]][];
+};
+
+export const getCurrentItems = async (basePath: string) => {
+	const cart = getCartState();
+	const ids = cart.orders.map(({ item }) => item.id);
+
+	if (ids.length === 0) return;
+
+	const url = new URL(`${basePath}/check-out?ids=${ids.join(',')}`);
+	const response = await fetch(url);
+
+	if (!response.ok) return;
+
+	const items: Result<InventoryItem[]> = await response.json();
+
+	const orders: Order[] = [];
+
+	for (const item of items.data) {
+		let order = cart.orders.find((o) => o.item.id === item.id);
+
+		if (!order) continue;
+
+		if (item.quantity < 1) continue;
+
+		const quantity = item.quantity < order.quantity ? item.quantity : order.quantity;
+
+		if (quantity >= 1) {
+			orders.push({
+				item,
+				quantity
+			});
+		}
+	}
+
+	const index = new Map(ids.map((id, i) => [id, i] as const));
+	const sorted = [...orders].sort(
+		(a, b) => (index.get(a.item.id) ?? 0) - (index.get(b.item.id) ?? 0)
+	);
+
+	cart.orders = sorted;
 };

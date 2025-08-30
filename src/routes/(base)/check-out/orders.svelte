@@ -102,7 +102,7 @@
 	</div>
 {/if}
 <Button
-	variant="outline"
+	variant="ghost"
 	class="mx-4 mb-64 place-self-start rounded-lg shadow-none"
 	onclick={() => goto(shop.lastShop === '' ? '/' : shop.lastShop)}
 >
