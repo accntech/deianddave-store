@@ -68,7 +68,7 @@
 				<Image
 					src={item.image || PUBLIC_DEFAULT_PRODUCT_IMAGE}
 					alt={item.product.name}
-					transform="h_120,c_fill"
+					transform="h_300,c_fill"
 					imageClass="object-cover w-full h-full"
 					class="size-24 shrink-0 rounded-xl border"
 				/>
