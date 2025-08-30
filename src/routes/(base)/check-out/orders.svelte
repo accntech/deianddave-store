@@ -9,6 +9,7 @@
 	import { getCartState } from '$lib/client/cart.svelte';
 	import { getShopState } from '$lib/client/shop.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import { Image } from '$lib/components/ui/image';
 	import type { InventoryItem } from '$lib/services/inventory';
 	import { splitNumberToString } from '$lib/utils/number-helper';
 	import { ShoppingCartIcon, XIcon } from '@lucide/svelte';
@@ -46,19 +47,14 @@
 	<div class="space-y-4 px-4 py-6">
 		{#each cart.orders as { item, quantity }}
 			{@const { wholeNumber, decimal } = splitNumberToString(item.price * quantity)}
-			<div class="relative flex gap-2 rounded-3xl bg-[#EEEEEE] p-4 pr-8">
-				<object
-					type="image/png"
-					data={item.image === '' ? PUBLIC_DEFAULT_PRODUCT_IMAGE : item.image}
-					class="size-24 shrink-0 rounded-xl border object-cover"
-					aria-label={item.product.name}
-				>
-					<img
-						src={PUBLIC_DEFAULT_PRODUCT_IMAGE}
-						alt={item.product.name}
-						class="h-full w-full object-cover"
-					/>
-				</object>
+			<div class="relative flex gap-2 rounded-3xl bg-accent p-4 pr-8">
+				<Image
+					src={item.image || PUBLIC_DEFAULT_PRODUCT_IMAGE}
+					alt={item.product.name}
+					transform="h_120,c_fill"
+					imageClass="object-cover w-full h-full"
+					class="size-24 shrink-0 rounded-xl border"
+				/>
 				<div class="flex-1">
 					<span class="text-md font-medium">{item.product.name}</span>
 					<span class="flex flex-nowrap gap-4 text-sm whitespace-pre-wrap text-muted-foreground">
