@@ -93,7 +93,7 @@
 			if (result.status === 200) {
 				order.paymentMethod = {
 					method: $formData.methodType,
-					discountCode: order.discount.code,
+					discountCode: order.discount?.code,
 					...$formData
 				};
 				index = 3;
@@ -134,7 +134,12 @@
 	};
 </script>
 
-<form method="POST" use:enhance use:focusTrap>
+<form
+	method="POST"
+	use:enhance
+	use:focusTrap
+	class="transition-all duration-300 sm:rounded-2xl sm:border sm:shadow-lg"
+>
 	<Card.Root class="rounded-none border-0 shadow-none sm:w-[375px] sm:rounded-3xl">
 		<Card.Header>
 			<Card.Title class="sm:text-lg">Payment Details</Card.Title>

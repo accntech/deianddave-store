@@ -25,35 +25,37 @@
 	});
 </script>
 
-{#if loaded}
-	{#if pageIndex === 0}
-		<Orders bind:index={pageIndex} {discounts} />
+<section class="flex flex-col sm:items-center">
+	{#if loaded}
+		{#if pageIndex === 0}
+			<Orders bind:index={pageIndex} {discounts} />
+		{:else}
+			<Stepper
+				containerClass="mx-12 sm:w-96"
+				bind:active={pageIndex}
+				steps={['Account Info', 'Payment Details', 'Confirm Order']}
+			/>
+			<div class="col-span-2 mx-6 mt-12 h-[1px] bg-border"></div>
+			<div class="mb-12 flex flex-col">
+				{#if pageIndex === 1}
+					<AccountInfo bind:index={pageIndex} />
+				{:else if pageIndex === 2}
+					<PaymentDetails bind:index={pageIndex} {discounts} />
+				{:else if pageIndex === 3}
+					<ConfirmOrder bind:index={pageIndex} csrfToken={data.streamed.csrfToken} />
+				{/if}
+				{@render Paymongo()}
+			</div>
+		{/if}
 	{:else}
-		<Stepper
-			containerClass="mx-12"
-			bind:active={pageIndex}
-			steps={['Account Info', 'Payment Details', 'Confirm Order']}
-		/>
-		<div class="col-span-2 mx-6 mt-12 h-[1px] bg-border"></div>
-		<div class="mb-12 flex flex-col">
-			{#if pageIndex === 1}
-				<AccountInfo bind:index={pageIndex} />
-			{:else if pageIndex === 2}
-				<PaymentDetails bind:index={pageIndex} {discounts} />
-			{:else if pageIndex === 3}
-				<ConfirmOrder bind:index={pageIndex} csrfToken={data.streamed.csrfToken} />
-			{/if}
-			{@render Paymongo()}
-		</div>
+		<Preview />
 	{/if}
-{:else}
-	<Preview />
-{/if}
+</section>
 
 {#snippet Paymongo()}
 	<span
 		aria-label="Powered by Paymongo"
-		class="my-4 inline-flex place-content-center items-center gap-4 text-xs text-muted-foreground"
+		class="my-8 inline-flex place-content-center items-center gap-4 text-xs text-muted-foreground"
 	>
 		Powered by
 		<a href="https://www.paymongo.com/" target="_blank" aria-label="Paymongo">

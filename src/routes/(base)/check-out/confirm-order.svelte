@@ -77,7 +77,9 @@
 	};
 </script>
 
-<Card.Root class="rounded-none border-0 shadow-none sm:w-[375px] sm:rounded-3xl">
+<Card.Root
+	class="rounded-none border-0 shadow-none sm:w-[375px] sm:rounded-2xl sm:border sm:shadow-lg"
+>
 	<Card.Header>
 		<Card.Title class="sm:text-lg">Review the order</Card.Title>
 		<Card.Description>
@@ -171,8 +173,11 @@
 				</span>
 				<div class="col-1 flex items-center text-sm">
 					<span>Discount</span>
-					<span class="mr-1 ml-2">{order.discount.code}</span>
-					<TagIcon class="size-4" />
+
+					{#if order.discount?.code}
+						<span class="mr-1 ml-2">{order.discount.code}</span>
+						<TagIcon class="size-4" />
+					{/if}
 				</div>
 				<span class="col-2 text-end text-sm">
 					{computeDiscount(total, order.discount).toLocaleString('en-US', {
