@@ -125,7 +125,7 @@
 				</Button>
 			</div>
 			<div
-				class="transition-width duration-300 sm:w-xs sm:rounded-3xl sm:border sm:p-6 sm:shadow-lg lg:w-sm"
+				class="transition-width w-full place-self-start duration-300 sm:w-xs sm:rounded-3xl sm:border sm:p-6 sm:shadow-lg lg:w-sm"
 			>
 				<div class="border-t border-b py-4 pt-6 sm:border-t-0 sm:pt-2">
 					<DiscountComponent {discounts} />
