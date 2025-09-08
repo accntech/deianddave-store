@@ -157,7 +157,21 @@
 					</div>
 				{/if}
 				<div class="mt-4 flex flex-col gap-2 font-medium">
-					<span class="text-sm">Quantity {available === 0 ? '' : `- ${available} available`} </span>
+					<div class="flex items-center gap-2 text-sm">
+						Quantity
+						{#if available === 0}
+							<span class="rounded-md bg-destructive px-2 py-1 text-sm text-white">Sold out</span>
+						{:else}
+							<span
+								class={cn(
+									'rounded-md px-2 py-1 text-sm',
+									available <= 3 ? 'bg-secondary' : ' bg-green-700 text-white'
+								)}
+							>
+								{available} available
+							</span>
+						{/if}
+					</div>
 					<div class="isolate flex items-center">
 						<Button
 							variant="outline"

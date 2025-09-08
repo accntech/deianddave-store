@@ -162,7 +162,21 @@
 	{/if}
 
 	<div class="flex flex-col gap-2">
-		<span class="mx-6 text-sm">Quantity - {available} available</span>
+		<div class="mx-6 flex items-center gap-2 text-sm">
+			Quantity
+			{#if available === 0}
+				<span class="rounded-md bg-destructive px-2 py-1 text-sm text-white">Sold out</span>
+			{:else}
+				<span
+					class={cn(
+						'rounded-md px-2 py-1 text-sm',
+						available <= 3 ? 'bg-secondary' : ' bg-green-700 text-white'
+					)}
+				>
+					{available} available
+				</span>
+			{/if}
+		</div>
 		<div class="isolate mx-6 flex items-center">
 			<Button
 				variant="outline"
