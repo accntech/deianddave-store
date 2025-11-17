@@ -9,16 +9,20 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 
 	const result = async () => {
 		const jwt = await generateJWT();
-		const url = new URL(INVENTORIES_URL);
-		url.searchParams.append('type', 'beddings');
-
-		const response = await fetch(url.toString(), {
+		const response = await fetch(`${INVENTORIES_URL}/?type=beddings`, {
 			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${jwt}`,
 				'Content-Type': 'application/json'
 			}
 		});
+
+		if (!response.ok) {
+			console.log(`HTTP error! status: ${response.status}`);
+			return {
+				result: { data: [], errors: { message: `HTTP error! status: ${response.status}` } }
+			};
+		}
 
 		const result: Result<InventoryItem[]> = await response.json();
 
