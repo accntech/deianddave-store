@@ -99,7 +99,7 @@
 			<div class="flex gap-2">
 				{#if order.paymentMethod.method === 'card'}
 					<div class="flex w-full items-center gap-1">
-						<div class="flex flex-grow items-center gap-1">
+						<div class="flex grow items-center gap-1">
 							{#if getCardType(order.paymentMethod.cardNumber) === 'visa'}
 								<img class="w-[50px] object-cover" src={VisaLogo} alt="visa" />
 							{:else if getCardType(order.paymentMethod.cardNumber) === 'master-card'}
@@ -107,7 +107,7 @@
 							{/if}
 							<p>{maskCardNumber(order.paymentMethod.cardNumber)}</p>
 						</div>
-						<p class="flex-grow-0">{order.paymentMethod.expiryDate}</p>
+						<p class="grow-0">{order.paymentMethod.expiryDate}</p>
 					</div>
 				{:else if order.paymentMethod.method === 'e-wallet'}
 					{#if order.paymentMethod.ewallet === 'gcash'}
@@ -162,7 +162,7 @@
 					</span>
 				{/each}
 			</div>
-			<div class="col-span-2 my-2 h-[1px] bg-border"></div>
+			<div class="col-span-2 my-2 h-px bg-border"></div>
 			<div class="grid grid-cols-[1fr_auto] gap-1">
 				<span class="col-1 text-sm font-medium uppercase">Subtotal</span>
 				<span class="col-2 text-end text-sm font-medium">
@@ -185,7 +185,7 @@
 						maximumFractionDigits: 2
 					})}
 				</span>
-				<div class="col-span-2 my-1 h-[1px] bg-border"></div>
+				<div class="col-span-2 my-1 h-px bg-border"></div>
 				<span class="col-1 text-base font-semibold uppercase">Total Due</span>
 				<span class="col-2 text-end text-base font-semibold">
 					{(total - computeDiscount(total, order.discount)).toLocaleString('en-US', {

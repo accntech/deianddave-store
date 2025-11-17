@@ -205,7 +205,7 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<div class="flex items-center gap-2">
-								<Form.Label class="flex-grow">Card Number</Form.Label>
+								<Form.Label class="grow">Card Number</Form.Label>
 								<img
 									class="h-6 w-24 object-cover antialiased"
 									src={VisaMasterCardLogo}

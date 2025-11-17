@@ -3,7 +3,6 @@
 	import { cn } from '$lib/utils';
 	import { transform } from '$lib/utils/image-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
-	import { Home } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
 	let displayText = $state('\u00A0');
@@ -45,9 +44,9 @@
 	<meta name="description" content="Welcome to our store" />
 </svelte:head>
 
-<section id="home" class="relative isolate -mt-16 flex h-[100dvh] w-full flex-col justify-center">
+<section id="home" class="relative isolate -mt-16 flex h-dvh w-full flex-col justify-center">
 	<picture
-		class="absolute h-full w-full [mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] transition-all duration-300 [-webkit-mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)]"
+		class="absolute h-full w-full mask-[linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] transition-all duration-300 [-webkit-mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)]"
 	>
 		<source
 			media="(width <= 800px)"
@@ -65,7 +64,7 @@
 	</picture>
 
 	<div
-		class="will-change-opacity transform-all z-20 flex w-full animate-in flex-col gap-6 place-self-center-safe duration-500 ease-out will-change-transform fade-in-50 slide-in-from-bottom-12 xl:max-w-[1280px]"
+		class="will-change-opacity transform-all z-20 flex w-full animate-in flex-col gap-6 place-self-center-safe duration-500 ease-out will-change-transform fade-in-50 slide-in-from-bottom-12 xl:max-w-7xl"
 	>
 		<div
 			class="text-center text-[clamp(1.5rem,calc(5vw+1rem),4rem)] font-medium text-primary transition-all duration-300"
@@ -90,11 +89,11 @@
 		showBanner ? 'scroll-mt-26' : 'scroll-mt-16'
 	)}
 >
-	<span class="place-self-center text-center text-xl font-medium xl:max-w-[1280px]">
+	<span class="place-self-center text-center text-xl font-medium xl:max-w-7xl">
 		Our Products
 	</span>
 	<div
-		class="flex w-full flex-col justify-center gap-4 place-self-center md:flex-row lg:gap-32 xl:max-w-[1280px]"
+		class="flex w-full flex-col justify-center gap-4 place-self-center md:flex-row lg:gap-32 xl:max-w-7xl"
 	>
 		<div
 			class="flex w-64 flex-col items-center justify-center place-self-center text-center text-sm"
@@ -111,14 +110,14 @@
 				</svg>
 			</div>
 			<span class="text-lg font-medium">Beddings</span>
-			<span class="mt-4 text-sm whitespace-pre-wrap opacity-75 sm:h-[80px]">
+			<span class="mt-4 text-sm whitespace-pre-wrap opacity-75 sm:h-20">
 				{'100% TENCEL™ Lyocell\n100% Organic Bamboo\n100% Grade 6A Mulberry Silk'}
 			</span>
 			<a href="/beddings" class="my-4 rounded-full bg-primary px-6 py-2 font-medium">
 				Shop Collection
 			</a>
 		</div>
-		<div class="col-span-2 h-[1px] w-64 place-self-center bg-border opacity-30 md:hidden"></div>
+		<div class="col-span-2 h-px w-64 place-self-center bg-border opacity-30 md:hidden"></div>
 		<div class="flex w-64 flex-col items-center place-self-center text-center text-sm">
 			<div class="mb-2 flex size-20">
 				<svg viewBox="0 0 110 96" class="size-18 fill-current" xmlns="http://www.w3.org/2000/svg">
@@ -129,7 +128,7 @@
 			</div>
 
 			<span class="text-lg font-medium">Loungewear</span>
-			<span class="mt-4 text-sm whitespace-pre-wrap opacity-75 sm:h-[80px]">
+			<span class="mt-4 text-sm whitespace-pre-wrap opacity-75 sm:h-20">
 				{'100% Organic Bamboo \nLyocell'}
 			</span>
 			<a href="/loungewear" class="my-4 rounded-full bg-primary px-6 py-2 font-medium">
@@ -139,7 +138,7 @@
 	</div>
 </section>
 <section id="fabric" class="flex flex-col">
-	<div class="flex w-full flex-col gap-10 place-self-center p-12 md:px-12 xl:max-w-[1280px]">
+	<div class="flex w-full flex-col gap-10 place-self-center p-12 md:px-12 xl:max-w-7xl">
 		<div class="flex gap-6">
 			<svg
 				viewBox="0 0 120 120"
@@ -207,7 +206,7 @@
 	</div>
 </section>
 <section id="testimonials" class="flex flex-col gap-4 bg-[#7D90B4] py-8">
-	<div class="flex flex-col gap-4 overflow-visible xl:max-w-[1280px] xl:place-self-center">
+	<div class="flex flex-col gap-4 overflow-visible xl:max-w-7xl xl:place-self-center">
 		<span class="px-8 text-lg font-medium text-primary-foreground sm:px-12">
 			What our customers have to say...
 		</span>

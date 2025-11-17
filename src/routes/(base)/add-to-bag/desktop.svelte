@@ -34,7 +34,7 @@
 </script>
 
 <div class="flex items-center justify-center px-4">
-	<section class="grid grid-cols-[1fr_auto] gap-12 xl:max-w-[1280px] xl:place-self-center">
+	<section class="grid grid-cols-[1fr_auto] gap-12 xl:max-w-7xl xl:place-self-center">
 		<div class="col-1">
 			<div class="grid w-full">
 				{#each images as image}

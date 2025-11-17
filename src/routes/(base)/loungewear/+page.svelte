@@ -9,6 +9,7 @@
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
 	import { ArrowLeftIcon, FullscreenIcon } from '@lucide/svelte';
 	import { onMount } from 'svelte';
+	import ImageDialog from '../image-dialog.svelte';
 	import {
 		filterProducts,
 		getUniqueAgeGroups,
@@ -16,7 +17,6 @@
 		groupProducts
 	} from '../items-helper.js';
 	import Preview from '../preview.svelte';
-	import ImageDialog from '../image-dialog.svelte';
 
 	let { data } = $props();
 	const shop = getShopState();
@@ -60,7 +60,7 @@
 </svelte:head>
 
 <div class="flex flex-col">
-	<div class="w-full xl:max-w-[1280px] xl:place-self-center">
+	<div class="w-full xl:max-w-7xl xl:place-self-center">
 		<div class="mx-6 my-4">
 			<p class="text-xl font-medium">
 				Silky-soft, naturally breathable, and gentle on sensitive skin
@@ -72,7 +72,7 @@
 				{#if fabrics.length > 1}
 					<div class="relative">
 						<div
-							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
+							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-linear-to-r from-background/75 to-transparent"
 						></div>
 						<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
 							{#each fabrics as fabric}
@@ -92,14 +92,14 @@
 							{/each}
 						</div>
 						<div
-							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
+							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background/75 to-transparent"
 						></div>
 					</div>
 				{/if}
 				{#if fabrics.length > 1 && ageGroup.length > 1}
 					<div class="relative">
 						<div
-							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
+							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-linear-to-r from-background/75 to-transparent"
 						></div>
 						<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
 							{#each ageGroup as group}
@@ -122,13 +122,13 @@
 							{/each}
 						</div>
 						<div
-							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
+							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background/75 to-transparent"
 						></div>
 					</div>
 				{:else if ageGroup.length > 1}
 					<div class="relative">
 						<div
-							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
+							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-linear-to-r from-background/75 to-transparent"
 						></div>
 						<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
 							{#each ageGroup as group}
@@ -145,7 +145,7 @@
 							{/each}
 						</div>
 						<div
-							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
+							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background/75 to-transparent"
 						></div>
 					</div>
 				{/if}
@@ -163,7 +163,7 @@
 										>
 											<div class="overflow-clip">
 												<Image
-													class="h-[240px] w-full"
+													class="h-60 w-full"
 													imageClass="group-hover:scale-105"
 													src={item.image || PUBLIC_DEFAULT_PRODUCT_IMAGE}
 													alt={item.product.name}

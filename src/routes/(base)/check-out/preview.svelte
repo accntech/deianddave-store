@@ -1,6 +1,6 @@
 <div class="flex w-full flex-col items-center">
 	<div
-		class="w-full grid-cols-[1fr_auto] gap-6 p-6 sm:grid sm:p-8 sm:px-4 xl:max-w-[1280px] xl:px-0"
+		class="w-full grid-cols-[1fr_auto] gap-6 p-6 sm:grid sm:p-8 sm:px-4 xl:max-w-7xl xl:px-0"
 	>
 		<div class="flex w-full flex-col gap-6">
 			<div class="h-32 animate-pulse rounded-3xl bg-muted"></div>

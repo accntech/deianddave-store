@@ -11,7 +11,6 @@
 	import Orders from './orders.svelte';
 	import PaymentDetails from './payment-details.svelte';
 	import Preview from './preview.svelte';
-	import { Check } from '@lucide/svelte';
 
 	let { data } = $props();
 	let pageIndex = $state(0);
@@ -45,7 +44,7 @@
 				bind:active={pageIndex}
 				steps={['Account Info', 'Payment Details', 'Confirm Order']}
 			/>
-			<div class="col-span-2 mx-6 mt-12 h-[1px] bg-border"></div>
+			<div class="col-span-2 mx-6 mt-12 h-px bg-border"></div>
 			<div class="mb-12 flex flex-col">
 				{#if pageIndex === 1}
 					<AccountInfo bind:index={pageIndex} />

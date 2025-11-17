@@ -101,7 +101,7 @@
 		<div class="relative isolate">
 			<span class="z-40 mx-6 text-sm">Size</span>
 			<div
-				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
+				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-linear-to-r from-background/75 to-transparent"
 			></div>
 			<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-6">
 				{#each sizes as size}
@@ -120,7 +120,7 @@
 				{/each}
 			</div>
 			<div
-				class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
+				class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background/75 to-transparent"
 			></div>
 		</div>
 	{/if}
@@ -129,7 +129,7 @@
 		<div class="relative isolate">
 			<span class="z-40 mx-6 text-sm">Color {selectedColor ? `- ${selectedColor.name}` : ''}</span>
 			<div
-				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background/75 to-transparent"
+				class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-linear-to-r from-background/75 to-transparent"
 			></div>
 			<div
 				class="-mt-2 no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-6 py-4"
@@ -156,7 +156,7 @@
 				{/each}
 			</div>
 			<div
-				class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background/75 to-transparent"
+				class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background/75 to-transparent"
 			></div>
 		</div>
 	{/if}
@@ -219,7 +219,7 @@
 		Back
 	</Button>
 	<div
-		class="fixed bottom-0 flex h-16 w-full justify-center bg-gradient-to-t from-background to-transparent pb-6"
+		class="fixed bottom-0 flex h-16 w-full justify-center bg-linear-to-t from-background to-transparent pb-6"
 	>
 		<div class="place-self-center overflow-clip rounded-full bg-background">
 			<button

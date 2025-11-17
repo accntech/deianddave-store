@@ -1,16 +1,16 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
+	import { PUBLIC_SHOW_BANNER } from '$env/static/public';
 	import favicon from '$lib/assets/favicon.png';
 	import Logo from '$lib/assets/logo.png';
 	import { getCartState, setCartState } from '$lib/client/cart.svelte';
-	import '@fontsource-variable/geist';
-	import '../app.css';
-	import { MenuIcon, ShoppingBagIcon } from '@lucide/svelte';
-	import { goto } from '$app/navigation';
 	import { setShopState } from '$lib/client/shop.svelte';
+	import '@fontsource-variable/geist';
+	import { MenuIcon, ShoppingBagIcon } from '@lucide/svelte';
 	import { onMount } from 'svelte';
+	import '../app.css';
 	import Banner from './banner.svelte';
-	import { PUBLIC_SHOW_BANNER } from '$env/static/public';
-	import { page } from '$app/state';
 
 	let { children } = $props();
 	setCartState([]);
@@ -70,7 +70,7 @@
 		class={`sticky top-0 z-40 flex min-h-16 flex-col justify-center text-primary transition-all duration-300 xl:items-center ${scrolled ? 'bg-white/85 backdrop-blur' : 'bg-background/10'}`}
 	>
 		<div class="flex w-full flex-col items-center p-4">
-			<div class="relative grid w-full grid-cols-[auto_1fr_auto] justify-center xl:max-w-[1280px]">
+			<div class="relative grid w-full grid-cols-[auto_1fr_auto] justify-center xl:max-w-7xl">
 				<button
 					class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:hidden dark:hover:bg-input/50 [&_svg]:size-5"
 				>

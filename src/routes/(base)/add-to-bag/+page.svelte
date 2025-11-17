@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
+	import { PUBLIC_APP_TITLE } from '$env/static/public';
 	import { getCartState } from '$lib/client/cart.svelte.js';
 	import { isMobile } from '$lib/hooks/is-mobile.svelte';
 	import type { InventoryItem } from '$lib/services/inventory';
 	import { onMount } from 'svelte';
+	import { getCurrentItems } from '../items-helper';
 	import Desktop from './desktop.svelte';
 	import Mobile from './mobile.svelte';
 	import Preview from './preview.svelte';
-	import { getCurrentItems } from '../items-helper';
-	import { page } from '$app/state';
-	import { PUBLIC_APP_TITLE } from '$env/static/public';
 
 	let { data } = $props();
 
