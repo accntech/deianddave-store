@@ -20,10 +20,6 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			}
 		});
 
-		if (!response.ok) {
-			throw new Error(`HTTP error! status: ${response.status}`);
-		}
-
 		const result: Result<InventoryItem[]> = await response.json();
 
 		return { result };
