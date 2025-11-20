@@ -25,37 +25,10 @@
 	.banner {
 		overflow: hidden;
 		display: flex;
+		width: 100%;
 		background: color-mix(in oklab, var(--primary) 70%, transparent);
 		white-space: nowrap;
 		position: relative;
-	}
-
-	.banner:before,
-	.banner:after {
-		position: absolute;
-		top: 0;
-		width: 50px;
-		height: 100%;
-		content: '';
-		z-index: 2;
-	}
-
-	.banner:before {
-		left: 0;
-		background: linear-gradient(
-			to left,
-			rgba(255, 255, 255, 0),
-			color-mix(in oklab, var(--primary) 70%, transparent)
-		);
-	}
-
-	.banner:after {
-		right: 0;
-		background: linear-gradient(
-			to right,
-			rgba(255, 255, 255, 0),
-			color-mix(in oklab, var(--primary) 70%, transparent)
-		);
 	}
 
 	.banner:hover .banner-slide {
