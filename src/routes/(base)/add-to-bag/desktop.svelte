@@ -33,16 +33,18 @@
 	let imageDialog: { show: (url: string) => void };
 </script>
 
-<div class="flex items-center justify-center px-4">
-	<section class="grid grid-cols-[1fr_auto] gap-12 xl:max-w-7xl xl:place-self-center">
-		<div class="col-1">
-			<div class="grid w-full">
+<div class="flex justify-center px-4">
+	<section class="flex gap-12 xl:max-w-7xl xl:place-self-center">
+		<!-- image -->
+		<div
+			class="flex max-h-[400px] min-h-[300px] max-w-[400px] min-w-[300px] flex-col transition-[width,height] duration-300 lg:max-h-[500px] lg:min-h-[400px] lg:max-w-[500px] lg:min-w-[400px]"
+		>
+			<div class={cn('relative grid', aspectRatio)}>
 				{#each images as image}
 					<div
 						class={cn(
-							'col-1 row-1 flex h-full flex-col overflow-clip rounded-xl opacity-0 transition-all duration-300 ',
-							selectedImage.source === image.source ? 'z-10 opacity-100' : '',
-							aspectRatio
+							'col-start-1 row-start-1 flex flex-col overflow-clip rounded-xl opacity-0 transition-all duration-300',
+							selectedImage.source === image.source ? 'z-10 opacity-100' : ''
 						)}
 					>
 						<Image
@@ -55,13 +57,13 @@
 				{/each}
 				<button
 					onclick={() => imageDialog.show(selectedImage.source)}
-					class="z-20 col-1 row-1 m-4 flex items-center justify-center place-self-start rounded-md border bg-background/75 p-1 text-foreground/50 transition-all duration-300 hover:bg-accent/75"
+					class="absolute top-2 left-2 z-20 flex items-center justify-center rounded-md border bg-background/75 p-1 text-foreground/50 transition-all duration-300 hover:bg-accent/75"
 				>
 					<FullscreenIcon class="size-6" />
 				</button>
 			</div>
 			{#if info && info.product.description}
-				<div class="mt-8 flex flex-col gap-2">
+				<div class="mt-8 flex max-w-[400px] flex-col gap-2">
 					<span class="text-sm">Description</span>
 					<p class="text-sm whitespace-pre-line text-muted-foreground">
 						{info.product.description}
@@ -77,9 +79,10 @@
 				Back
 			</Button>
 		</div>
+		<!-- details -->
 		{#if info}
 			{@const { wholeNumber, decimal } = splitNumberToString(price)}
-			<div class="transition-[width, height] col-2 w-80 duration-300 lg:w-90">
+			<div class="w-80 transition-[width,height] duration-300 lg:w-90">
 				<div>
 					<p class="text-sm text-muted-foreground">{info.fabric.name}</p>
 					<p class="text-lg font-medium lg:text-xl">{info.product.name}</p>
