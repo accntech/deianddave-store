@@ -1,29 +1,24 @@
-<div class="flex w-full flex-col items-center">
-	<div
-		class="w-full grid-cols-[1fr_auto] gap-6 p-6 sm:grid sm:p-8 sm:px-4 xl:max-w-7xl xl:px-0"
-	>
-		<div class="flex w-full flex-col gap-6">
-			<div class="h-32 animate-pulse rounded-3xl bg-muted"></div>
-			<div class="h-32 animate-pulse rounded-3xl bg-muted"></div>
-			<div class="h-9 w-36 animate-pulse rounded-md bg-muted"></div>
+<div class="flex flex-col items-center w-full">
+	<div class="gap-6 sm:grid grid-cols-[1fr_auto] p-6 sm:p-8 sm:px-4 xl:px-0 w-full xl:max-w-7xl">
+		<div class="flex flex-col gap-6 w-full">
+			<div class="bg-muted rounded-3xl h-32 animate-pulse"></div>
+			<div class="bg-muted rounded-3xl h-32 animate-pulse"></div>
+			<div class="bg-muted rounded-full w-36 h-9 animate-pulse"></div>
 		</div>
 		<div
-			class="transition-width mt-16 flex flex-col gap-4 duration-300 sm:mt-0 sm:w-xs sm:rounded-3xl lg:w-sm"
+			class="flex flex-col gap-4 mt-16 sm:mt-0 sm:rounded-3xl sm:w-xs lg:w-sm transition-width duration-300"
 		>
-			<div class="hidden grid-cols-[1fr_auto] gap-2 sm:grid">
-				<div class="h-9 animate-pulse rounded-md bg-muted"></div>
-				<div class="h-9 w-20 animate-pulse rounded-md bg-muted"></div>
-			</div>
-			<div class="h-4 w-56 animate-pulse rounded-md bg-muted"></div>
-			<div class="h-4 w-56 animate-pulse rounded-md bg-muted"></div>
-			<div class="h-12 rounded-full bg-muted *:animate-pulse"></div>
-			<div class="h-4 w-40 animate-pulse rounded-md bg-muted"></div>
+			<div class="bg-muted rounded-md h-9 animate-pulse"></div>
+			<div class="bg-muted rounded-md w-56 h-4 animate-pulse"></div>
+			<div class="bg-muted rounded-md w-56 h-4 animate-pulse"></div>
+			<div class="bg-muted rounded-full h-12 *:animate-pulse"></div>
+			<div class="bg-muted rounded-md w-40 h-4 animate-pulse"></div>
 			<div class="flex gap-2">
-				<div class="h-10 w-12 animate-pulse rounded-md bg-muted"></div>
-				<div class="h-10 w-12 animate-pulse rounded-md bg-muted"></div>
-				<div class="h-10 w-12 animate-pulse rounded-md bg-muted"></div>
-				<div class="h-10 w-12 animate-pulse rounded-md bg-muted"></div>
-				<div class="h-10 w-12 animate-pulse rounded-md bg-muted"></div>
+				<div class="bg-muted rounded-md w-12 h-10 animate-pulse"></div>
+				<div class="bg-muted rounded-md w-12 h-10 animate-pulse"></div>
+				<div class="bg-muted rounded-md w-12 h-10 animate-pulse"></div>
+				<div class="bg-muted rounded-md w-12 h-10 animate-pulse"></div>
+				<div class="bg-muted rounded-md w-12 h-10 animate-pulse"></div>
 			</div>
 		</div>
 	</div>

@@ -59,46 +59,46 @@
 	});
 </script>
 
-<div class="flex w-full flex-col items-center">
+<div class="flex flex-col items-center w-full">
 	<section
-		class="w-full grid-cols-[1fr_auto] gap-6 p-6 sm:grid sm:p-8 sm:px-4 xl:max-w-7xl xl:px-0"
+		class="gap-6 sm:grid grid-cols-[1fr_auto] p-6 sm:p-8 sm:px-4 xl:px-0 w-full xl:max-w-7xl"
 	>
 		{#if cart.orders.length > 0}
 			<div class="w-full">
 				<div class="space-y-4 pb-6">
 					{#each cart.orders as { item, quantity }}
 						{@const { wholeNumber, decimal } = splitNumberToString(item.price * quantity)}
-						<div class="relative flex gap-2 rounded-3xl bg-accent p-4 pr-8">
+						<div class="relative flex gap-2 bg-accent p-4 pr-8 rounded-3xl">
 							<Image
 								src={item.image || PUBLIC_DEFAULT_PRODUCT_IMAGE}
 								alt={item.product.name}
 								transform="h_300,c_fill"
 								imageClass="object-cover w-full h-full"
-								class="size-24 shrink-0 rounded-xl border"
+								class="border rounded-xl size-24 shrink-0"
 							/>
 							<div class="flex-1">
-								<span class="text-md font-medium">{item.product.name}</span>
+								<span class="font-medium text-md">{item.product.name}</span>
 								<span
-									class="flex flex-nowrap gap-4 text-sm whitespace-pre-wrap text-muted-foreground"
+									class="flex flex-nowrap gap-4 text-muted-foreground text-sm whitespace-pre-wrap"
 								>
 									{createDescription(item)}
 								</span>
-								<div class="flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground">
-									<span class="text-base font-semibold text-foreground">x{quantity}</span> |
+								<div class="flex flex-wrap items-center gap-x-2 text-muted-foreground text-sm">
+									<span class="font-semibold text-foreground text-base">x{quantity}</span> |
 									<span>{item.size.name}</span>
 									<div class="flex items-center gap-1">
 										<div
 											style="background-color: {item.color.hexCode}"
-											class="size-4 shrink-0 rounded-full"
+											class="rounded-full size-4 shrink-0"
 										></div>
 										<span>{item.color.name}</span>
 									</div>
 								</div>
-								<div class="mt-2 flex items-baseline gap-2">
-									<span class="text-xs font-medium text-primary">₱</span>
+								<div class="flex items-baseline gap-2 mt-2">
+									<span class="font-medium text-primary text-xs">₱</span>
 									<div class="flex gap-1">
-										<span class="text-md font-semibold">{wholeNumber}</span>
-										<span class="mt-1 align-top text-xs font-medium">
+										<span class="font-semibold text-md">{wholeNumber}</span>
+										<span class="mt-1 font-medium text-xs align-top">
 											{decimal}
 										</span>
 									</div>
@@ -106,7 +106,7 @@
 							</div>
 							<button
 								type="button"
-								class="absolute top-3 right-3 shrink-0 rounded-full border bg-muted p-0.5"
+								class="top-3 right-3 absolute bg-muted p-0.5 border rounded-full shrink-0"
 								onclick={() => cart.remove(item.id)}
 								aria-label={`Remove ${item.product.name}`}
 							>
@@ -117,7 +117,7 @@
 				</div>
 				<Button
 					variant="ghost"
-					class="mx-4 mb-8 place-self-start shadow-none"
+					class="place-self-start shadow-none mx-4 mb-8 rounded-full"
 					onclick={() => goto(shop.lastShop === '' ? '/' : shop.lastShop)}
 				>
 					<ShoppingCartIcon />
@@ -125,14 +125,14 @@
 				</Button>
 			</div>
 			<div
-				class="transition-width w-full place-self-start duration-300 sm:w-xs sm:rounded-3xl sm:border sm:p-6 sm:shadow-lg lg:w-sm"
+				class="place-self-start sm:shadow-lg sm:p-6 sm:border sm:rounded-3xl w-full sm:w-xs lg:w-sm transition-width duration-300"
 			>
-				<div class="border-t border-b py-4 pt-6 sm:border-t-0 sm:pt-2">
+				<div class="py-4 pt-6 sm:pt-2 border-t sm:border-t-0 border-b">
 					<DiscountComponent {discounts} />
 				</div>
 				<div class="flex flex-col gap-4 pb-8">
-					<div class="flex flex-col border-b py-4">
-						<div class="grid grid-cols-[1fr_auto] gap-2">
+					<div class="flex flex-col py-4 border-b">
+						<div class="gap-2 grid grid-cols-[1fr_auto]">
 							<p class="uppercase">Subtotal</p>
 							<p class="text-right">{toPeso(totalAmount)}</p>
 							<div class="flex gap-2 text-sm">
@@ -143,38 +143,38 @@
 									>
 								{/if}
 							</div>
-							<span class="text-right text-sm">
+							<span class="text-sm text-right">
 								{toDecimalString(discount)}
 							</span>
 
 							<p class="font-semibold uppercase">Total Due</p>
-							<p class="text-right text-lg font-semibold">{toPeso(netAmount)}</p>
+							<p class="font-semibold text-lg text-right">{toPeso(netAmount)}</p>
 						</div>
 					</div>
 					<button
 						onclick={checkout}
 						disabled={cart.orders.length === 0}
-						class="w-full rounded-full border border-primary-foreground/10 bg-primary/85 px-6 py-3 text-center text-sm font-medium text-primary-foreground backdrop-blur-sm transition-all duration-300 outline-none hover:bg-primary/95 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+						class="bg-primary/85 hover:bg-primary/95 disabled:opacity-50 backdrop-blur-sm px-6 py-3 border border-primary-foreground/10 focus-visible:border-ring rounded-full outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 w-full font-medium text-primary-foreground text-sm text-center transition-all duration-300 disabled:cursor-not-allowed disabled:pointer-events-none"
 					>
 						Checkout Now
 					</button>
 					<div class="space-y-1">
-						<p class="text-sm font-medium">You can pay thru the following</p>
+						<p class="font-medium text-sm">You can pay thru the following</p>
 						<div class="flex flex-wrap gap-2">
-							<img class="w-12 rounded-md border object-cover" src={MasterCard} alt="Mastercard" />
-							<img class="w-12 rounded-md border object-cover" src={Visa} alt="Visa" />
-							<img class="w-12 rounded-md border object-cover" src={Gcash} alt="Gcash" />
-							<img class="w-12 rounded-md border object-cover" src={PayMaya} alt="PayMaya" />
-							<img class="w-12 rounded-md border object-cover" src={GrabPay} alt="GrabPay" />
+							<img class="border rounded-md w-12 object-cover" src={MasterCard} alt="Mastercard" />
+							<img class="border rounded-md w-12 object-cover" src={Visa} alt="Visa" />
+							<img class="border rounded-md w-12 object-cover" src={Gcash} alt="Gcash" />
+							<img class="border rounded-md w-12 object-cover" src={PayMaya} alt="PayMaya" />
+							<img class="border rounded-md w-12 object-cover" src={GrabPay} alt="GrabPay" />
 						</div>
 					</div>
 				</div>
 			</div>
 		{:else}
-			<div class="flex h-[calc(100dvh-4rem)] items-center">
-				<div class="flex w-full flex-col items-center justify-center gap-4">
+			<div class="flex items-center h-[calc(100dvh-4rem)]">
+				<div class="flex flex-col justify-center items-center gap-4 w-full">
 					<svg
-						class="size-20 fill-foreground/50 transition-all duration-300 sm:size-26"
+						class="fill-foreground/50 size-20 sm:size-26 transition-all duration-300"
 						xmlns="http://www.w3.org/2000/svg"
 						xmlns:xlink="http://www.w3.org/1999/xlink"
 						viewBox="0 0 483.1 483.1"
@@ -199,7 +199,7 @@
 					</svg>
 					<span class="text-muted-foreground"> Your cart is empty. </span>
 					<a
-						class="mt-8 flex items-center gap-2 rounded-full bg-primary px-6 py-2 font-medium text-primary-foreground shadow-none"
+						class="flex items-center gap-2 bg-primary shadow-none mt-8 px-6 py-2 rounded-full font-medium text-primary-foreground"
 						href="/"
 					>
 						<HomeIcon class="size-5" />

@@ -16,6 +16,7 @@
 	import { Footer } from '$lib/components/ui/footer';
 	import ConsentDialog from './consent-dialog.svelte';
 	import SearchDialog from './search-dialog.svelte';
+	import { Button } from '$lib/components/ui/button';
 
 	let { children } = $props();
 	setCartState([]);
@@ -53,6 +54,9 @@
 		if (href === '/') return page.url.pathname === '/';
 		return page.url.pathname.startsWith(href);
 	}
+
+	const shopRoutes = ['/', '/beddings', '/loungewear'];
+	let showShopNow = $derived(!shopRoutes.includes(page.url.pathname));
 </script>
 
 <svelte:window onscroll={handleScroll} onkeydown={handleKeydown} />
@@ -115,16 +119,20 @@
 					<img src={Logo} alt="Logo" class="h-8 shrink-0" />
 				</a>
 				<div class="hidden md:flex justify-self-end place-self-end md:gap-1 mx-2 text-sm">
+					{#if showShopNow}
+						<Button href="/#shop" variant="outline" class="rounded-full">Shop Now</Button>
+					{/if}
 					{#each navLinks as link (link.href)}
-						<a
+						<Button
 							href={link.href}
+							variant="ghost"
 							class={cn(
-								'hover:bg-accent px-3 py-1.5 rounded-md text-nowrap transition-colors',
+								'rounded-full whitespace-nowrap transition-colors',
 								isActive(link.href) && 'font-semibold'
 							)}
 						>
 							{link.label}
-						</a>
+						</Button>
 					{/each}
 				</div>
 				<div class="flex justify-self-end items-center gap-1">
@@ -182,7 +190,7 @@
 			drawerOpen ? 'translate-x-0' : '-translate-x-full'
 		)}
 	>
-		<div class="flex items-center justify-between mb-8">
+		<div class="flex justify-between items-center mb-8">
 			<a href="/" onclick={() => (drawerOpen = false)}>
 				<img src={Logo} alt="Logo" class="h-7 shrink-0" />
 			</a>
@@ -206,6 +214,11 @@
 			<span>Search products...</span>
 		</button>
 		<nav class="flex flex-col gap-4">
+			{#if showShopNow}
+				<Button href="/#shop" onclick={() => (drawerOpen = false)} variant="outline">
+					Shop Now
+				</Button>
+			{/if}
 			{#each navLinks as link (link.href)}
 				<a
 					href={link.href}
@@ -219,12 +232,12 @@
 				</a>
 			{/each}
 		</nav>
-		<div class="mt-auto flex flex-col gap-2 border-t border-border pt-4">
+		<div class="flex flex-col gap-2 mt-auto pt-4 border-border border-t">
 			<a
 				href="/terms-and-conditions"
 				onclick={() => (drawerOpen = false)}
 				class={cn(
-					'hover:bg-accent px-3 py-1.5 rounded-md text-xs text-muted-foreground transition-colors',
+					'hover:bg-accent px-3 py-1.5 rounded-md text-muted-foreground text-xs transition-colors',
 					isActive('/terms-and-conditions') && 'bg-accent font-semibold'
 				)}
 			>
@@ -234,7 +247,7 @@
 				href="/privacy-policy"
 				onclick={() => (drawerOpen = false)}
 				class={cn(
-					'hover:bg-accent px-3 py-1.5 rounded-md text-xs text-muted-foreground transition-colors',
+					'hover:bg-accent px-3 py-1.5 rounded-md text-muted-foreground text-xs transition-colors',
 					isActive('/privacy-policy') && 'bg-accent font-semibold'
 				)}
 			>

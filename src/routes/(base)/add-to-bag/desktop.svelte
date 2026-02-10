@@ -72,7 +72,7 @@
 			{/if}
 			<Button
 				variant="ghost"
-				class="place-self-start shadow-none mt-6"
+				class="place-self-start shadow-none mt-6 rounded-full"
 				onclick={() => history.back()}
 			>
 				<ArrowLeftIcon />
