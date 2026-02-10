@@ -12,6 +12,7 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import Banner from './banner.svelte';
+	import { Footer } from '$lib/components/ui/footer';
 	import SearchDialog from './search-dialog.svelte';
 
 	let { children } = $props();
@@ -178,13 +179,18 @@
 			drawerOpen ? 'translate-x-0' : '-translate-x-full'
 		)}
 	>
-		<button
-			onclick={() => (drawerOpen = false)}
-			class="inline-flex justify-center items-center self-end hover:bg-accent mb-8 rounded-lg size-8 transition-colors"
-			aria-label="Close menu"
-		>
-			<X class="size-5" />
-		</button>
+		<div class="flex items-center justify-between mb-8">
+			<a href="/" onclick={() => (drawerOpen = false)}>
+				<img src={Logo} alt="Logo" class="h-7 shrink-0" />
+			</a>
+			<button
+				onclick={() => (drawerOpen = false)}
+				class="inline-flex justify-center items-center hover:bg-accent rounded-lg size-8 transition-colors"
+				aria-label="Close menu"
+			>
+				<X class="size-5" />
+			</button>
+		</div>
 		<!-- Drawer search trigger -->
 		<button
 			onclick={() => {
@@ -210,9 +216,33 @@
 				</a>
 			{/each}
 		</nav>
+		<div class="mt-auto flex flex-col gap-2 border-t border-border pt-4">
+			<a
+				href="/terms-and-conditions"
+				onclick={() => (drawerOpen = false)}
+				class={cn(
+					'hover:bg-accent px-3 py-1.5 rounded-md text-xs text-muted-foreground transition-colors',
+					isActive('/terms-and-conditions') && 'bg-accent font-semibold'
+				)}
+			>
+				Terms & Conditions
+			</a>
+			<a
+				href="/privacy-policy"
+				onclick={() => (drawerOpen = false)}
+				class={cn(
+					'hover:bg-accent px-3 py-1.5 rounded-md text-xs text-muted-foreground transition-colors',
+					isActive('/privacy-policy') && 'bg-accent font-semibold'
+				)}
+			>
+				Privacy Policy
+			</a>
+		</div>
 	</aside>
 
 	{@render children?.()}
+
+	<Footer />
 </main>
 
 <SearchDialog bind:open={searchOpen} />
