@@ -38,6 +38,7 @@
 		requestAnimationFrame(() => {
 			imageUrl = url;
 			dialogEl.showModal();
+			document.body.style.overflow = 'hidden';
 		});
 	};
 
@@ -45,6 +46,7 @@
 		imageUrl = '';
 		loaded = false;
 		resetTransform();
+		document.body.style.overflow = '';
 	}
 
 	function wheelAction(node: HTMLElement) {
