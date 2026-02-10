@@ -4,19 +4,19 @@
 </script>
 
 <footer class="bg-primary text-primary-foreground">
-	<div class="mx-auto w-full max-w-7xl px-6 py-12 lg:px-8">
-		<div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+	<div class="mx-auto px-6 lg:px-8 py-12 w-full max-w-7xl">
+		<div class="gap-10 grid sm:grid-cols-2 lg:grid-cols-4">
 			<div class="flex flex-col gap-4 sm:col-span-2 lg:col-span-1">
 				<a href="/">
-					<img src={Logo} alt="Dei & Dave" class="h-8 brightness-0 invert" />
+					<img src={Logo} alt="Dei & Dave" class="brightness-0 invert h-8" />
 				</a>
-				<p class="max-w-xs text-sm leading-relaxed text-primary-foreground/70">
+				<p class="max-w-xs text-primary-foreground/70 text-sm leading-relaxed">
 					Sustainably luxurious beddings & loungewear — because your choice matters.
 				</p>
 			</div>
 
 			<div class="flex flex-col gap-3">
-				<span class="text-xs font-semibold uppercase tracking-wider text-primary-foreground/50">
+				<span class="font-semibold text-primary-foreground/50 text-xs uppercase tracking-wider">
 					Shop
 				</span>
 				<nav class="flex flex-col gap-2">
@@ -26,7 +26,7 @@
 			</div>
 
 			<div class="flex flex-col gap-3">
-				<span class="text-xs font-semibold uppercase tracking-wider text-primary-foreground/50">
+				<span class="font-semibold text-primary-foreground/50 text-xs uppercase tracking-wider">
 					Company
 				</span>
 				<nav class="flex flex-col gap-2">
@@ -37,7 +37,7 @@
 			</div>
 
 			<div class="flex flex-col gap-3">
-				<span class="text-xs font-semibold uppercase tracking-wider text-primary-foreground/50">
+				<span class="font-semibold text-primary-foreground/50 text-xs uppercase tracking-wider">
 					Legal
 				</span>
 				<nav class="flex flex-col gap-2">
@@ -47,15 +47,15 @@
 			</div>
 		</div>
 
-		<div class="mt-10 border-t border-primary-foreground/10 pt-8">
-			<div class="flex flex-col items-center gap-4 md:flex-row md:justify-between">
-				<p class="text-xs text-primary-foreground/50">
+		<div class="mt-10 pt-8 border-primary-foreground/10 border-t">
+			<div class="flex md:flex-row flex-col md:justify-between items-center gap-4">
+				<p class="text-primary-foreground/50 text-xs">
 					&copy; {new Date().getFullYear()} Dei & Dave. All rights reserved.
 				</p>
 
 				<a
 					href="mailto:hello@deianddave.com"
-					class="flex items-center gap-2 text-sm text-primary-foreground/70 transition-colors duration-200 hover:text-primary-foreground"
+					class="flex items-center gap-2 text-primary-foreground/70 hover:text-primary-foreground text-sm transition-colors duration-200"
 				>
 					<MailIcon class="size-4" />
 					hello@deianddave.com
@@ -63,10 +63,10 @@
 
 				<div class="flex items-center gap-1">
 					<a
-						href="https://facebook.com"
+						href="https://www.facebook.com/people/Dei-and-Dave/61568834423596/"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="inline-flex size-9 items-center justify-center rounded-full text-primary-foreground/70 transition-colors duration-200 hover:bg-primary-foreground/10 hover:text-primary-foreground"
+						class="inline-flex justify-center items-center hover:bg-primary-foreground/10 rounded-full size-9 text-primary-foreground/70 hover:text-primary-foreground transition-colors duration-200"
 						aria-label="Facebook"
 					>
 						<svg
@@ -79,16 +79,14 @@
 							stroke-linecap="round"
 							stroke-linejoin="round"
 						>
-							<path
-								d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
-							/>
+							<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
 						</svg>
 					</a>
 					<a
-						href="https://instagram.com"
+						href="https://www.instagram.com/deianddave"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="inline-flex size-9 items-center justify-center rounded-full text-primary-foreground/70 transition-colors duration-200 hover:bg-primary-foreground/10 hover:text-primary-foreground"
+						class="inline-flex justify-center items-center hover:bg-primary-foreground/10 rounded-full size-9 text-primary-foreground/70 hover:text-primary-foreground transition-colors duration-200"
 						aria-label="Instagram"
 					>
 						<svg
@@ -107,10 +105,10 @@
 						</svg>
 					</a>
 					<a
-						href="https://tiktok.com"
+						href="https://www.tiktok.com/@deianddave"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="inline-flex size-9 items-center justify-center rounded-full text-primary-foreground/70 transition-colors duration-200 hover:bg-primary-foreground/10 hover:text-primary-foreground"
+						class="inline-flex justify-center items-center hover:bg-primary-foreground/10 rounded-full size-9 text-primary-foreground/70 hover:text-primary-foreground transition-colors duration-200"
 						aria-label="TikTok"
 					>
 						<svg
