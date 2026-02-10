@@ -99,7 +99,7 @@
 	>
 	<!-- End Meta Pixel Code -->
 </svelte:head>
-<Toaster position={isMobile.current ? 'top-center' : 'bottom-right'} />
+<Toaster position={isMobile.current ? 'top-center' : 'bottom-right'} visibleToasts={1} />
 <main class="relative flex flex-col min-h-dvh">
 	<nav
 		class={cn(
