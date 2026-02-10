@@ -89,7 +89,7 @@
 	<!-- End Meta Pixel Code -->
 </svelte:head>
 
-<main class="relative">
+<main class="relative flex flex-col min-h-dvh">
 	<nav
 		class={cn(
 			'top-0 z-40 sticky flex flex-col justify-center xl:items-center min-h-16 text-primary transition-all duration-300',
@@ -240,7 +240,9 @@
 		</div>
 	</aside>
 
-	{@render children?.()}
+	<div class="flex-1">
+		{@render children?.()}
+	</div>
 
 	<Footer />
 </main>

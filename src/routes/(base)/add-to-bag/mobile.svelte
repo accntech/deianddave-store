@@ -34,6 +34,33 @@
 	}: Props = $props();
 
 	let imageDialog: { show: (url: string) => void };
+	let footerEl: HTMLElement;
+	let footerVisible = $state(false);
+	let atBottom = $state(false);
+	let hideFloating = $derived(footerVisible || atBottom);
+
+	$effect(() => {
+		if (!footerEl) return;
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				footerVisible = entry.isIntersecting;
+			},
+			{ threshold: 0 }
+		);
+		observer.observe(footerEl);
+		return () => observer.disconnect();
+	});
+
+	$effect(() => {
+		const onScroll = () => {
+			const scrollTop = window.scrollY || document.documentElement.scrollTop;
+			const scrollHeight = document.documentElement.scrollHeight;
+			const clientHeight = document.documentElement.clientHeight;
+			atBottom = scrollTop + clientHeight >= scrollHeight - 1;
+		};
+		window.addEventListener('scroll', onScroll, { passive: true });
+		return () => window.removeEventListener('scroll', onScroll);
+	});
 </script>
 
 <section class="relative flex flex-col gap-4">
@@ -210,16 +237,29 @@
 		</div>
 	{/if}
 
-	<Button
-		variant="ghost"
-		class="mx-6 mt-6 mb-24 place-self-start shadow-none"
-		onclick={() => history.back()}
-	>
-		<ArrowLeftIcon />
-		Back
-	</Button>
+	<div bind:this={footerEl} class="mx-6 mt-6 mb-6 flex flex-col gap-4">
+		<button
+			onclick={onSubmit}
+			disabled={quantity === 0}
+			class="inline-flex w-full items-center justify-center rounded-full border border-primary-foreground/10 bg-primary/85 px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-all duration-300 hover:bg-primary/95 disabled:cursor-not-allowed disabled:opacity-50"
+		>
+			<ShoppingBagIcon class="mr-2 inline-block size-5" />
+			Add to Bag
+		</button>
+		<Button
+			variant="ghost"
+			class="place-self-start shadow-none"
+			onclick={() => history.back()}
+		>
+			<ArrowLeftIcon />
+			Back
+		</Button>
+	</div>
 	<div
-		class="fixed bottom-0 flex h-16 w-full justify-center bg-linear-to-t from-background to-transparent pb-6"
+		class={cn(
+			'fixed bottom-0 flex h-16 w-full justify-center bg-linear-to-t from-background to-transparent pb-6 transition-all duration-300',
+			hideFloating ? 'pointer-events-none translate-y-full opacity-0' : 'opacity-100'
+		)}
 	>
 		<div class="place-self-center overflow-clip rounded-full bg-background">
 			<button

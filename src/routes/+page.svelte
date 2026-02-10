@@ -6,6 +6,8 @@
 	import { ChevronRight } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
+	let { data } = $props();
+
 	let displayText = $state('\u00A0');
 
 	const typewriter = (content: string) => {
@@ -223,95 +225,23 @@
 			class="flex gap-4 px-12 pb-10 overflow-x-auto scroll-smooth mask-edges no-scrollbar"
 			style="--mask-size: 48px"
 		>
-			<button
-				use:scrollOnFocus={selectedFeedback === '1'}
-				onclick={() => {
-					selectedFeedback = '1';
-				}}
-				class="space-y-4 bg-background/60 hover:bg-background/75 cta-shadow backdrop-blur-md px-6 py-5 border border-white/20 rounded-xl w-70 transition-colors duration-150 shrink-0"
-				aria-label="Customer feedback 1"
-			>
-				<p class="text-sm text-start">
-					"This bedding set feels so soft and cozy. Waking up well-rested has never been this easy."
-				</p>
+			{#each data.testimonials as testimonial, i}
+				<button
+					use:scrollOnFocus={selectedFeedback === String(i + 1)}
+					onclick={() => {
+						selectedFeedback = String(i + 1);
+					}}
+					class="space-y-4 bg-background/60 hover:bg-background/75 cta-shadow backdrop-blur-md px-6 py-5 border border-white/20 rounded-xl w-70 transition-colors duration-150 shrink-0"
+					aria-label="Customer feedback {i + 1}"
+				>
+					<p class="text-sm text-start">"{testimonial.quote}"</p>
 
-				<div class="flex flex-col items-end">
-					<span class="font-medium text-sm">Christine De Guzman</span>
-					<span class="text-primary/75 text-sm">Cavite, Philippines</span>
-				</div>
-			</button>
-			<button
-				use:scrollOnFocus={selectedFeedback === '2'}
-				onclick={() => {
-					selectedFeedback = '2';
-				}}
-				class="space-y-4 bg-background/60 hover:bg-background/75 cta-shadow backdrop-blur-md px-6 py-5 border border-white/20 rounded-xl w-70 transition-colors duration-150 shrink-0"
-				aria-label="Customer feedback 2"
-			>
-				<p class="text-sm text-start">
-					"The fabric quality is amazing. After several washes, it still looks brand new. Definitely
-					worth every peso."
-				</p>
-
-				<div class="flex flex-col items-end">
-					<span class="font-medium text-sm">a*****s</span>
-					<span class="text-primary/75 text-sm">Bulacan, Philippines</span>
-				</div>
-			</button>
-			<button
-				use:scrollOnFocus={selectedFeedback === '3'}
-				onclick={() => {
-					selectedFeedback = '3';
-				}}
-				class="space-y-4 bg-background/60 hover:bg-background/75 cta-shadow backdrop-blur-md px-6 py-5 border border-white/20 rounded-xl w-70 transition-colors duration-150 shrink-0"
-				aria-label="Customer feedback 3"
-			>
-				<p class="text-sm text-start">
-					"I used to have trouble falling asleep, but ever since I switched to your sheets, I’ve
-					been sleeping like a baby."
-				</p>
-
-				<div class="flex flex-col items-end">
-					<span class="font-medium text-sm">Janice Contreras</span>
-					<span class="text-primary/75 text-sm">Manila, Philippines</span>
-				</div>
-			</button>
-			<button
-				use:scrollOnFocus={selectedFeedback === '4'}
-				onclick={() => {
-					selectedFeedback = '4';
-				}}
-				class="space-y-4 bg-background/60 hover:bg-background/75 cta-shadow backdrop-blur-md px-6 py-5 border border-white/20 rounded-xl w-70 transition-colors duration-150 shrink-0"
-				aria-label="Customer feedback 4"
-			>
-				<p class="text-sm text-start">
-					"The size fits perfectly on my bed, and the design gives my room such a cozy, stylish
-					vibe. Guests always compliment it!"
-				</p>
-
-				<div class="flex flex-col items-end">
-					<span class="font-medium text-sm">m*****z</span>
-					<span class="text-primary/75 text-sm">Manila, Philippines</span>
-				</div>
-			</button>
-			<button
-				use:scrollOnFocus={selectedFeedback === '5'}
-				onclick={() => {
-					selectedFeedback = '5';
-				}}
-				class="space-y-4 bg-background/60 hover:bg-background/75 cta-shadow backdrop-blur-md px-6 py-5 border border-white/20 rounded-xl w-70 transition-colors duration-150 shrink-0"
-				aria-label="Customer feedback 5"
-			>
-				<p class="text-sm text-start">
-					"I bought this as a gift, and my friend absolutely loved it! Beautiful packaging and such
-					a thoughtful product."
-				</p>
-
-				<div class="flex flex-col items-end">
-					<span class="font-medium text-sm">Gladys Mercado</span>
-					<span class="text-primary/75 text-sm">Bulacan, Philippines</span>
-				</div>
-			</button>
+					<div class="flex flex-col items-end">
+						<span class="font-medium text-sm">{testimonial.name}</span>
+						<span class="text-primary/75 text-sm">{testimonial.location}</span>
+					</div>
+				</button>
+			{/each}
 		</div>
 	</div>
 </section>

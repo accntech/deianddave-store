@@ -33,17 +33,17 @@
 	let imageDialog: { show: (url: string) => void };
 </script>
 
-<div class="flex justify-center px-4">
-	<section class="flex gap-12 xl:max-w-7xl xl:place-self-center">
+<div class="flex justify-center px-4 py-12">
+	<section class="flex xl:place-self-center gap-12 xl:max-w-7xl">
 		<!-- image -->
 		<div
-			class="flex max-h-[400px] min-h-[300px] max-w-[400px] min-w-[300px] flex-col transition-[width,height] duration-300 lg:max-h-[500px] lg:min-h-[400px] lg:max-w-[500px] lg:min-w-[400px]"
+			class="flex flex-col min-w-75 lg:min-w-100 max-w-100 lg:max-w-125 transition-[width] duration-300"
 		>
 			<div class={cn('relative grid', aspectRatio)}>
-				{#each images as image}
+				{#each images as image (image.source)}
 					<div
 						class={cn(
-							'col-start-1 row-start-1 flex flex-col overflow-clip rounded-xl opacity-0 transition-all duration-300',
+							'flex flex-col col-start-1 row-start-1 opacity-0 rounded-xl overflow-clip transition-all duration-300',
 							selectedImage.source === image.source ? 'z-10 opacity-100' : ''
 						)}
 					>
@@ -51,28 +51,28 @@
 							src={image.source}
 							alt={info?.product.name ?? ''}
 							imageClass="w-full h-full object-cover"
-							transform="h_900,c_fill"
+							transform="w_800,c_fill"
 						/>
 					</div>
 				{/each}
 				<button
 					onclick={() => imageDialog.show(selectedImage.source)}
-					class="absolute top-2 left-2 z-20 flex items-center justify-center rounded-full border border-white/20 bg-background/50 p-1.5 text-foreground/50 backdrop-blur-md transition-all duration-300 hover:bg-background/70"
+					class="top-2 left-2 z-20 absolute flex justify-center items-center bg-background/50 hover:bg-background/70 backdrop-blur-md p-1.5 border border-white/20 rounded-full text-foreground/50 transition-all duration-300"
 				>
 					<FullscreenIcon class="size-6" />
 				</button>
 			</div>
 			{#if info && info.product.description}
-				<div class="mt-8 flex max-w-[400px] flex-col gap-2">
+				<div class="flex flex-col gap-2 mt-8 max-w-100">
 					<span class="text-sm">Description</span>
-					<p class="text-sm whitespace-pre-line text-muted-foreground">
+					<p class="text-muted-foreground text-sm whitespace-pre-line">
 						{info.product.description}
 					</p>
 				</div>
 			{/if}
 			<Button
 				variant="ghost"
-				class="mt-6 mb-24 place-self-start shadow-none"
+				class="place-self-start shadow-none mt-6"
 				onclick={() => history.back()}
 			>
 				<ArrowLeftIcon />
@@ -82,43 +82,43 @@
 		<!-- details -->
 		{#if info}
 			{@const { wholeNumber, decimal } = splitNumberToString(price)}
-			<div class="w-80 transition-[width,height] duration-300 lg:w-90">
+			<div class="w-80 lg:w-90 transition-[width,height] duration-300">
 				<div>
-					<p class="text-sm text-muted-foreground">{info.fabric.name}</p>
-					<p class="text-lg font-medium lg:text-xl">{info.product.name}</p>
+					<p class="text-muted-foreground text-sm">{info.fabric.name}</p>
+					<p class="font-medium text-lg lg:text-xl">{info.product.name}</p>
 
 					<div class="flex gap-2 text-sm">
 						{#if info.ageGroup}
-							<p class="rounded-full bg-accent px-2 py-0.5">
+							<p class="bg-accent px-2 py-0.5 rounded-full">
 								{info.ageGroup.name}
 							</p>
 						{/if}
 
 						{#if info.genderGroup}
-							<p class="rounded-full bg-accent px-2 py-0.5">
+							<p class="bg-accent px-2 py-0.5 rounded-full">
 								{info.genderGroup.name}
 							</p>
 						{/if}
 					</div>
 				</div>
-				<div class="mt-6 flex items-baseline gap-2">
-					<span class="text-sm font-medium text-primary">₱</span>
+				<div class="flex items-baseline gap-2 mt-6">
+					<span class="font-medium text-primary text-sm">₱</span>
 					<div class="flex gap-1">
-						<span class="text-2xl font-semibold">{wholeNumber}</span>
-						<span class="mt-1 align-top text-sm font-medium">
+						<span class="font-semibold text-2xl">{wholeNumber}</span>
+						<span class="mt-1 font-medium text-sm align-top">
 							.{decimal}
 						</span>
 					</div>
 				</div>
 				{#if sizes}
-					<div class="mt-4 flex flex-col gap-1 font-medium">
+					<div class="flex flex-col gap-1 mt-4 font-medium">
 						<span class="text-sm">Size</span>
 						<div class="flex flex-wrap items-center gap-1">
-							{#each sizes as size}
+							{#each sizes as size (size.id)}
 								<button
 									onclick={() => (selectedSize = size)}
 									class={cn(
-										'rounded-full px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 ',
+										'px-4 py-2 rounded-full font-medium text-sm text-nowrap transition-colors duration-300',
 										selectedSize?.id === size.id
 											? 'bg-secondary text-secondary-foreground hover:bg-secondary/60'
 											: 'hover:bg-accent'
@@ -131,26 +131,26 @@
 					</div>
 				{/if}
 				{#if colors}
-					<div class="mt-4 flex flex-col gap-1 font-medium">
+					<div class="flex flex-col gap-1 mt-4 font-medium">
 						<span class="text-sm">
 							Color {selectedColor ? `- ${selectedColor.name}` : ''}
 						</span>
 
 						<div class="flex items-center gap-4 py-4">
-							{#each colors as color}
+							{#each colors as color (color.id)}
 								<button
 									aria-label={color.name}
 									onclick={() => onColorChanged(color)}
 									style="background-color: {color.hexCode}"
 									class={cn(
-										'flex size-7 justify-center rounded-full border transition-all duration-300',
+										'flex justify-center border rounded-full size-7 transition-all duration-300',
 										selectedColor?.id === color.id ? 'scale-125' : ''
 									)}
 								>
 									<CheckIcon
 										style={`stroke:${textColorBasedOnBackground(color.hexCode)}`}
 										class={cn(
-											'size-5 place-self-center opacity-0 transition-opacity duration-300',
+											'place-self-center opacity-0 size-5 transition-opacity duration-300',
 											selectedColor?.id === color.id ? 'opacity-100' : ''
 										)}
 									/>
@@ -159,15 +159,15 @@
 						</div>
 					</div>
 				{/if}
-				<div class="mt-4 flex flex-col gap-2 font-medium">
+				<div class="flex flex-col gap-2 mt-4 font-medium">
 					<div class="flex items-center gap-2 text-sm">
 						Quantity
 						{#if available === 0}
-							<span class="rounded-md bg-destructive px-2 py-1 text-sm text-white">Sold out</span>
+							<span class="bg-destructive px-2 py-1 rounded-md text-white text-sm">Sold out</span>
 						{:else}
 							<span
 								class={cn(
-									'rounded-md px-2 py-1 text-sm',
+									'px-2 py-1 rounded-md text-sm',
 									available <= 3 ? 'bg-secondary' : ' bg-green-700 text-white'
 								)}
 							>
@@ -179,7 +179,7 @@
 						<Button
 							variant="outline"
 							onclick={() => quantity--}
-							class="h-9 w-11 rounded-none rounded-l-full shadow-none focus:z-10"
+							class="focus:z-10 shadow-none rounded-none rounded-l-full w-11 h-9"
 							size="icon"
 						>
 							<MinusIcon />
@@ -187,12 +187,12 @@
 						<input
 							type="number"
 							bind:value={quantity}
-							class="flex size-9 min-w-0 border-y border-input bg-background px-2 py-1 text-center font-medium ring-offset-background transition-[color,box-shadow] outline-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dark:bg-input/30"
+							class="focus:z-10 flex bg-background selection:bg-primary dark:bg-input/30 disabled:opacity-50 px-2 py-1 border-input border-y focus-visible:border-ring outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 ring-offset-background min-w-0 size-9 font-medium selection:text-primary-foreground placeholder:text-muted-foreground md:text-sm text-center transition-[color,box-shadow] disabled:cursor-not-allowed"
 						/>
 						<Button
 							variant="outline"
 							onclick={() => quantity++}
-							class="h-9 w-11 rounded-none rounded-r-full shadow-none focus:z-10"
+							class="focus:z-10 shadow-none rounded-none rounded-r-full w-11 h-9"
 						>
 							<PlusIcon />
 						</Button>
@@ -202,9 +202,9 @@
 				<button
 					onclick={onSubmit}
 					disabled={quantity === 0}
-					class="mt-8 w-full rounded-full border border-primary-foreground/10 bg-primary/85 px-6 py-3 text-center text-sm font-medium text-primary-foreground backdrop-blur-sm transition-all duration-300 hover:bg-primary/95 disabled:cursor-not-allowed disabled:opacity-50"
+					class="bg-primary/85 hover:bg-primary/95 disabled:opacity-50 backdrop-blur-sm mt-8 px-6 py-3 border border-primary-foreground/10 rounded-full w-full font-medium text-primary-foreground text-sm text-center transition-all duration-300 disabled:cursor-not-allowed"
 				>
-					<ShoppingBagIcon class="mr-2 inline-block size-5" />
+					<ShoppingBagIcon class="inline-block mr-2 size-5" />
 					Add to Bag
 				</button>
 			</div>

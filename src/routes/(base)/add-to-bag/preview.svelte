@@ -4,12 +4,16 @@
 	let { aspectRatio = '' } = $props();
 </script>
 
-<div class="flex flex-col px-4 lg:items-center">
-	<div class="grid gap-12 md:grid-cols-[1fr_auto] lg:w-full lg:max-w-[1128px]">
-		<div class={cn('grid', aspectRatio)}>
-			<div class="animate-pulse rounded-xl bg-muted"></div>
+<div class="flex justify-center px-4 py-12">
+	<section class="flex gap-12">
+		<!-- image placeholder -->
+		<div class="min-w-75 lg:min-w-100 max-w-100 lg:max-w-125">
+			<div class={cn('grid', aspectRatio)}>
+				<div class="animate-pulse rounded-xl bg-muted"></div>
+			</div>
 		</div>
-		<div class="mt-8 sm:w-80 md:mt-0 lg:w-90">
+		<!-- details placeholder -->
+		<div class="w-80 lg:w-90">
 			<div class="row-2 mb-2 h-4 w-36 animate-pulse justify-start rounded bg-muted"></div>
 			<div class="row-2 h-8 w-full animate-pulse rounded-md bg-muted"></div>
 
@@ -38,5 +42,5 @@
 				class="row-2 mt-8 mb-2 hidden h-12 w-full animate-pulse justify-start rounded-full bg-muted sm:block"
 			></div>
 		</div>
-	</div>
+	</section>
 </div>
