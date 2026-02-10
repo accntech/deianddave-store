@@ -5,6 +5,7 @@
 	import favicon from '$lib/assets/favicon.png';
 	import Logo from '$lib/assets/logo.png';
 	import { getCartState, setCartState } from '$lib/client/cart.svelte';
+	import { setConsentState } from '$lib/client/consent.svelte';
 	import { setShopState } from '$lib/client/shop.svelte';
 	import { cn } from '$lib/utils';
 	import '@fontsource-variable/geist';
@@ -13,10 +14,12 @@
 	import '../app.css';
 	import Banner from './banner.svelte';
 	import { Footer } from '$lib/components/ui/footer';
+	import ConsentDialog from './consent-dialog.svelte';
 	import SearchDialog from './search-dialog.svelte';
 
 	let { children } = $props();
 	setCartState([]);
+	setConsentState();
 	setShopState('');
 
 	let scrolled = $state(false);
@@ -248,6 +251,7 @@
 </main>
 
 <SearchDialog bind:open={searchOpen} />
+<ConsentDialog />
 
 <style>
 	.circle {

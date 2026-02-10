@@ -95,6 +95,6 @@
 			these sites or the consequences of you going on to those sites.
 		</p>
 
-		<p class="text-sm">Last updated: April 1, 2024</p>
+		<p class="text-sm">Last updated: January 01, 2026</p>
 	</div>
 </div>
