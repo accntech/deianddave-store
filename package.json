@@ -46,8 +46,5 @@
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.55.0",
 		"vite": "^7.3.1"
-	},
-	"dependencies": {
-		"svelte-image-viewer": "^6.0.0"
 	}
 }
