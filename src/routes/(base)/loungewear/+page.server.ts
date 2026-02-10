@@ -25,8 +25,13 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 		}
 
 		const result: Result<InventoryItem[]> = await response.json();
+		if (result.errors) {
+			return { result: { data: [], errors: result.errors } };
+		}
 
-		return { result };
+		return {
+			result: { data: result.data.filter((item) => item.status !== 'inactive'), errors: null }
+		};
 	};
 
 	return {

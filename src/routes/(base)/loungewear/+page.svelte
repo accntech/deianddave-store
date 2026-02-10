@@ -60,21 +60,21 @@
 </svelte:head>
 
 <div class="flex flex-col">
-	<div class="w-full xl:max-w-7xl xl:place-self-center">
+	<div class="xl:place-self-center w-full xl:max-w-7xl">
 		<div class="mx-6 my-4">
-			<p class="text-xl font-medium">
+			<p class="font-medium text-xl">
 				Silky-soft, naturally breathable, and gentle on sensitive skin
 			</p>
-			<p class="text-lg font-light">— made for dreamers of all ages.</p>
+			<p class="font-light text-lg">— made for dreamers of all ages.</p>
 		</div>
 		{#if loaded}
 			<div class="flex flex-col gap-2">
 				{#if fabrics.length > 1}
 					<div class="relative">
 						<div
-							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-linear-to-r from-background/75 to-transparent"
+							class="left-0 absolute inset-y-0 bg-linear-to-r from-background/75 to-transparent w-8 pointer-events-none"
 						></div>
-						<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
+						<div class="flex items-center gap-4 px-8 overflow-x-auto scroll-smooth no-scrollbar">
 							{#each fabrics as fabric}
 								<button
 									use:scrollOnFocus={selectedFabric === fabric.id}
@@ -83,7 +83,7 @@
 										selectedAgeGroup = '';
 									}}
 									class={cn(
-										'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 hover:border-primary/40',
+										'px-4 py-2 border border-transparent hover:border-primary/40 rounded-full font-medium text-sm text-nowrap transition-colors duration-300',
 										selectedFabric === fabric.id ? 'bg-primary text-primary-foreground' : ''
 									)}
 								>
@@ -92,29 +92,29 @@
 							{/each}
 						</div>
 						<div
-							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background/75 to-transparent"
+							class="right-0 absolute inset-y-0 bg-linear-to-l from-background/75 to-transparent w-8 pointer-events-none"
 						></div>
 					</div>
 				{/if}
 				{#if fabrics.length > 1 && ageGroup.length > 1}
 					<div class="relative">
 						<div
-							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-linear-to-r from-background/75 to-transparent"
+							class="left-0 absolute inset-y-0 bg-linear-to-r from-background/75 to-transparent w-8 pointer-events-none"
 						></div>
-						<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
+						<div class="flex items-center gap-4 px-8 overflow-x-auto scroll-smooth no-scrollbar">
 							{#each ageGroup as group}
 								<button
 									onclick={() => (selectedAgeGroup = group.id)}
 									use:scrollOnFocus={selectedAgeGroup === group.id}
 									class={cn(
-										'rounded-full px-4 py-2 text-nowrap',
+										'px-4 py-2 rounded-full text-nowrap',
 										selectedAgeGroup === group.id ? 'text-secondary' : ''
 									)}
 								>
 									{group.name}
 									<div
 										class={cn(
-											'h-1 w-0 rounded-lg bg-secondary opacity-0 transition-all duration-300',
+											'bg-secondary opacity-0 rounded-lg w-0 h-1 transition-all duration-300',
 											selectedAgeGroup === group.id ? 'w-full opacity-100' : ''
 										)}
 									></div>
@@ -122,21 +122,21 @@
 							{/each}
 						</div>
 						<div
-							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background/75 to-transparent"
+							class="right-0 absolute inset-y-0 bg-linear-to-l from-background/75 to-transparent w-8 pointer-events-none"
 						></div>
 					</div>
 				{:else if ageGroup.length > 1}
 					<div class="relative">
 						<div
-							class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-linear-to-r from-background/75 to-transparent"
+							class="left-0 absolute inset-y-0 bg-linear-to-r from-background/75 to-transparent w-8 pointer-events-none"
 						></div>
-						<div class="no-scrollbar flex items-center gap-4 overflow-x-auto scroll-smooth px-8">
+						<div class="flex items-center gap-4 px-8 overflow-x-auto scroll-smooth no-scrollbar">
 							{#each ageGroup as group}
 								<button
 									use:scrollOnFocus={selectedAgeGroup === group.id}
 									onclick={() => (selectedAgeGroup = group.id)}
 									class={cn(
-										'rounded-full border border-transparent px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 last:mr-2 hover:border-primary/40',
+										'last:mr-2 px-4 py-2 border border-transparent hover:border-primary/40 rounded-full font-medium text-sm text-nowrap transition-colors duration-300',
 										selectedAgeGroup === group.id ? 'bg-primary text-white' : ''
 									)}
 								>
@@ -145,40 +145,40 @@
 							{/each}
 						</div>
 						<div
-							class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background/75 to-transparent"
+							class="right-0 absolute inset-y-0 bg-linear-to-l from-background/75 to-transparent w-8 pointer-events-none"
 						></div>
 					</div>
 				{/if}
 
 				{#if products.length > 0}
-					<div class="m-6 flex flex-col gap-4">
+					<div class="flex flex-col gap-4 m-6">
 						{#each groupProducts(products) as [gender, items]}
 							<div class="flex flex-col gap-4">
-								<span class="text-lg font-semibold">{gender}</span>
+								<span class="font-semibold text-lg">{gender}</span>
 								<div class="flex flex-wrap gap-4">
 									{#each items ?? [] as item}
 										{@const { wholeNumber, decimal } = splitNumberToString(item.price)}
 										<div
-											class="group transition-width relative isolate w-full overflow-clip rounded-3xl bg-accent sm:w-[296px]"
+											class="group isolate relative bg-accent shadow-sm rounded-3xl w-full sm:w-74 overflow-clip transition-width"
 										>
 											<div class="overflow-clip">
 												<Image
-													class="h-60 w-full"
+													class="w-full h-60"
 													imageClass="group-hover:scale-105"
 													src={item.image || PUBLIC_DEFAULT_PRODUCT_IMAGE}
 													alt={item.product.name}
 													transform="g_auto:classic,w_500,c_fill"
 												/>
 											</div>
-											<div class=" flex flex-col p-4">
-												<span class="text-sm text-muted-foreground">{item.fabric.name}</span>
+											<div class="flex flex-col p-4">
+												<span class="text-muted-foreground text-sm">{item.fabric.name}</span>
 												<a
 													href="/add-to-bag?productId={item.product.id}&fabricId={item.fabric
 														.id}&ageGroupId={item.ageGroup?.id}&genderGroupId={item.genderGroup
 														?.id}"
 													class="font-semibold text-wrap"
 												>
-													<span class="absolute inset-0 z-40"></span>
+													<span class="z-40 absolute inset-0"></span>
 													{item.product.name}
 												</a>
 												{#if item.sets && item.sets.length > 0}
@@ -190,12 +190,12 @@
 														</div>
 													{/each}
 												{/if}
-												<span class="mt-4 text-xs text-muted-foreground">from</span>
+												<span class="mt-4 text-muted-foreground text-xs">from</span>
 												<div class="flex items-baseline gap-2">
-													<span class="text-xs font-medium">₱</span>
+													<span class="font-medium text-xs">₱</span>
 													<div class="flex gap-1">
-														<span class="text-lg font-semibold">{wholeNumber}</span>
-														<span class="mt-1 align-top text-xs font-medium">
+														<span class="font-semibold text-lg">{wholeNumber}</span>
+														<span class="mt-1 font-medium text-xs align-top">
 															{decimal}
 														</span>
 													</div>
@@ -204,7 +204,7 @@
 											{#if item.image}
 												<button
 													onclick={() => imageDialog.show(item.image!)}
-													class="absolute top-0 left-0 z-50 col-1 row-1 m-4 flex items-center justify-center rounded-md border bg-background/75 p-1 text-foreground/50 transition-all duration-300 hover:bg-accent/75"
+													class="top-0 left-0 z-50 absolute flex justify-center items-center bg-background/50 hover:bg-background/70 backdrop-blur-md m-4 p-1.5 border border-white/20 rounded-full text-foreground/50 transition-all duration-300 col-1 row-1"
 												>
 													<FullscreenIcon class="size-6" />
 												</button>
@@ -219,7 +219,7 @@
 				<Button
 					variant="ghost"
 					href="/beddings"
-					class="mx-6 mb-20 place-self-start rounded-lg shadow-none"
+					class="place-self-start shadow-none mx-6 mb-20"
 				>
 					<ArrowLeftIcon />
 					Go to Beddings

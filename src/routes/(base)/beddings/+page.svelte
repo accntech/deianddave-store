@@ -157,7 +157,7 @@
 									{#each items ?? [] as item}
 										{@const { wholeNumber, decimal } = splitNumberToString(item.price)}
 										<div
-											class="group relative isolate w-full overflow-clip rounded-3xl bg-accent transition-all duration-300 sm:w-[296px]"
+											class="group relative isolate w-full overflow-clip rounded-3xl bg-accent shadow-sm transition-all duration-300 sm:w-[296px]"
 										>
 											<div class="overflow-clip">
 												<Image
@@ -202,7 +202,7 @@
 											{#if item.image}
 												<button
 													onclick={() => imageDialog.show(item.image!)}
-													class="absolute top-0 left-0 z-50 col-1 row-1 m-4 flex items-center justify-center rounded-md border bg-background/75 p-1 text-foreground/50 transition-all duration-300 hover:bg-accent/75"
+													class="absolute top-0 left-0 z-50 col-1 row-1 m-4 flex items-center justify-center rounded-full border border-white/20 bg-background/50 p-1.5 text-foreground/50 backdrop-blur-md transition-all duration-300 hover:bg-background/70"
 												>
 													<FullscreenIcon class="size-6" />
 												</button>
@@ -217,7 +217,7 @@
 				<Button
 					variant="ghost"
 					href="/loungewear"
-					class="mx-6 mb-20 place-self-start rounded-lg shadow-none"
+					class="mx-6 mb-20 place-self-start shadow-none"
 				>
 					<ArrowLeftIcon />
 					Go to Loungewear

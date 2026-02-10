@@ -117,7 +117,7 @@
 				</div>
 				<Button
 					variant="ghost"
-					class="mx-4 mb-8 place-self-start rounded-lg shadow-none"
+					class="mx-4 mb-8 place-self-start shadow-none"
 					onclick={() => goto(shop.lastShop === '' ? '/' : shop.lastShop)}
 				>
 					<ShoppingCartIcon />
@@ -154,7 +154,7 @@
 					<button
 						onclick={checkout}
 						disabled={cart.orders.length === 0}
-						class="w-full rounded-full bg-primary px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-all duration-300 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-input/50"
+						class="w-full rounded-full border border-primary-foreground/10 bg-primary/85 px-6 py-3 text-center text-sm font-medium text-primary-foreground backdrop-blur-sm transition-all duration-300 outline-none hover:bg-primary/95 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						Checkout Now
 					</button>

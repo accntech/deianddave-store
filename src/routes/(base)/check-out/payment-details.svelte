@@ -305,13 +305,13 @@
 			{/if}
 		</Card.Content>
 		<Card.Footer class="flex w-full flex-row-reverse  justify-between gap-4">
-			<Form.Button disabled={$submitting} class="w-32 rounded-lg">
+			<Form.Button disabled={$submitting} class="w-32">
 				{#if $submitting}
 					<LoaderCircleIcon class="h-5 w-5 animate-spin" />
 				{/if}
 				Next
 			</Form.Button>
-			<Button variant="outline" class="w-32 rounded-lg" onclick={() => (index = 1)}>Back</Button>
+			<Button variant="outline" class="w-32" onclick={() => (index = 1)}>Back</Button>
 		</Card.Footer>
 	</Card.Root>
 </form>

@@ -3,6 +3,7 @@
 	import { cn } from '$lib/utils';
 	import { transform } from '$lib/utils/image-helper';
 	import { scrollOnFocus } from '$lib/utils/scroll-helper';
+	import { ChevronRight } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
 	let displayText = $state('\u00A0');
@@ -44,9 +45,9 @@
 	<meta name="description" content="Welcome to our store" />
 </svelte:head>
 
-<section id="home" class="relative isolate -mt-16 flex h-dvh w-full flex-col justify-center">
+<section id="home" class="isolate relative flex flex-col justify-center -mt-16 w-full h-dvh">
 	<picture
-		class="absolute h-full w-full mask-[linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] transition-all duration-300 [-webkit-mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)]"
+		class="absolute w-full h-full transition-all duration-300 mask-[linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_10%,#000_75%,#000_100%)]"
 	>
 		<source
 			media="(width <= 800px)"
@@ -59,25 +60,27 @@
 		<img
 			srcset={transform(fullHeroImage, 'g_auto:classic,w_3400,c_fill')}
 			alt="Bedding set"
-			class="h-full w-full object-cover object-center"
+			class="w-full h-full object-center object-cover"
 		/>
 	</picture>
 
 	<div
-		class="will-change-opacity transform-all z-20 flex w-full animate-in flex-col gap-6 place-self-center-safe duration-500 ease-out will-change-transform fade-in-50 slide-in-from-bottom-12 xl:max-w-7xl"
+		class="slide-in-from-bottom-12 z-20 flex flex-col place-self-center-safe gap-6 w-full xl:max-w-7xl transform-all animate-in duration-500 ease-out will-change-opacity will-change-transform fade-in-50"
 	>
 		<div
-			class="text-center text-[clamp(1.5rem,calc(5vw+1rem),4rem)] font-medium text-primary transition-all duration-300"
+			class="font-light text-[clamp(1.5rem,calc(5vw+1rem),4rem)] text-primary text-center text-balance transition-all duration-300"
+			style="font-family: 'Moranga', serif;"
 		>
-			<span>Because your choice</span>
-			<p class="font-bold">{displayText}</p>
+			Because your choice
+			<p style="font-family: 'Moranga', serif;" class="font-bold">matters</p>
 		</div>
 
 		<button
 			onclick={goToShop}
-			class="place-self-center rounded-full bg-primary px-6 py-3 text-center font-semibold text-white transition-all duration-300 hover:scale-105"
+			class="flex items-center place-self-center gap-3 bg-linear-to-r from-white/20 hover:from-white/30 to-white/10 cta-shadow backdrop-blur-sm px-6 py-3 border-2 border-white/30 rounded-full max-w-max font-bold text-white transition-colors duration-150"
 		>
 			Shop Now
+			<ChevronRight class="size-4" />
 		</button>
 	</div>
 </section>
@@ -85,65 +88,71 @@
 	id="shop"
 	tabindex="-1"
 	class={cn(
-		'flex flex-col gap-4 bg-[#405C93] p-6 py-4 text-primary-foreground transition-all duration-300 sm:h-auto sm:min-h-auto',
+		'flex flex-col gap-4 bg-[#405C93] p-6 py-4 sm:h-auto sm:min-h-auto text-primary-foreground transition-all duration-300',
 		showBanner ? 'scroll-mt-26' : 'scroll-mt-16'
 	)}
 >
-	<span class="place-self-center text-center text-xl font-medium xl:max-w-7xl">
-		Our Products
-	</span>
+	<span class="place-self-center xl:max-w-7xl font-medium text-xl text-center"> Our Products </span>
 	<div
-		class="flex w-full flex-col justify-center gap-4 place-self-center md:flex-row lg:gap-32 xl:max-w-7xl"
+		class="flex md:flex-row flex-col justify-center place-self-center gap-4 lg:gap-32 w-full xl:max-w-7xl"
 	>
 		<div
-			class="flex w-64 flex-col items-center justify-center place-self-center text-center text-sm"
+			class="flex flex-col justify-center items-center place-self-center w-64 text-sm text-center"
 		>
-			<div class="mb-2 flex size-20 flex-col">
+			<div class="flex flex-col mb-2 size-20">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 87.09 64.01"
-					class="size-20 fill-current"
+					class="fill-current size-20"
 				>
 					<path
 						d="M20.89,61.25c-1.71,1.12-3.52,2.03-5.44,2.76h56.06c-1.92-.69-3.74-1.63-5.44-2.76H20.89ZM55.8,20.76c.07.94.29,1.85.65,2.76h8.45l1.89,2.94c1.41.22,2.76.65,4.06,1.23l-3.85-5.95v-10.63c0-2.76-1.67-5.26-4.21-6.35-2.47-1.09-5.26-1.23-7.84-.51-1.74.58-3.63.11-4.86-1.27l-.11-.11c-1.63-1.81-3.95-2.87-6.42-2.87s-4.79,1.02-6.42,2.83c-1.23,1.41-3.23,1.96-5.01,1.38-2.58-.73-5.3-.58-7.76.47-2.58,1.05-4.28,3.56-4.28,6.35v10.63l-5.59,8.63c1.49-.8,3.01-1.49,4.57-2.07l3.08-4.79h7.66s.11-.22.22-.36c.47-.73.8-1.56.98-2.39h-8.24v-9.65c0-1.67.98-3.19,2.54-3.81,1.89-.83,3.99-.98,5.95-.44,2.83.91,5.91.04,7.87-2.18,1.12-1.23,2.72-1.92,4.39-1.92s3.27.69,4.35,1.92l.11.11c1.92,2.18,4.97,2.98,7.73,2.07,2-.58,4.14-.44,6.02.44,1.52.65,2.5,2.14,2.5,3.77v9.69h-8.45v.07h.02ZM54.78,12.38c-.36-.47-1.05-.65-1.6-.4-5.81,2.61-12.44,2.65-18.29.11-.22-.15-.47-.22-.76-.22-.51,0-.98.29-1.2.73s-.22.98.07,1.41c1.56,3.52,1.23,7.55-.8,10.78-.33.44-.33,1.02-.04,1.49h3.16c5.08-1.85,10.67-1.85,15.75,0h3.05s.11-.22.15-.36c.11-.36,0-.76-.18-1.09-1.56-3.52-1.23-7.55.8-10.78.36-.51.33-1.16-.04-1.67h-.07ZM50.68,23.23c-2.39-.76-4.9-1.12-7.44-1.12s-4.93.36-7.29,1.05c.83-2.43.94-5.04.4-7.58,4.79,1.49,9.9,1.49,14.73.07-.83,2.43-.94,5.04-.4,7.58ZM80.99,43.08c-.76-1.96-1.78-4.64-4.28-6.64-.94-.8-1.81-1.67-2.54-2.65-2.32-3.01-5.88-4.75-9.65-4.75H30.51c-7.33.07-14.4,2.65-20.06,7.33l-.11.07c-.22.18-.4.36-.58.54-.07.04-.11.11-.18.15-1.6,1.71-2.83,3.74-3.52,5.95-.25.73-.54,1.45-.94,2.1C3.94,46.85-.34,60.38.02,62.12c.11.58.62,1.05,1.2,1.09.62.07,14.48,1.38,22.2-7.73,3.05,2.36,8.74,4.68,14.4.94,3.45-2.32,7.98-2.32,11.43,0,5.66,3.74,11.36,1.38,14.4-.94,5.91,6.97,15.38,7.84,19.81,7.84,1.38,0,2.25-.07,2.39-.11.58-.07,1.09-.51,1.2-1.09.33-1.74-3.95-15.27-5.08-16.94-.4-.65-.69-1.38-.94-2.1h-.07.01ZM30.47,31.76h34.01c2.65,0,5.19,1.12,7,3.08-15.82-1.85-38.36,6.53-45.33,9.36-3.08,1.23-4.28,1.2-4.61,1.12.04-.29.15-.58.29-.83.07-.15.11-.29.15-.44.36-1.67-.07-3.45-1.23-4.72-1.52-1.67-4.1-2.36-6.28-2.58,4.72-3.23,10.3-4.97,16-5.01v.02ZM64.9,52.69c-.22-.33-.58-.54-.98-.54h-.11c-.36,0-.69.15-.94.4s-5.88,5.77-12.15,1.6c-4.35-2.94-10.05-2.94-14.4,0-6.24,4.1-11.94-1.38-12.15-1.6-.54-.54-1.38-.54-1.92,0-.04.04-.11.11-.15.18-5.3,7.37-15.46,7.95-19.19,7.87.8-3.52,3.59-12.59,4.43-13.82.51-.83.94-1.74,1.23-2.68.54-1.71,1.41-3.3,2.58-4.68,1.96-.07,6.02.07,7.58,1.81.54.62.76,1.41.58,2.21-.33.65-.98,2.47.11,3.74.62.65,1.52,1.02,2.43.94,1.85-.15,3.63-.58,5.3-1.38,5.22-2.1,31.97-12.37,47.36-8.6.15.15.33.29.47.44,1.96,1.56,2.76,3.63,3.45,5.48.33.94.73,1.85,1.23,2.68.83,1.23,3.63,10.3,4.43,13.82-3.74.07-13.86-.51-19.19-7.87h.04-.03Z"
 					/>
 				</svg>
 			</div>
-			<span class="text-lg font-medium">Beddings</span>
-			<span class="mt-4 text-sm whitespace-pre-wrap opacity-75 sm:h-20">
+			<span class="font-medium text-lg">Beddings</span>
+			<span class="opacity-75 mt-4 sm:h-20 text-sm whitespace-pre-wrap">
 				{'100% TENCEL™ Lyocell\n100% Organic Bamboo\n100% Grade 6A Mulberry Silk'}
 			</span>
-			<a href="/beddings" class="my-4 rounded-full bg-primary px-6 py-2 font-medium">
+			<a
+				href="/beddings"
+				class="flex items-center gap-3 bg-linear-to-r from-primary-foreground/15 hover:from-primary-foreground/25 to-primary-foreground/5 cta-shadow my-4 px-5 py-3 border-2 border-primary-foreground/30 rounded-full font-bold text-primary-foreground transition-colors duration-150"
+			>
 				Shop Collection
+				<ChevronRight class="size-4" />
 			</a>
 		</div>
-		<div class="col-span-2 h-px w-64 place-self-center bg-border opacity-30 md:hidden"></div>
-		<div class="flex w-64 flex-col items-center place-self-center text-center text-sm">
-			<div class="mb-2 flex size-20">
-				<svg viewBox="0 0 110 96" class="size-18 fill-current" xmlns="http://www.w3.org/2000/svg">
+		<div class="md:hidden place-self-center col-span-2 opacity-30 bg-border w-64 h-px"></div>
+		<div class="flex flex-col items-center place-self-center w-64 text-sm text-center">
+			<div class="flex mb-2 size-20">
+				<svg viewBox="0 0 110 96" class="fill-current size-18" xmlns="http://www.w3.org/2000/svg">
 					<path
 						d="M109.081 24.675L90.4669 10.5C90.4669 10.5 90.2862 10.245 90.0302 10.245L68.9308 0.164989C67.741 -0.270011 66.4308 0.164989 65.9338 1.34999C65.7531 1.78499 65.7531 2.27999 65.8133 2.65499C65.6928 2.83499 65.6928 2.96999 65.6928 3.14999C65.6928 5.95499 61.3856 9.11999 54.9549 9.11999C48.5242 9.11999 44.1567 5.87999 44.1567 3.14999C44.1567 2.33999 43.7802 1.58999 43.1627 1.34999C42.7862 1.16999 42.726 1.16999 43.0422 1.28999C43.479 1.46999 42.726 1.16999 42.6055 1.03499C42.5453 0.974989 42.485 0.974989 42.485 1.03499C42.485 1.15499 42.1688 0.974989 42.0483 0.974989H41.9278C41.9278 0.974989 41.3706 1.03499 41.1145 1.15499C40.994 1.21499 40.7983 1.21499 40.6778 1.27499L19.8796 10.23C19.8796 10.23 19.3224 10.545 19.0663 10.785L0.873568 24.675C-0.0601669 25.29 -0.316191 26.91 0.436821 27.84L13.238 45.435C13.6748 45.87 14.232 46.425 14.8645 46.425C15.3013 46.425 16.0543 46.425 16.491 45.93L20.7983 42.765L16.7471 93.51C16.7471 94.2 16.9278 94.875 17.3645 95.31C17.8013 95.745 18.2983 96 18.991 96H91.0392C91.732 96 92.229 95.745 92.6657 95.31C93.1025 94.875 93.3585 94.185 93.3585 93.51L89.232 42.765L93.5392 45.93C93.976 46.425 94.473 46.425 95.1657 46.425C95.8585 46.425 96.3555 45.93 96.7922 45.435L109.593 27.84C110.286 26.715 110.09 25.35 109.157 24.675H109.096H109.081ZM15.6778 40.83L5.37658 26.895L18.9308 16.575L21.0543 36.915L15.6778 40.83ZM59.5633 91.395H54.9398V71.55H56.0694C57.5001 71.55 58.3736 70.56 58.3736 69.255C58.3736 67.95 57.4398 67.02 56.0694 67.02H54.9398V55.83H56.0694C57.5001 55.83 58.3736 54.9 58.3736 53.535C58.3736 52.17 57.4398 51.3 56.0694 51.3H54.9398V39.855H56.0694C57.5001 39.855 58.3736 38.925 58.3736 37.56C58.3736 36.195 57.4398 35.325 56.0694 35.325H54.9398V33.03C54.9398 30.045 56.7471 27.555 59.5633 26.625V91.545V91.425V91.395ZM64.1266 91.395V23.73C64.1266 22.305 63.1928 21.435 61.8826 21.435C55.4519 21.435 50.3916 26.475 50.3916 32.88V91.395H21.1748L25.738 38.775V38.16H25.7983V37.725L23.2983 13.785L40.2862 6.38999C42.229 10.68 47.9067 13.725 55.0151 13.725C62.1236 13.725 68.4338 10.365 70.0001 5.63999L86.6718 13.725L84.1718 37.725V38.16L88.479 91.395H64.1266ZM94.2169 40.83L88.8404 36.855L90.9639 16.575L104.518 26.895L94.2169 40.83Z"
 					/>
 				</svg>
 			</div>
 
-			<span class="text-lg font-medium">Loungewear</span>
-			<span class="mt-4 text-sm whitespace-pre-wrap opacity-75 sm:h-20">
+			<span class="font-medium text-lg">Loungewear</span>
+			<span class="opacity-75 mt-4 sm:h-20 text-sm whitespace-pre-wrap">
 				{'100% Organic Bamboo \nLyocell'}
 			</span>
-			<a href="/loungewear" class="my-4 rounded-full bg-primary px-6 py-2 font-medium">
+			<a
+				href="/loungewear"
+				class="flex items-center gap-3 bg-linear-to-r from-primary-foreground/15 hover:from-primary-foreground/25 to-primary-foreground/5 cta-shadow my-4 px-5 py-3 border-2 border-primary-foreground/30 rounded-full font-bold text-primary-foreground transition-colors duration-150"
+			>
 				Shop Collection
+				<ChevronRight class="size-4" />
 			</a>
 		</div>
 	</div>
 </section>
 <section id="fabric" class="flex flex-col">
-	<div class="flex w-full flex-col gap-10 place-self-center p-12 md:px-12 xl:max-w-7xl">
+	<div class="flex flex-col place-self-center gap-10 p-12 md:px-12 w-full xl:max-w-7xl">
 		<div class="flex gap-6">
 			<svg
 				viewBox="0 0 120 120"
 				xmlns="http://www.w3.org/2000/svg"
-				class="w-14 fill-primary md:w-18"
+				class="fill-primary w-14 md:w-18"
 			>
 				<path
 					d="M30.2405 12.4039C29.2859 11.8585 28.0587 12.1312 27.377 12.9493C26.8315 13.9038 27.1043 15.131 27.9224 15.8128L28.0587 15.9491C34.1947 19.4943 44.1486 22.6304 75.783 22.6304C103.327 22.6304 110.417 30.8119 110.69 31.0845C111.372 31.9026 112.735 32.1754 113.553 31.3573C114.372 30.6754 114.644 29.4482 113.963 28.4938C113.826 28.221 111.644 25.6303 105.372 23.0396C100.327 10.3586 86.1461 5.17707 85.6006 4.90437C84.5098 4.4953 83.4189 5.04072 83.0099 6.13155V6.26792L82.6008 7.63146L82.1918 6.94968C80.6918 4.35894 77.8283 2.72267 74.8286 2.58632C68.6926 2.72267 62.5566 3.2681 56.557 4.22259C55.1934 4.35894 53.9662 4.768 52.6027 5.04072C40.6035 8.31323 25.059 4.22259 17.0141 1.63184C14.696 0.813707 12.1052 2.04091 11.4235 4.35894C11.0144 5.58614 11.1507 7.08605 11.8325 8.17688C17.2867 16.7672 28.1952 32.1754 40.7398 38.8568C47.1485 42.2656 54.3754 43.902 61.7386 43.902C65.5565 43.902 69.2381 43.4928 72.9197 42.6748C75.9193 41.993 78.5102 40.493 80.5555 38.1751C80.5555 38.1751 80.5555 38.0386 80.6918 38.0386L82.4645 35.857L82.8736 38.584C83.0099 39.6749 84.1008 40.493 85.1915 40.3567C85.328 40.3567 85.6006 40.2204 85.737 40.2204C90.3731 38.0386 102.509 32.448 102.645 32.3117C103.736 31.9026 104.145 30.6754 103.736 29.5847C103.327 28.4938 102.1 28.0847 101.009 28.4938C100.872 28.4938 92.0093 32.5845 86.5552 35.1752L85.8733 30.4028C85.7369 29.3119 84.6461 28.4938 83.5554 28.6301C83.0099 28.7664 82.6008 29.0392 82.1918 29.4482L77.5557 35.4479C76.0558 37.0842 74.1469 38.1751 72.1014 38.584C66.1019 39.9476 54.239 41.1748 42.7851 35.1752C31.1949 29.0392 20.6957 14.1765 15.3778 5.9952C15.2414 5.85885 15.2414 5.7225 15.3778 5.58614C15.5141 5.44978 15.6505 5.44978 15.7868 5.44978C26.2862 8.85865 41.2853 12.2675 53.8299 8.99501C54.9208 8.7223 56.148 8.4496 57.2387 8.17688C63.1021 7.2224 68.9653 6.81333 74.8286 6.67698C76.4648 6.67698 77.9648 7.63145 78.7829 8.99501L81.7827 14.0402C82.3281 14.9946 83.5554 15.4037 84.6461 14.7219C85.0552 14.4492 85.4643 14.0402 85.6006 13.4947L86.5552 9.54043C89.8277 11.1767 96.2363 14.8583 100.191 20.9943C92.2821 19.0853 84.2371 18.1308 76.1921 18.2671C45.1032 18.5399 35.5582 15.4037 30.2405 12.4039Z"
@@ -157,14 +166,14 @@
 			</svg>
 			<div class="flex flex-col">
 				<span class="-mb-1 font-medium text-primary">Skin-friendly</span>
-				<span class="text-sm text-primary/75">Soft, safe, and gentle on all skin types</span>
+				<span class="text-primary/75 text-sm">Soft, safe, and gentle on all skin types</span>
 			</div>
 		</div>
 		<div class="flex flex-row-reverse gap-6">
 			<svg
 				viewBox="0 0 119 120"
 				xmlns="http://www.w3.org/2000/svg"
-				class="w-14 fill-primary md:w-18"
+				class="fill-primary w-14 md:w-18"
 			>
 				<path
 					d="M58.4024 119.495C71.9902 119.495 85.1746 114.721 95.6681 105.855C96.4753 105.173 96.6098 103.809 95.9371 102.99C95.5336 102.445 94.7264 102.172 94.0536 102.308C71.183 106.264 49.5232 90.5772 45.6218 67.388C41.7202 44.199 57.1915 22.2374 80.0622 18.2816C82.3493 17.8724 84.6363 17.736 87.0579 17.736C89.345 17.736 91.7667 17.8724 94.0536 18.2816C95.13 18.4181 96.2062 17.736 96.3407 16.6448C96.4753 15.9626 96.2062 15.1443 95.6681 14.735C70.914 -6.1352 34.0519 -2.72502 13.4683 22.5102C-7.11534 47.7454 -3.75199 84.9846 21.1367 105.855C31.6303 114.721 44.8145 119.495 58.4024 119.495ZM58.4024 5.18657C68.6269 5.18657 78.7168 8.18752 87.327 13.6438C62.0348 13.5074 41.3166 34.3776 41.1821 60.1585C41.0476 85.9394 61.6312 106.946 87.0579 106.946H87.4615C62.0348 123.178 28.4015 115.403 12.392 89.6223C-3.61747 63.8415 4.05093 29.8762 29.4777 13.6438C38.0878 8.05111 48.1778 5.18657 58.4024 5.18657Z"
@@ -177,8 +186,8 @@
 				/>
 			</svg>
 			<div class="flex flex-col">
-				<span class="-mb-1 text-end font-medium text-primary">Snuggly sleep</span>
-				<span class="text-end text-sm text-primary/75">
+				<span class="-mb-1 font-medium text-primary text-end">Snuggly sleep</span>
+				<span class="text-primary/75 text-sm text-end">
 					Cozy, warm, and made for deep, restful nights
 				</span>
 			</div>
@@ -187,7 +196,7 @@
 			<svg
 				viewBox="0 0 129 120"
 				xmlns="http://www.w3.org/2000/svg"
-				class="w-14 shrink-0 fill-primary md:w-18"
+				class="fill-primary w-14 md:w-18 shrink-0"
 			>
 				<path
 					d="M0.632324 58.5188C0.632324 90.3455 26.5573 116.27 58.384 116.27C64.7072 116.27 70.8196 115.217 76.7213 113.32C80.5153 115.427 84.9414 116.692 89.3677 116.692C91.0539 116.692 92.5294 116.481 94.2155 116.27C95.9017 116.692 97.7986 116.903 99.6956 116.903C107.705 116.903 115.082 113.109 120.141 106.997C134.684 90.1346 124.356 66.1065 123.934 65.0528C123.513 64.2097 122.67 63.7881 121.827 63.7881C119.93 63.9988 118.033 64.2097 116.136 64.6312C119.508 32.8045 96.3232 4.56089 64.4965 1.18853C32.6698 -2.18384 4.21546 21.0011 1.05387 52.6172C0.843097 54.7249 0.632324 56.6217 0.632324 58.5188ZM4.84778 58.5188C4.84778 46.5047 8.85247 34.9122 16.2295 25.4274C12.2248 34.4906 11.3817 44.8185 14.1218 54.3033C17.7049 66.1065 28.6652 69.9004 38.1498 73.2729C47.4239 76.4344 53.1148 78.753 53.1148 85.0761C53.1148 90.767 51.007 91.1886 48.0562 91.8208C46.7915 92.0317 45.7378 92.4532 44.6838 92.8748C41.3115 94.7716 37.096 94.1394 34.3559 91.1886C33.0913 89.924 31.4051 89.2916 29.719 89.5024C26.1358 89.924 22.7634 93.9285 21.0772 96.6686C10.7494 86.9732 4.84778 73.0621 4.84778 58.5188ZM71.2412 102.781C61.1242 89.5024 67.8689 71.5866 70.1874 66.5281C75.6675 67.582 94.2155 72.4297 99.0632 88.4485C102.646 100.041 98.0094 107.418 95.2693 110.58L80.9369 82.7576L77.1428 84.6546L91.4754 112.477C87.26 112.898 78.6183 112.477 71.2412 102.781ZM116.768 104.256C112.553 109.736 105.808 112.898 98.8525 112.687C104.754 105.521 106.23 95.8256 103.068 87.1838C102.014 83.6006 100.117 80.2283 97.5879 77.2775C105.597 70.5328 116.347 68.6358 120.141 68.2142C122.248 73.2728 127.728 91.6101 116.768 104.256ZM112.131 58.5188C112.131 60.8372 111.92 63.1557 111.71 65.4743C108.97 66.3174 106.44 67.1605 103.911 68.4251C104.543 63.5773 103.911 58.7294 102.436 54.3033C101.803 51.9848 99.4847 51.7741 98.2201 51.7741C97.5879 51.7741 97.1663 51.5632 96.5339 51.5632C91.4754 49.034 89.5784 45.0292 87.4707 40.6031C85.9954 36.8092 83.4661 33.4367 80.3045 30.6968C77.1428 28.589 73.3489 27.746 69.7659 28.589C67.2366 28.7997 66.1827 29.0106 64.7072 27.5351C63.8641 26.692 64.075 26.2705 64.075 26.0598C64.7072 23.9521 69.3443 21.0011 72.2951 20.158C73.3489 19.9473 74.4028 19.1042 74.8244 17.8396C75.4566 15.7318 73.9813 13.8349 72.9274 11.9379C72.5058 11.3056 71.8736 10.6733 71.6627 10.2518C72.9274 9.1979 74.4028 8.56557 75.8782 7.93325C97.5879 15.3103 112.131 35.7553 112.131 58.5188ZM69.9766 6.24706C68.7119 6.8794 67.8689 8.14402 67.2366 9.40867C67.2366 11.0948 67.8689 12.9918 69.1335 14.2564C69.555 14.678 69.9766 15.5211 70.3981 16.1534C67.4473 17.2072 60.9133 20.3689 59.8595 25.0058C59.438 27.1136 60.0702 29.2213 61.5457 30.4859C63.8641 32.8045 67.0258 33.6476 70.1874 32.8045C72.9274 32.1721 75.6675 32.8045 77.7752 34.2798C80.5153 36.1768 81.9906 39.1276 83.4661 42.5C85.5738 46.9262 88.1031 52.1956 94.4262 55.3571C95.4802 55.7786 96.5339 55.9895 97.5879 55.9895C97.7986 55.9895 98.0094 55.9895 98.431 55.9895C100.117 62.3126 100.328 67.582 98.6417 71.3759C97.377 72.219 96.1124 73.2729 94.8478 74.116C84.7307 64.4204 69.9766 62.3126 69.1335 62.102C68.2904 61.8911 67.4473 62.5235 67.0258 63.1557C66.6042 64.2097 54.3795 87.6054 67.6582 105.31C68.9228 107.207 70.609 108.893 72.2951 110.369C55.4332 115.006 37.5176 111.001 24.028 99.8303C25.7142 97.3009 28.2436 94.3501 30.1405 94.1394C30.562 94.1394 30.9836 94.3501 31.1944 94.5609C35.199 98.9872 41.733 99.8303 46.7915 96.8793C47.4239 96.6686 48.0562 96.4578 48.6886 96.2471C51.85 95.6147 56.9087 94.5609 56.9087 85.4977C56.9087 76.0129 47.8455 72.8512 39.2038 69.6897C30.1405 66.5281 20.8666 63.1557 17.7049 53.4602C12.6464 34.9122 25.2927 17.6288 27.1897 15.0995C39.4144 6.24708 55.2226 2.8747 69.9766 6.24706Z"
@@ -198,7 +207,7 @@
 			</svg>
 			<div class="flex flex-col">
 				<span class="-mb-1 font-medium text-primary">Eco-friendly</span>
-				<span class="text-sm text-primary/75">
+				<span class="text-primary/75 text-sm">
 					Made with sustainable materials that are kind to the planet
 				</span>
 			</div>
@@ -206,12 +215,12 @@
 	</div>
 </section>
 <section id="testimonials" class="flex flex-col gap-4 bg-[#7D90B4] py-8">
-	<div class="flex flex-col gap-4 overflow-visible xl:max-w-7xl xl:place-self-center">
-		<span class="px-8 text-lg font-medium text-primary-foreground sm:px-12">
+	<div class="flex flex-col xl:place-self-center gap-4 xl:max-w-7xl overflow-visible">
+		<span class="px-8 sm:px-12 font-medium text-primary-foreground text-lg">
 			What our customers have to say...
 		</span>
 		<div
-			class="mask-edges no-scrollbar flex gap-4 overflow-x-auto scroll-smooth px-12 pb-10"
+			class="flex gap-4 px-12 pb-10 overflow-x-auto scroll-smooth mask-edges no-scrollbar"
 			style="--mask-size: 48px"
 		>
 			<button
@@ -219,16 +228,16 @@
 				onclick={() => {
 					selectedFeedback = '1';
 				}}
-				class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+				class="space-y-4 bg-background/60 hover:bg-background/75 cta-shadow backdrop-blur-md px-6 py-5 border border-white/20 rounded-xl w-70 transition-colors duration-150 shrink-0"
 				aria-label="Customer feedback 1"
 			>
-				<p class="text-start text-sm">
+				<p class="text-sm text-start">
 					"This bedding set feels so soft and cozy. Waking up well-rested has never been this easy."
 				</p>
 
 				<div class="flex flex-col items-end">
-					<span class="text-sm font-medium">Christine De Guzman</span>
-					<span class="text-sm text-primary/75">Cavite, Philippines</span>
+					<span class="font-medium text-sm">Christine De Guzman</span>
+					<span class="text-primary/75 text-sm">Cavite, Philippines</span>
 				</div>
 			</button>
 			<button
@@ -236,17 +245,17 @@
 				onclick={() => {
 					selectedFeedback = '2';
 				}}
-				class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+				class="space-y-4 bg-background/60 hover:bg-background/75 cta-shadow backdrop-blur-md px-6 py-5 border border-white/20 rounded-xl w-70 transition-colors duration-150 shrink-0"
 				aria-label="Customer feedback 2"
 			>
-				<p class="text-start text-sm">
+				<p class="text-sm text-start">
 					"The fabric quality is amazing. After several washes, it still looks brand new. Definitely
 					worth every peso."
 				</p>
 
 				<div class="flex flex-col items-end">
-					<span class="text-sm font-medium">a*****s</span>
-					<span class="text-sm text-primary/75">Bulacan, Philippines</span>
+					<span class="font-medium text-sm">a*****s</span>
+					<span class="text-primary/75 text-sm">Bulacan, Philippines</span>
 				</div>
 			</button>
 			<button
@@ -254,17 +263,17 @@
 				onclick={() => {
 					selectedFeedback = '3';
 				}}
-				class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+				class="space-y-4 bg-background/60 hover:bg-background/75 cta-shadow backdrop-blur-md px-6 py-5 border border-white/20 rounded-xl w-70 transition-colors duration-150 shrink-0"
 				aria-label="Customer feedback 3"
 			>
-				<p class="text-start text-sm">
+				<p class="text-sm text-start">
 					"I used to have trouble falling asleep, but ever since I switched to your sheets, I’ve
 					been sleeping like a baby."
 				</p>
 
 				<div class="flex flex-col items-end">
-					<span class="text-sm font-medium">Janice Contreras</span>
-					<span class="text-sm text-primary/75">Manila, Philippines</span>
+					<span class="font-medium text-sm">Janice Contreras</span>
+					<span class="text-primary/75 text-sm">Manila, Philippines</span>
 				</div>
 			</button>
 			<button
@@ -272,17 +281,17 @@
 				onclick={() => {
 					selectedFeedback = '4';
 				}}
-				class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+				class="space-y-4 bg-background/60 hover:bg-background/75 cta-shadow backdrop-blur-md px-6 py-5 border border-white/20 rounded-xl w-70 transition-colors duration-150 shrink-0"
 				aria-label="Customer feedback 4"
 			>
-				<p class="text-start text-sm">
+				<p class="text-sm text-start">
 					"The size fits perfectly on my bed, and the design gives my room such a cozy, stylish
 					vibe. Guests always compliment it!"
 				</p>
 
 				<div class="flex flex-col items-end">
-					<span class="text-sm font-medium">m*****z</span>
-					<span class="text-sm text-primary/75">Manila, Philippines</span>
+					<span class="font-medium text-sm">m*****z</span>
+					<span class="text-primary/75 text-sm">Manila, Philippines</span>
 				</div>
 			</button>
 			<button
@@ -290,17 +299,17 @@
 				onclick={() => {
 					selectedFeedback = '5';
 				}}
-				class="w-70 shrink-0 space-y-4 rounded-xl bg-background px-6 py-4 shadow-xl"
+				class="space-y-4 bg-background/60 hover:bg-background/75 cta-shadow backdrop-blur-md px-6 py-5 border border-white/20 rounded-xl w-70 transition-colors duration-150 shrink-0"
 				aria-label="Customer feedback 5"
 			>
-				<p class="text-start text-sm">
+				<p class="text-sm text-start">
 					"I bought this as a gift, and my friend absolutely loved it! Beautiful packaging and such
 					a thoughtful product."
 				</p>
 
 				<div class="flex flex-col items-end">
-					<span class="text-sm font-medium">Gladys Mercado</span>
-					<span class="text-sm text-primary/75">Bulacan, Philippines</span>
+					<span class="font-medium text-sm">Gladys Mercado</span>
+					<span class="text-primary/75 text-sm">Bulacan, Philippines</span>
 				</div>
 			</button>
 		</div>

@@ -58,7 +58,7 @@
 				{/each}
 				<button
 					onclick={() => imageDialog.show(selectedImage.source)}
-					class="z-20 col-1 row-1 m-4 flex items-center justify-center place-self-start rounded-md border bg-background/75 p-1 text-foreground/50 transition-all duration-300 hover:bg-accent/75"
+					class="z-20 col-1 row-1 m-4 flex items-center justify-center place-self-start rounded-full border border-white/20 bg-background/50 p-1.5 text-foreground/50 backdrop-blur-md transition-all duration-300 hover:bg-background/70"
 				>
 					<FullscreenIcon class="size-6" />
 				</button>
@@ -109,7 +109,7 @@
 						use:scrollOnFocus={selectedSize?.id === size.id}
 						onclick={() => (selectedSize = size)}
 						class={cn(
-							'rounded-lg px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 ',
+							'rounded-full px-4 py-2 text-sm font-medium text-nowrap transition-colors duration-300 ',
 							selectedSize?.id === size.id
 								? 'bg-secondary text-secondary-foreground hover:bg-secondary/60'
 								: 'hover:bg-accent'
@@ -181,7 +181,7 @@
 			<Button
 				variant="outline"
 				onclick={() => quantity--}
-				class="h-9 w-11 rounded-none rounded-l-lg shadow-none focus:z-10"
+				class="h-9 w-11 rounded-none rounded-l-full shadow-none focus:z-10"
 				size="icon"
 			>
 				<MinusIcon />
@@ -194,7 +194,7 @@
 			<Button
 				variant="outline"
 				onclick={() => quantity++}
-				class="h-9 w-11 rounded-none rounded-r-lg shadow-none focus:z-10"
+				class="h-9 w-11 rounded-none rounded-r-full shadow-none focus:z-10"
 			>
 				<PlusIcon />
 			</Button>
@@ -212,7 +212,7 @@
 
 	<Button
 		variant="ghost"
-		class="mx-6 mt-6 mb-24 place-self-start rounded-lg shadow-none"
+		class="mx-6 mt-6 mb-24 place-self-start shadow-none"
 		onclick={() => history.back()}
 	>
 		<ArrowLeftIcon />
@@ -225,7 +225,7 @@
 			<button
 				onclick={onSubmit}
 				disabled={quantity === 0}
-				class="inline-flex bg-primary px-6 py-3 text-center text-sm font-medium text-primary-foreground transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50"
+				class="inline-flex border border-primary-foreground/10 bg-primary/85 px-6 py-3 text-center text-sm font-medium text-primary-foreground backdrop-blur-sm transition-all duration-300 hover:bg-primary/95 disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				<ShoppingBagIcon class="mr-2 inline-block size-5" />
 				Add to Bag

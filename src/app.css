@@ -2,6 +2,20 @@
 
 @import 'tw-animate-css';
 
+@font-face {
+	font-family: 'Moranga';
+	src: url('/fonts/Moranga-Light.otf') format('opentype');
+	font-weight: 300;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Moranga';
+	src: url('/fonts/Moranga-Bold.otf') format('opentype');
+	font-weight: 700;
+	font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -116,7 +130,7 @@
 		@apply border-border outline-ring/50;
 	}
 	body {
-		@apply h-screen bg-background text-foreground;
+		@apply min-h-screen bg-background text-foreground;
 	}
 
 	html {
@@ -193,4 +207,8 @@
 
 @utility no-scrollbar {
 	@apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+
+@utility cta-shadow {
+	box-shadow: 0 4px 14px 0 oklch(0.28 0.09 268 / 0.15);
 }

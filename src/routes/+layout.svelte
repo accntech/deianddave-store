@@ -6,17 +6,29 @@
 	import Logo from '$lib/assets/logo.png';
 	import { getCartState, setCartState } from '$lib/client/cart.svelte';
 	import { setShopState } from '$lib/client/shop.svelte';
+	import { cn } from '$lib/utils';
 	import '@fontsource-variable/geist';
-	import { MenuIcon, ShoppingBagIcon } from '@lucide/svelte';
+	import { MenuIcon, SearchIcon, ShoppingBagIcon, X } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import Banner from './banner.svelte';
+	import SearchDialog from './search-dialog.svelte';
 
 	let { children } = $props();
 	setCartState([]);
 	setShopState('');
 
 	let scrolled = $state(false);
+	let drawerOpen = $state(false);
+	let searchOpen = $state(false);
+
+	function handleKeydown(e: KeyboardEvent) {
+		if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+			e.preventDefault();
+			searchOpen = !searchOpen;
+		}
+	}
+
 	const handleScroll = () => {
 		scrolled = typeof window !== 'undefined' ? window.scrollY > 4 : false;
 	};
@@ -26,9 +38,20 @@
 	});
 
 	let showBanner = $derived(PUBLIC_SHOW_BANNER === 'true');
+
+	const navLinks = [
+		{ href: '/about-us', label: 'About Us' },
+		{ href: '/know-your-fabric', label: 'Know your fabric' },
+		{ href: '/customer-care', label: 'Customer Care' }
+	] as const;
+
+	function isActive(href: string) {
+		if (href === '/') return page.url.pathname === '/';
+		return page.url.pathname.startsWith(href);
+	}
 </script>
 
-<svelte:window on:scroll={handleScroll} />
+<svelte:window onscroll={handleScroll} onkeydown={handleKeydown} />
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
@@ -67,26 +90,68 @@
 
 <main class="relative">
 	<nav
-		class={`sticky top-0 z-40 flex min-h-16 flex-col justify-center text-primary transition-all duration-300 xl:items-center ${scrolled ? 'bg-white/85 backdrop-blur' : 'bg-background/10'}`}
+		class={cn(
+			'top-0 z-40 sticky flex flex-col justify-center xl:items-center min-h-16 text-primary transition-all duration-300',
+			scrolled ? 'bg-white/90 shadow-sm backdrop-blur' : 'bg-background/10'
+		)}
 	>
-		<div class="flex w-full flex-col items-center p-4">
-			<div class="relative grid w-full grid-cols-[auto_1fr_auto] justify-center xl:max-w-7xl">
+		<div class="flex flex-col items-center p-4 w-full">
+			<div class="relative items-center grid grid-cols-[auto_1fr_auto] w-full xl:max-w-7xl">
 				<button
-					class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:hidden dark:hover:bg-input/50 [&_svg]:size-5"
+					onclick={() => (drawerOpen = true)}
+					class="md:hidden inline-flex justify-center items-center gap-2 hover:bg-accent dark:hover:bg-input/50 p-2 focus-visible:border-ring rounded-full outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 [&_svg]:size-5 transition-all shrink-0"
+					aria-label="Open menu"
 				>
 					<MenuIcon />
 				</button>
-				<a href="/" class="absolute place-self-center sm:place-self-start">
-					<img src={Logo} alt="Logo" class="h-8" />
+				<a href="/" class="hidden md:inline-flex place-self-start shrink-0">
+					<img src={Logo} alt="Logo" class="h-8 shrink-0" />
 				</a>
-				<div class="col-3">
+				<a href="/" class="md:hidden absolute place-self-center shrink-0">
+					<img src={Logo} alt="Logo" class="h-8 shrink-0" />
+				</a>
+				<div class="hidden md:flex justify-self-end place-self-end md:gap-1 mx-2 text-sm">
+					{#each navLinks as link (link.href)}
+						<a
+							href={link.href}
+							class={cn(
+								'hover:bg-accent px-3 py-1.5 rounded-md text-nowrap transition-colors',
+								isActive(link.href) && 'font-semibold'
+							)}
+						>
+							{link.label}
+						</a>
+					{/each}
+				</div>
+				<div class="flex justify-self-end items-center gap-1">
+					<!-- Desktop search trigger -->
+					<button
+						onclick={() => (searchOpen = true)}
+						class="hidden md:flex items-center gap-2 bg-background hover:bg-accent px-3 py-1.5 border border-input rounded-full min-w-44 text-muted-foreground text-sm transition-colors"
+					>
+						<SearchIcon class="size-4" />
+						<span>Search</span>
+						<kbd
+							class="bg-muted ml-auto px-1.5 py-0.5 border border-border rounded font-medium text-xs"
+							>⌘K</kbd
+						>
+					</button>
+					<!-- Mobile search trigger -->
+					<button
+						onclick={() => (searchOpen = true)}
+						class="md:hidden inline-flex justify-center items-center hover:bg-accent dark:hover:bg-input/50 p-2 focus-visible:border-ring rounded-full outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 [&_svg]:size-5 transition-all shrink-0"
+						aria-label="Search"
+					>
+						<SearchIcon />
+					</button>
 					<button
 						onclick={() => goto('/check-out')}
-						class="relative inline-flex shrink-0 items-center justify-center gap-2 rounded-lg p-2 transition-all outline-none hover:bg-accent focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:hover:bg-input/50 [&_svg]:size-5"
+						class="inline-flex relative justify-center items-center gap-2 hover:bg-accent dark:hover:bg-input/50 p-2 focus-visible:border-ring rounded-full outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 [&_svg]:size-5 transition-all shrink-0"
+						aria-label="Shopping bag"
 					>
 						<ShoppingBagIcon />
 						{#if getCartState().orders.length > 0}
-							<div class="circle absolute top-1 right-1"></div>
+							<div class="top-1 right-1 absolute circle"></div>
 						{/if}
 					</button>
 				</div>
@@ -97,8 +162,60 @@
 		{/if}
 	</nav>
 
+	<!-- Mobile drawer backdrop -->
+	{#if drawerOpen}
+		<button
+			class="z-50 fixed inset-0 bg-black/40 transition-opacity"
+			onclick={() => (drawerOpen = false)}
+			aria-label="Close menu"
+		></button>
+	{/if}
+
+	<!-- Mobile drawer panel -->
+	<aside
+		class={cn(
+			'md:hidden top-0 left-0 z-50 fixed flex flex-col bg-background shadow-lg p-6 w-64 h-full transition-transform duration-300 ease-in-out',
+			drawerOpen ? 'translate-x-0' : '-translate-x-full'
+		)}
+	>
+		<button
+			onclick={() => (drawerOpen = false)}
+			class="inline-flex justify-center items-center self-end hover:bg-accent mb-8 rounded-lg size-8 transition-colors"
+			aria-label="Close menu"
+		>
+			<X class="size-5" />
+		</button>
+		<!-- Drawer search trigger -->
+		<button
+			onclick={() => {
+				drawerOpen = false;
+				searchOpen = true;
+			}}
+			class="flex items-center gap-2 bg-background hover:bg-accent mb-4 px-3 py-2 border border-input rounded-lg w-full text-muted-foreground text-sm transition-colors"
+		>
+			<SearchIcon class="size-4" />
+			<span>Search products...</span>
+		</button>
+		<nav class="flex flex-col gap-4">
+			{#each navLinks as link (link.href)}
+				<a
+					href={link.href}
+					onclick={() => (drawerOpen = false)}
+					class={cn(
+						'hover:bg-accent px-3 py-2 rounded-md text-sm transition-colors',
+						isActive(link.href) && 'bg-accent font-semibold'
+					)}
+				>
+					{link.label}
+				</a>
+			{/each}
+		</nav>
+	</aside>
+
 	{@render children?.()}
 </main>
+
+<SearchDialog bind:open={searchOpen} />
 
 <style>
 	.circle {

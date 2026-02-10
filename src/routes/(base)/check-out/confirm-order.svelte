@@ -201,12 +201,12 @@
 			By pressing the 'Confirm and Pay' button, you agree to our terms & conditions and privacy
 			policy.
 		</span>
-		<Button onclick={submit} disabled={submitting} class="w-full rounded-lg">
+		<Button onclick={submit} disabled={submitting} class="w-full">
 			{#if submitting}
 				<LoaderCircleIcon class="h-5 w-5 animate-spin" />
 			{/if}
 			Confirm and Pay
 		</Button>
-		<Button variant="outline" class="w-full rounded-lg" onclick={() => (index = 2)}>Back</Button>
+		<Button variant="outline" class="w-full" onclick={() => (index = 2)}>Back</Button>
 	</Card.Footer>
 </Card.Root>
