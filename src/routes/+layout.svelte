@@ -7,6 +7,7 @@
 	import { getCartState, setCartState } from '$lib/client/cart.svelte';
 	import { setConsentState } from '$lib/client/consent.svelte';
 	import { setShopState } from '$lib/client/shop.svelte';
+	import { setSocialProofState } from '$lib/client/social-proof.svelte';
 	import { cn } from '$lib/utils';
 	import '@fontsource-variable/geist';
 	import { MenuIcon, SearchIcon, ShoppingBagIcon, X } from '@lucide/svelte';
@@ -17,11 +18,14 @@
 	import ConsentDialog from './consent-dialog.svelte';
 	import SearchDialog from './search-dialog.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import { Toaster } from 'svelte-sonner';
+	import { isMobile } from '$lib/hooks/is-mobile.svelte';
 
 	let { children } = $props();
 	setCartState([]);
 	setConsentState();
 	setShopState('');
+	setSocialProofState();
 
 	let scrolled = $state(false);
 	let drawerOpen = $state(false);
@@ -95,7 +99,7 @@
 	>
 	<!-- End Meta Pixel Code -->
 </svelte:head>
-
+<Toaster position={isMobile.current ? 'top-center' : 'bottom-right'} />
 <main class="relative flex flex-col min-h-dvh">
 	<nav
 		class={cn(
